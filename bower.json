@@ -1,0 +1,22 @@
+{
+  "name": "Codegarden",
+  "description": "A fun game",
+  "main": "gulpfile.js",
+  "authors": [
+    "TOPdesk "
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "phaser": "~2.4.4"
+  }
+}
