@@ -25,4 +25,4 @@ Just as the general recipe above, but install the npm and nodjs-legacy
 package (see this [stackoverflow
 question](http://stackoverflow.com/questions/21168141/cannot-install-packages-using-node-package-manager-in-ubuntu)
 for the reason). The npm install -g commands have to be run using
-sudo, because this install global packages.
+sudo, because this installs global packages.
