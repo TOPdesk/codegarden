@@ -21,7 +21,7 @@ Changes to the sourcecode will automatically cause the browser to refresh, but G
 
 ### Debian specific instructions
 
-Just as the general recipe above, but install the npm and nodjs-legacy
+Just as the general recipe above, but install the npm and nodejs-legacy
 package (see this [stackoverflow
 question](http://stackoverflow.com/questions/21168141/cannot-install-packages-using-node-package-manager-in-ubuntu)
 for the reason). The npm install -g commands have to be run using
