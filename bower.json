@@ -1,5 +1,5 @@
 {
-  "name": "Codegarden",
+  "name": "codegarden",
   "description": "A fun game",
   "main": "gulpfile.js",
   "authors": [
@@ -17,6 +17,6 @@
     "tests"
   ],
   "dependencies": {
-    "phaser": "~2.4.4"
+    "phaser": "^2.4.8"
   }
 }
