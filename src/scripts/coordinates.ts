@@ -22,30 +22,30 @@ document.body.innerHTML = q.x + " " + q.y;
 */
 
 class Point {
-    x: number;
-    y: number;
+	x: number;
+	y: number;
 };
 
 class CoordinateTransformer {
-    half_tile_width: number;
-    half_tile_height: number;
-    
-    constructor(tile_width, tile_height) {
-        this.half_tile_width = tile_width / 2;
-        this.half_tile_height = tile_height / 2;
-    }
-    
-    map_to_screen(map: Point) {
-        let screen: Point = new Point();
-        screen.x = (map.x - map.y) * this.half_tile_width;
-        screen.y = (map.x + map.y) * this.half_tile_height;
-        return screen;
-    }
-    
-    screen_to_map(screen: Point) {
-        let map: Point = new Point();
-        map.x = (screen.x / this.half_tile_width + screen.y / this.half_tile_height) / 2;
-        map.y = (screen.y / this.half_tile_height - screen.x / this.half_tile_width) / 2;
-        return map;
-    }   
+	halfTileWidth: number;
+	halfTileHeight: number;
+
+	constructor(tileWidth, tileHeight) {
+		this.halfTileWidth = tileWidth / 2;
+		this.halfTileHeight = tileHeight / 2;
+	}
+
+	map_to_screen(map: Point) {
+		let screen: Point = new Point();
+		screen.x = (map.x - map.y) * this.halfTileWidth;
+		screen.y = (map.x + map.y) * this.halfTileHeight;
+		return screen;
+	}
+
+	screen_to_map(screen: Point) {
+		let map: Point = new Point();
+		map.x = (screen.x / this.halfTileWidth + screen.y / this.halfTileHeight) / 2;
+		map.y = (screen.y / this.halfTileHeight - screen.x / this.halfTileWidth) / 2;
+		return map;
+	}
 }

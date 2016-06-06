@@ -5,10 +5,13 @@ class Game extends Phaser.Game {
 
 	constructor() {
 		//noinspection TypeScriptValidateTypes
-    super(1200, 800, Phaser.AUTO, 'content', null);
-    this.state.add('boot',States.BootState,true);
-  }
+		super(1200, 800, Phaser.AUTO, "content", null);
+	}
 
+	start() {
+		this.state.add("boot", States.BootState, true);
+	}
 }
 
-var mygame = new Game();
+let myGame = new Game();
+myGame.start();
