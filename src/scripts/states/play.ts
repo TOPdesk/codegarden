@@ -8,7 +8,7 @@ namespace States {
 		private gnome: Gnome;
 
 		create() {
-			let blocks = this.renderStage(5, 5);
+			this.renderStage(5, 5);
 			this.gnome = new Gnome(this.game, 360, 0);
 			this.gnome.alpha = 0;
 			this.game.tweens.pauseAll();
