@@ -17,7 +17,8 @@ namespace States {
 			this.load.setPreloadSprite(progressBar);
 
 			this.load.image("stage_block", "assets/images/stage_block.png");
-			this.load.image("gnome_normal", "assets/images/gnome_normal.png");
+			this.load.image("gnome_facing_nw", "assets/images/gnome_facing_nw.png");
+			this.load.image("gnome_facing_se", "assets/images/gnome_facing_se.png");
 			this.load.image("rotate_left", "assets/images/rotate_left.png");
 			this.load.image("rotate_right", "assets/images/rotate_right.png");
 			this.load.image("move_forward", "assets/images/move_forward.png");

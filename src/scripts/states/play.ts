@@ -14,13 +14,14 @@ namespace States {
 		private direction: Direction = Direction.SE;
 
 		constructor(game: Phaser.Game, x: number, y: number) {
-			super(game, x, y, "gnome_normal");
-			this.anchor.setTo(.5, .5);
+			super(game, x, y, "gnome_facing_se");
+			this.anchor.setTo(.4, .5);
 			game.add.existing(this);
 		}
 
 		rotateLeft() {
 			this.direction = Direction.rotateLeft(this.direction);
+			console.log("Now facing " + this.direction);
 			this.faceDirection();
 		}
 
@@ -41,20 +42,20 @@ namespace States {
 		private faceDirection() {
 			switch (this.direction) {
 				case Direction.NW:
-					this.scale.x = -1;
-					this.scale.y = -1;
+					this.loadTexture("gnome_facing_nw");
+					this.scale.x = 1;
 					break;
 				case Direction.NE:
-					this.scale.x = 1;
-					this.scale.y = -1;
+					this.loadTexture("gnome_facing_nw");
+					this.scale.x = -1;
 					break;
 				case Direction.SE:
+					this.loadTexture("gnome_facing_se");
 					this.scale.x = 1;
-					this.scale.y = 1;
 					break;
 				case Direction.SW:
+					this.loadTexture("gnome_facing_se");
 					this.scale.x = -1;
-					this.scale.y = 1;
 					break;
 			}
 		}
