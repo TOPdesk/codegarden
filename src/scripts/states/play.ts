@@ -77,15 +77,15 @@ namespace States {
 		}
 
 		drawButtons() {
-			let moveButton = this.game.add.sprite(10, 10, "move_forward");
+			let moveButton = this.game.add.sprite(10, 10, "control_forward");
 			moveButton.inputEnabled = true;
 			moveButton.events.onInputDown.add(this.gnome.moveForward, this.gnome);
 
-			let rotateLeftButton = this.game.add.sprite(10, 60, "rotate_left");
+			let rotateLeftButton = this.game.add.sprite(10, 94, "control_left");
 			rotateLeftButton.inputEnabled = true;
 			rotateLeftButton.events.onInputDown.add(this.gnome.rotateLeft, this.gnome);
 
-			let rotateRightButton = this.game.add.sprite(10, 110, "rotate_right");
+			let rotateRightButton = this.game.add.sprite(10, 178, "control_right");
 			rotateRightButton.inputEnabled = true;
 			rotateRightButton.events.onInputDown.add(this.gnome.rotateRight, this.gnome);
 		}

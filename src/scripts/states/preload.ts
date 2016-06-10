@@ -18,9 +18,9 @@ namespace States {
 
 			this.load.image("stage_block", "assets/images/stage_block.png");
 			this.load.image("gnome_normal", "assets/images/gnome_normal.png");
-			this.load.image("rotate_left", "assets/images/rotate_left.png");
-			this.load.image("rotate_right", "assets/images/rotate_right.png");
-			this.load.image("move_forward", "assets/images/move_forward.png");
+			this.load.image("control_left", "assets/images/control_left.png");
+			this.load.image("control_right", "assets/images/control_right.png");
+			this.load.image("control_forward", "assets/images/control_forward.png");
 		}
 
 		create() {
