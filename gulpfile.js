@@ -14,6 +14,7 @@ var typescript	= require('gulp-typescript');
 var browserSync	= require('browser-sync');
 var del 		= require('del');
 var runSequence = require('run-sequence');
+var sourcemaps = require('gulp-sourcemaps');
 
 // definition of source paths
 var srcs = {
@@ -82,14 +83,16 @@ gulp.task('html', function() {
 // JS concat, strip debugging and minify
 gulp.task('scripts', function() {
 	return gulp.src(srcs.scripts)
+		.pipe(sourcemaps.init())
 		.pipe(typescript({
 			declarationFiles: true,
 			noExternalResolve: false,
 			sortOutput: true
 		}))
 		.pipe(concat('script.min.js'))
+		.pipe(sourcemaps.write())
 		// .pipe(stripDebug())
-		.pipe(uglify())
+		// .pipe(uglify())
 		.pipe(gulp.dest(dests.scripts))
 		.pipe(browserSync.reload({stream : true}));
 });
