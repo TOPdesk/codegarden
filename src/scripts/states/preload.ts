@@ -18,10 +18,13 @@ namespace States {
 
 			this.load.image("stage_block", "assets/images/stage_block.png");
 			this.load.image("gnome_normal", "assets/images/gnome_normal.png");
+			this.load.image("rotate_left", "assets/images/rotate_left.png");
+			this.load.image("rotate_right", "assets/images/rotate_right.png");
+			this.load.image("move_forward", "assets/images/move_forward.png");
 		}
 
 		create() {
-			this.game.time.events.add(10, () => {
+			this.game.time.events.add(0, () => {
 				this.game.state.start("play");
 			}, this);
 		}

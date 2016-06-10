@@ -2,24 +2,37 @@
 
 namespace States {
 
+	class Gnome extends Phaser.Sprite {
+		constructor(game: Phaser.Game, x: number, y: number) {
+			super(game, x, y, "gnome_normal");
+			game.add.existing(this);
+		}
+
+		moveGnome(block) {
+			this.game.add.tween(this).to({ x: block.x + 40, y: block.y - 40 }, 2000, "Quart.easeOut").start();
+		}
+	}
+
 	export class PlayState extends Phaser.State {
-		gnome;
+		private gnome: Gnome;
 
 		create() {
 			let blocks = this.renderStage(5, 5);
-			this.gnome = this.game.add.sprite(340, 0, "gnome_normal");
+			this.gnome = new Gnome(this.game, 340, 0);
 			this.gnome.alpha = 0;
 			this.game.tweens.pauseAll();
 			//TODO _add is internal API that we should not be using in this way
 			this.game.tweens._add[0].onComplete.add(function () {
 				this.game.add.tween(this.gnome).to({ x: blocks[0].x + 40, y: blocks[0].y - 40, alpha: 1 }, 500, "Quart.easeOut").start();
 			}, this);
+
+			this.drawButtons();
 		}
 
-		moveGnome(block) {
-			// this.gnome.x = block.x + 40;
-			// this.gnome.y = block.y - 40;
-			this.game.add.tween(this.gnome).to({ x: block.x + 40, y: block.y - 40 }, 2000, "Quart.easeOut").start();
+		drawButtons() {
+			this.game.add.sprite(10, 10, "move_forward");
+			this.game.add.sprite(10, 60, "rotate_left");
+			this.game.add.sprite(10, 110, "rotate_right");
 		}
 
 		renderStage(northWestWidth, southWestWidth) {
@@ -41,7 +54,7 @@ namespace States {
 					block.inputEnabled = true;
 					block.events.onInputDown.add(
 						function () {
-							this.moveGnome(block);
+							this.gnome.moveGnome(block);
 						}, this);
 					block.input.pixelPerfectClick = true;
 				}
