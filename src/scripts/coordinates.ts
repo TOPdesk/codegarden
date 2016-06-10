@@ -5,11 +5,11 @@ and back.
 
 Example tile coordinate in ASCII art:
 
-          (0,0)
+  NW      (0,0)      NE
      (0,1)     (1,0)
 (0,2)     (1,1)     (2,0)
      (1,2)     (2,1)
-          (2,2)
+  SW      (2,2)      SE
 
 Example of usage:
 
@@ -25,6 +25,23 @@ class Point {
 	x: number;
 	y: number;
 };
+
+enum Direction {
+	//These should be in ascending order of right rotation!
+	NW,
+	NE,
+	SE,
+	SW
+}
+namespace Direction {
+	export function rotateRight(direction: Direction) {
+		return (direction + 1) % 4;
+	}
+
+	export function rotateLeft(direction: Direction) {
+		return (direction + 3) % 4;
+	}
+}
 
 class CoordinateTransformer {
 	halfTileWidth: number;
