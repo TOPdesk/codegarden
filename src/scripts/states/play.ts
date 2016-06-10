@@ -21,7 +21,6 @@ namespace States {
 
 		rotateLeft() {
 			this.direction = Direction.rotateLeft(this.direction);
-			console.log("Now facing " + this.direction);
 			this.faceDirection();
 		}
 
