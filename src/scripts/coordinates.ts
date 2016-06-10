@@ -14,16 +14,17 @@ Example tile coordinate in ASCII art:
 Example of usage:
 
 let ct: CoordinateTransformer = new CoordinateTransformer(110, 68);
-let p: Point = new Point;
-p.x = 0;
-p.y = 0;
+let p: Point = new Point(0, 0)
 let q: Point = ct.map_to_screen(p);
 document.body.innerHTML = q.x + " " + q.y;
 */
 
 class Point {
-	x: number;
-	y: number;
+	constructor(public x: number, public y: number) {}
+
+	getNeighbor(direction: Direction) {
+		return new Point(this.x + Direction.getXDelta(direction), this.y + Direction.getYDelta(direction));
+	}
 };
 
 enum Direction {
@@ -41,6 +42,28 @@ namespace Direction {
 	export function rotateLeft(direction: Direction) {
 		return (direction + 3) % 4;
 	}
+
+	export function getXDelta(direction: Direction) {
+		switch (direction) {
+			case Direction.NW:
+				return -1;
+			case Direction.SE:
+				return 1;
+			default:
+				return 0;
+		}
+	}
+
+	export function getYDelta(direction: Direction) {
+		switch (direction) {
+			case Direction.NE:
+				return -1;
+			case Direction.SW:
+				return 1;
+			default:
+				return 0;
+		}
+	}
 }
 
 class CoordinateTransformer {
@@ -52,17 +75,15 @@ class CoordinateTransformer {
 		this.halfTileHeight = tileHeight / 2;
 	}
 
-	map_to_screen(map: Point) {
-		let screen: Point = new Point();
-		screen.x = (map.x - map.y) * this.halfTileWidth;
-		screen.y = (map.x + map.y) * this.halfTileHeight;
-		return screen;
+	map_to_screen(map: Point): Point {
+		let x = (map.x - map.y) * this.halfTileWidth;
+		let y = (map.x + map.y) * this.halfTileHeight;
+		return new Point(x, y);
 	}
 
 	screen_to_map(screen: Point) {
-		let map: Point = new Point();
-		map.x = (screen.x / this.halfTileWidth + screen.y / this.halfTileHeight) / 2;
-		map.y = (screen.y / this.halfTileHeight - screen.x / this.halfTileWidth) / 2;
-		return map;
+		let x = (screen.x / this.halfTileWidth + screen.y / this.halfTileHeight) / 2;
+		let y = (screen.y / this.halfTileHeight - screen.x / this.halfTileWidth) / 2;
+		return new Point(x, y);
 	}
 }
