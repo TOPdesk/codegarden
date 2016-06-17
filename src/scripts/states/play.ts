@@ -8,13 +8,14 @@ namespace States {
 		private gnome: Gnome;
 
 		create() {
-			let stage = new Array<Array<WorldConstants.BlockType>>(5);
-			for (let x = 0; x < 5; x++) {
-				stage[x] = new Array<WorldConstants.BlockType>(5);
-				for (let y = 0; y < 5; y++) {
-					stage[x][y] = WorldConstants.BlockType.GRASS;
-				}
-			}
+			let stage: WorldConstants.BlockType[][] = [
+				[0, 0, 0, 0, 1, 1],
+				[0, 0, 0, 1, 1, 1],
+				[0, 1, 0, 1, 0, 0],
+				[0, 0, 0, 1, 1, 0],
+				[0, 0, 0, 0, 1, 0],
+				[0, 0, 1, 1, 1, 0],
+			];
 
 			this.renderStage(stage);
 			this.gnome = new Gnome(this.game, 360, 0);
@@ -52,17 +53,38 @@ namespace States {
 			console.log(stepsToSouthWest);
 			console.log(stepsToSouthEast);
 
-			for (let southWestPosition = 0; southWestPosition < stepsToSouthWest; southWestPosition++) {
-				for (let southEastPosition = 0; southEastPosition < stepsToSouthEast; southEastPosition++) {
-
-					if (stage[southWestPosition][southEastPosition] === WorldConstants.BlockType.GRASS) {
-						this.renderGrassBlock(southWestPosition, southEastPosition);
-					}
+			for (let x = 0; x < stepsToSouthWest; x++) {
+				for (let y = 0; y < stepsToSouthEast; y++) {
+					this.renderBlock(x, y, stage[x][y]);
 				}
 			}
 		}
 
-		renderGrassBlock(x: number, y: number) {
+		renderBlock(x: number, y: number, blockType: WorldConstants.BlockType) {
+			let diffX = WorldConstants.BLOCK_WIDTH / 2;
+			let diffY = WorldConstants.BLOCK_HEIGHT / 2;
+			let positionX = WorldConstants.WORLD_ORIGIN_X - (diffX * x) + (diffX * y);
+			let finalPositionY = WorldConstants.WORLD_ORIGIN_Y + (diffY * x) + (diffY * y);
+
+			if (blockType === WorldConstants.BlockType.WATER) {
+				finalPositionY += 20;
+			}
+
+			let block = this.game.add.sprite(positionX, -100, this.getBlockSprite(blockType));
+			this.game.add.tween(block).to({ y: finalPositionY }, this.rnd.integerInRange(1500, 2000), Phaser.Easing.Bounce.Out).start();
+		}
+
+		private getBlockSprite(blockType: WorldConstants.BlockType): string {
+			switch (blockType) {
+				case WorldConstants.BlockType.GRASS:
+					return "stage_block";
+				case WorldConstants.BlockType.WATER:
+					return "water_block";
+				default: return "stage_block"; //TODO throw an error instead?
+			}
+		}
+
+		renderWaterBlock(x: number, y: number) {
 			let diffX = WorldConstants.BLOCK_WIDTH / 2;
 			let diffY = WorldConstants.BLOCK_HEIGHT / 2;
 			let positionX = WorldConstants.WORLD_ORIGIN_X - (diffX * x) + (diffX * y);
