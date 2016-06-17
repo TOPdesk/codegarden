@@ -8,7 +8,9 @@ namespace States {
 		private gnome: Gnome;
 
 		create() {
-			this.renderStage(5, 5);
+
+			let mazeLayout = ["oooo", "oooo", "oooo", "oooo", "oooo"];
+			this.renderStage(mazeLayout);
 			this.gnome = new Gnome(this.game, 360, 0);
 			this.gnome.alpha = 0;
 			this.game.tweens.pauseAll();
@@ -35,17 +37,35 @@ namespace States {
 			rotateRightButton.events.onInputDown.add(this.gnome.rotateRight, this.gnome);
 		}
 
-		renderStage(northWestWidth, southWestWidth) {
+		renderStage(mazeLayout) {
 			let diffX = WorldConstants.BLOCK_WIDTH / 2;
 			let diffY = WorldConstants.BLOCK_HEIGHT / 2;
 
-			for (let nw = 0; nw < northWestWidth; nw++) {
-				for (let sw = 0; sw < southWestWidth; sw++) {
-					let finalPositionY = WorldConstants.WORLD_ORIGIN_Y + (diffY * nw) + (diffY * sw);
-					let block = this.game.add.sprite(WorldConstants.WORLD_ORIGIN_X - (diffX * nw) + (diffX * sw), -100, "stage_block");
-					this.game.add.tween(block).to({ y: finalPositionY }, this.rnd.integerInRange(1500, 2000), Phaser.Easing.Bounce.Out).start();
+			let stepsToSouthWest = mazeLayout.length;
+			let stepsToSouthEast = mazeLayout[0].length;
+
+			console.log(stepsToSouthWest);
+			console.log(stepsToSouthEast);
+
+			for (let southWestPosition = 0; southWestPosition < stepsToSouthWest; southWestPosition++) {
+				let layoutCharacter = mazeLayout[southWestPosition];
+
+				for (let southEastPosition = 0; southEastPosition < stepsToSouthEast; southEastPosition++) {
+
+					if (layoutCharacter.charAt(southEastPosition) === "o") {
+						this.renderGrassBlock(southWestPosition, southEastPosition);
+					}
 				}
 			}
+		}
+
+		renderGrassBlock(southWestPosition, southEastPosition) {
+			let diffX = WorldConstants.BLOCK_WIDTH / 2;
+			let diffY = WorldConstants.BLOCK_HEIGHT / 2;
+			let finalPositionY = WorldConstants.WORLD_ORIGIN_Y + (diffY * southWestPosition) + (diffY * southEastPosition);
+
+			let block = this.game.add.sprite(WorldConstants.WORLD_ORIGIN_X - (diffX * southWestPosition) + (diffX * southEastPosition), -100, "stage_block");
+			this.game.add.tween(block).to({ y: finalPositionY }, this.rnd.integerInRange(1500, 2000), Phaser.Easing.Bounce.Out).start();
 		}
 
 	}
