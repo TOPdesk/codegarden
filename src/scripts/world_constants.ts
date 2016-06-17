@@ -3,8 +3,6 @@
 namespace WorldConstants {
 	export const BLOCK_WIDTH: number = 110;
 	export const BLOCK_HEIGHT: number = 68;
-	export const WORLD_ORIGIN_X: number = 400;
-	export const WORLD_ORIGIN_Y: number = 100;
 
 	export const COORDINATE_TRANSFORMER: CoordinateTransformer = new CoordinateTransformer(BLOCK_WIDTH, BLOCK_HEIGHT);
 

@@ -6,9 +6,8 @@ namespace States {
 	export class BootState extends Phaser.State {
 
 		init() {
-			this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-			this.scale.pageAlignHorizontally = true;
-			this.scale.pageAlignVertically = true;
+			this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+			this.game.camera.bounds = null;
 		}
 
 		preload() {

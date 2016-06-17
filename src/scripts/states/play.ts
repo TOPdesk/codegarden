@@ -4,10 +4,14 @@
 /// <reference path="../world_constants.ts"/>
 
 namespace States {
+	const CAMERA_OFFSET_X = -400;
+	const CAMERA_OFFSET_Y = -100;
+
 	export class PlayState extends Phaser.State {
 		private gnome: Gnome;
 
 		create() {
+			this.game.camera.setPosition(CAMERA_OFFSET_X, CAMERA_OFFSET_Y);
 			let level = this.game.cache.getJSON("example_level").LEVEL_DEFINITION;
 
 			let stage = new Array<Array<WorldConstants.BlockType>>();
@@ -22,32 +26,29 @@ namespace States {
 			}
 
 			this.renderStage(stage);
-			this.gnome = new Gnome(this.game, 360, 0);
+			this.gnome = new Gnome(this.game, 60, 0);
 			this.gnome.alpha = 0;
 			this.game.tweens.pauseAll();
-			console.log(this.game.tweens);
 
 			//TODO _add is internal API that we should not be using in this way
 			this.game.tweens._add[0].onComplete.add(function () {
-				this.game.add.tween(this.gnome).to({
-					x: WorldConstants.WORLD_ORIGIN_X + 60, y: WorldConstants.WORLD_ORIGIN_Y, alpha: 1 }, 500, Phaser.Easing.Quartic.Out).start();
+				this.game.add.tween(this.gnome).to({ alpha: 1 }, 500, Phaser.Easing.Quartic.Out).start();
 			}, this);
 
 			this.drawButtons();
 		}
 
 		drawButtons() {
-			let moveButton = this.game.add.sprite(10, 10, "control_forward");
-			moveButton.inputEnabled = true;
-			moveButton.events.onInputDown.add(this.gnome.moveForward, this.gnome);
+			this.drawButton(10, 10, "control_forward", this.gnome.moveForward);
+			this.drawButton(10, 94, "control_left", this.gnome.rotateLeft);
+			this.drawButton(10, 178, "control_right", this.gnome.rotateRight);
+		}
 
-			let rotateLeftButton = this.game.add.sprite(10, 94, "control_left");
-			rotateLeftButton.inputEnabled = true;
-			rotateLeftButton.events.onInputDown.add(this.gnome.rotateLeft, this.gnome);
-
-			let rotateRightButton = this.game.add.sprite(10, 178, "control_right");
-			rotateRightButton.inputEnabled = true;
-			rotateRightButton.events.onInputDown.add(this.gnome.rotateRight, this.gnome);
+		private drawButton(x: number, y: number, pictureKey, trigger: Function) {
+			let button = this.game.add.sprite(x, y, pictureKey, trigger);
+			button.inputEnabled = true;
+			button.fixedToCamera = true;
+			button.events.onInputDown.add(trigger, this.gnome);
 		}
 
 		renderStage(stage: Array<Array<WorldConstants.BlockType>>) {
@@ -63,14 +64,13 @@ namespace States {
 
 		renderBlock(x: number, y: number, blockType: WorldConstants.BlockType) {
 			let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new Point(x, y));
-			let positionX = screenCoordinates.x + WorldConstants.WORLD_ORIGIN_X;
-			let finalPositionY = screenCoordinates.y + WorldConstants.WORLD_ORIGIN_Y;
 
+			let finalPositionY = screenCoordinates.y;
 			if (blockType === WorldConstants.BlockType.WATER) {
 				finalPositionY += 20;
 			}
 
-			let block = this.game.add.sprite(positionX, -100, this.getBlockSprite(blockType));
+			let block = this.game.add.sprite(screenCoordinates.x, -100, this.getBlockSprite(blockType));
 			this.game.add.tween(block).to({ y: finalPositionY }, this.rnd.integerInRange(1500, 2000), Phaser.Easing.Bounce.Out).start();
 		}
 
@@ -82,6 +82,10 @@ namespace States {
 					return "water_block";
 				default: return "stage_block"; //TODO throw an error instead?
 			}
+		}
+
+		render() {
+			this.game.debug.cameraInfo(this.game.camera, 32, 32);
 		}
 	}
 }

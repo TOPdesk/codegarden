@@ -5,7 +5,7 @@ class Game extends Phaser.Game {
 
 	constructor() {
 		//noinspection TypeScriptValidateTypes
-		super(1200, 800, Phaser.AUTO, "content", null);
+		super("100", "100", Phaser.AUTO, "content", null);
 	}
 
 	start() {
