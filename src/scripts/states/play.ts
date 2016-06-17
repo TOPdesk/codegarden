@@ -8,14 +8,18 @@ namespace States {
 		private gnome: Gnome;
 
 		create() {
-			let stage: WorldConstants.BlockType[][] = [
-				[0, 0, 0, 0, 1, 1],
-				[0, 0, 0, 1, 1, 1],
-				[0, 1, 0, 1, 0, 0],
-				[0, 0, 0, 1, 1, 0],
-				[0, 0, 0, 0, 1, 0],
-				[0, 0, 1, 1, 1, 0],
-			];
+			let level = this.game.cache.getJSON("example_level").LEVEL_DEFINITION;
+
+			let stage = new Array<Array<WorldConstants.BlockType>>();
+			for (let row = 0; row < level.layout.length; row++) {
+				if (level.layout[row] === undefined) {
+					break;
+				}
+				stage[row] = new Array<WorldConstants.BlockType>();
+				for (let column = 0; column < level.layout[0].length; column++) {
+					stage[row][column] = Number(level.layout[row][column]);
+				}
+			}
 
 			this.renderStage(stage);
 			this.gnome = new Gnome(this.game, 360, 0);
@@ -47,15 +51,12 @@ namespace States {
 		}
 
 		renderStage(stage: Array<Array<WorldConstants.BlockType>>) {
-			let stepsToSouthWest = stage.length;
-			let stepsToSouthEast = stage[0].length;
+			let rows = stage.length;
+			let columns = stage[0].length;
 
-			console.log(stepsToSouthWest);
-			console.log(stepsToSouthEast);
-
-			for (let x = 0; x < stepsToSouthWest; x++) {
-				for (let y = 0; y < stepsToSouthEast; y++) {
-					this.renderBlock(x, y, stage[x][y]);
+			for (let row = 0; row < rows; row++) {
+				for (let column = 0; column < columns; column++) {
+					this.renderBlock(column, row, stage[row][column]);
 				}
 			}
 		}
@@ -63,8 +64,8 @@ namespace States {
 		renderBlock(x: number, y: number, blockType: WorldConstants.BlockType) {
 			let diffX = WorldConstants.BLOCK_WIDTH / 2;
 			let diffY = WorldConstants.BLOCK_HEIGHT / 2;
-			let positionX = WorldConstants.WORLD_ORIGIN_X - (diffX * x) + (diffX * y);
-			let finalPositionY = WorldConstants.WORLD_ORIGIN_Y + (diffY * x) + (diffY * y);
+			let positionX = WorldConstants.WORLD_ORIGIN_X + (diffX * x) - (diffX * y);
+			let finalPositionY = WorldConstants.WORLD_ORIGIN_Y + (diffY * y) + (diffY * x);
 
 			if (blockType === WorldConstants.BlockType.WATER) {
 				finalPositionY += 20;
@@ -83,16 +84,5 @@ namespace States {
 				default: return "stage_block"; //TODO throw an error instead?
 			}
 		}
-
-		renderWaterBlock(x: number, y: number) {
-			let diffX = WorldConstants.BLOCK_WIDTH / 2;
-			let diffY = WorldConstants.BLOCK_HEIGHT / 2;
-			let positionX = WorldConstants.WORLD_ORIGIN_X - (diffX * x) + (diffX * y);
-			let finalPositionY = WorldConstants.WORLD_ORIGIN_Y + (diffY * x) + (diffY * y);
-
-			let block = this.game.add.sprite(positionX, -100, "stage_block");
-			this.game.add.tween(block).to({ y: finalPositionY }, this.rnd.integerInRange(1500, 2000), Phaser.Easing.Bounce.Out).start();
-		}
-
 	}
 }

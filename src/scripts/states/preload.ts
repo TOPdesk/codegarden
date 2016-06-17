@@ -25,6 +25,8 @@ namespace States {
 			this.load.image("control_left", "assets/images/control_left.png");
 			this.load.image("control_right", "assets/images/control_right.png");
 			this.load.image("control_forward", "assets/images/control_forward.png");
+
+			this.load.json("example_level", "assets/levels/example_level.json");
 		}
 
 		create() {
