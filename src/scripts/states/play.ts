@@ -61,11 +61,9 @@ namespace States {
 		}
 
 		renderBlock(x: number, y: number, blockType: WorldConstants.BlockType) {
-			let diffX = WorldConstants.BLOCK_WIDTH / 2;
-			let diffY = WorldConstants.BLOCK_HEIGHT / 2;
-			let positionX = WorldConstants.WORLD_ORIGIN_X - (diffX * x) + (diffX * y);
-			let finalPositionY = WorldConstants.WORLD_ORIGIN_Y + (diffY * x) + (diffY * y);
-
+			let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new Point(x, y));
+			let positionX = screenCoordinates.x + WorldConstants.WORLD_ORIGIN_X;
+			let finalPositionY = screenCoordinates.y + WorldConstants.WORLD_ORIGIN_Y;
 			if (blockType === WorldConstants.BlockType.WATER) {
 				finalPositionY += 20;
 			}
@@ -83,16 +81,5 @@ namespace States {
 				default: return "stage_block"; //TODO throw an error instead?
 			}
 		}
-
-		renderWaterBlock(x: number, y: number) {
-			let diffX = WorldConstants.BLOCK_WIDTH / 2;
-			let diffY = WorldConstants.BLOCK_HEIGHT / 2;
-			let positionX = WorldConstants.WORLD_ORIGIN_X - (diffX * x) + (diffX * y);
-			let finalPositionY = WorldConstants.WORLD_ORIGIN_Y + (diffY * x) + (diffY * y);
-
-			let block = this.game.add.sprite(positionX, -100, "stage_block");
-			this.game.add.tween(block).to({ y: finalPositionY }, this.rnd.integerInRange(1500, 2000), Phaser.Easing.Bounce.Out).start();
-		}
-
 	}
 }
