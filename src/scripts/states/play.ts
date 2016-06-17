@@ -83,9 +83,5 @@ namespace States {
 				default: return "stage_block"; //TODO throw an error instead?
 			}
 		}
-
-		render() {
-			this.game.debug.cameraInfo(this.game.camera, 32, 32);
-		}
 	}
 }
