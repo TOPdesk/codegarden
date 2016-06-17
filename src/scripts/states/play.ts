@@ -62,10 +62,9 @@ namespace States {
 		}
 
 		renderBlock(x: number, y: number, blockType: WorldConstants.BlockType) {
-			let diffX = WorldConstants.BLOCK_WIDTH / 2;
-			let diffY = WorldConstants.BLOCK_HEIGHT / 2;
-			let positionX = WorldConstants.WORLD_ORIGIN_X + (diffX * x) - (diffX * y);
-			let finalPositionY = WorldConstants.WORLD_ORIGIN_Y + (diffY * y) + (diffY * x);
+			let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new Point(x, y));
+			let positionX = screenCoordinates.x + WorldConstants.WORLD_ORIGIN_X;
+			let finalPositionY = screenCoordinates.y + WorldConstants.WORLD_ORIGIN_Y;
 
 			if (blockType === WorldConstants.BlockType.WATER) {
 				finalPositionY += 20;
