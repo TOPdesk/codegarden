@@ -64,7 +64,7 @@ gulp.task('tslint', function(){
 });
 
 // copy assets
-gulp.task('assets', function() {	
+gulp.task('assets', function() {
 	return gulp.src(srcs.assets)
 		.pipe(changed(dests.assets))
 		.pipe(gulp.dest(dests.assets))
@@ -94,7 +94,7 @@ gulp.task('scripts', function() {
 		.pipe(concat('script.min.js'))
 		.pipe(sourcemaps.write())
 		// .pipe(stripDebug())
-		// .pipe(uglify())
+		.pipe(uglify())
 		.pipe(gulp.dest(dests.scripts))
 		.pipe(browserSync.reload({stream : true}));
 });

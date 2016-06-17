@@ -8,12 +8,20 @@ namespace States {
 		private gnome: Gnome;
 
 		create() {
+			let stage = new Array<Array<WorldConstants.BlockType>>(5);
+			for (let x = 0; x < 5; x++) {
+				stage[x] = new Array<WorldConstants.BlockType>(5);
+				for (let y = 0; y < 5; y++) {
+					stage[x][y] = WorldConstants.BlockType.GRASS;
+				}
+			}
 
-			let mazeLayout = ["oooo", "oooo", "oooo", "oooo", "oooo"];
-			this.renderStage(mazeLayout);
+			this.renderStage(stage);
 			this.gnome = new Gnome(this.game, 360, 0);
 			this.gnome.alpha = 0;
 			this.game.tweens.pauseAll();
+			console.log(this.game.tweens);
+
 			//TODO _add is internal API that we should not be using in this way
 			this.game.tweens._add[0].onComplete.add(function () {
 				this.game.add.tween(this.gnome).to({
@@ -37,34 +45,30 @@ namespace States {
 			rotateRightButton.events.onInputDown.add(this.gnome.rotateRight, this.gnome);
 		}
 
-		renderStage(mazeLayout) {
-			let diffX = WorldConstants.BLOCK_WIDTH / 2;
-			let diffY = WorldConstants.BLOCK_HEIGHT / 2;
-
-			let stepsToSouthWest = mazeLayout.length;
-			let stepsToSouthEast = mazeLayout[0].length;
+		renderStage(stage: Array<Array<WorldConstants.BlockType>>) {
+			let stepsToSouthWest = stage.length;
+			let stepsToSouthEast = stage[0].length;
 
 			console.log(stepsToSouthWest);
 			console.log(stepsToSouthEast);
 
 			for (let southWestPosition = 0; southWestPosition < stepsToSouthWest; southWestPosition++) {
-				let layoutCharacter = mazeLayout[southWestPosition];
-
 				for (let southEastPosition = 0; southEastPosition < stepsToSouthEast; southEastPosition++) {
 
-					if (layoutCharacter.charAt(southEastPosition) === "o") {
+					if (stage[southWestPosition][southEastPosition] === WorldConstants.BlockType.GRASS) {
 						this.renderGrassBlock(southWestPosition, southEastPosition);
 					}
 				}
 			}
 		}
 
-		renderGrassBlock(southWestPosition, southEastPosition) {
+		renderGrassBlock(x: number, y: number) {
 			let diffX = WorldConstants.BLOCK_WIDTH / 2;
 			let diffY = WorldConstants.BLOCK_HEIGHT / 2;
-			let finalPositionY = WorldConstants.WORLD_ORIGIN_Y + (diffY * southWestPosition) + (diffY * southEastPosition);
+			let positionX = WorldConstants.WORLD_ORIGIN_X - (diffX * x) + (diffX * y);
+			let finalPositionY = WorldConstants.WORLD_ORIGIN_Y + (diffY * x) + (diffY * y);
 
-			let block = this.game.add.sprite(WorldConstants.WORLD_ORIGIN_X - (diffX * southWestPosition) + (diffX * southEastPosition), -100, "stage_block");
+			let block = this.game.add.sprite(positionX, -100, "stage_block");
 			this.game.add.tween(block).to({ y: finalPositionY }, this.rnd.integerInRange(1500, 2000), Phaser.Easing.Bounce.Out).start();
 		}
 

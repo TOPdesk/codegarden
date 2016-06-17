@@ -7,4 +7,9 @@ namespace WorldConstants {
 	export const WORLD_ORIGIN_Y: number = 100;
 
 	export const COORDINATE_TRANSFORMER: CoordinateTransformer = new CoordinateTransformer(BLOCK_WIDTH, BLOCK_HEIGHT);
+
+	export enum BlockType {
+		GRASS,
+		WATER
+	}
 }
