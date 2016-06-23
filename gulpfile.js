@@ -92,9 +92,9 @@ gulp.task('scripts', function() {
 			sortOutput: true
 		}))
 		.pipe(concat('script.min.js'))
-		.pipe(sourcemaps.write())
 		// .pipe(stripDebug())
 		.pipe(uglify())
+		.pipe(sourcemaps.write('../maps'))
 		.pipe(gulp.dest(dests.scripts))
 		.pipe(browserSync.reload({stream : true}));
 });
