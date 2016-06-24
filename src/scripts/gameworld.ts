@@ -11,6 +11,7 @@ class GameWorld {
 	constructor(public game: Phaser.Game) {}
 
 	public level: Level;
+	public gnome: Gnome;
 
 	/**
 	 * Loads the level with the provided name. It should be a JSON file that is loaded into the cache
@@ -19,12 +20,34 @@ class GameWorld {
 	loadLevel(levelName: string) {
 		let levelDefinition = this.game.cache.getJSON(levelName).LEVEL_DEFINITION;
 		this.level = new Level(levelDefinition);
+		this.level.renderStage(this.game);
+		this.gnome = new Gnome(this.game, 2, 2);
 	}
 
-	tryMove(gnome: Gnome) {
-		let newLocation = gnome.location.getNeighbor(gnome.direction);
+	/**
+	 * Rotate active gnome left
+	 */
+	rotateLeft() {
+		this.gnome.rotateLeft();
+	}
+
+	/**
+	 * Rotate active gnome right
+	 */
+	rotateRight() {
+		this.gnome.rotateRight();
+	}
+
+	tryMove() {
+		let newLocation = this.gnome.location.getNeighbor(this.gnome.direction);
 		if (this.level.pointIsPassable(newLocation)) {
-			gnome.location = newLocation;
+			this.gnome.location = newLocation;
+		}
+
+		let causeOfDeath = this.level.getPointCauseOfDeath(newLocation);
+		if (causeOfDeath !== null) {
+			this.gnome.die(causeOfDeath);
+			this.gnome = new Gnome(this.game, 2, 2);
 		}
 	}
 }
@@ -38,9 +61,22 @@ class Level {
 
 	pointIsPassable(point: Point): boolean {
 		if (this.layout[point.x] === undefined || this.layout[point.x][point.y] === undefined) {
-			return false;
+			return true;
 		}
+		//TODO some entities are impassable
 		return true;
+	}
+
+	getPointCauseOfDeath(point: Point): CauseOfDeath {
+		if (this.layout[point.x] === undefined || this.layout[point.x][point.y] === undefined) {
+			return CauseOfDeath.FALLING;
+		}
+
+		if (this.layout[point.x][point.y] === WorldConstants.BlockType.WATER) {
+			return CauseOfDeath.DROWNING;
+		}
+
+		return null;
 	}
 
 	renderStage(game: Phaser.Game) {
@@ -49,16 +85,15 @@ class Level {
 
 		for (let row = 0; row < rows; row++) {
 			for (let column = 0; column < columns; column++) {
-				this.renderBlock(game, column, row, this.layout[row][column]);
+				this.renderBlock(game, row, column, this.layout[row][column]);
 			}
 		}
 	}
 
 	renderBlock(game: Phaser.Game, x: number, y: number, blockType: WorldConstants.BlockType) {
 		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new Point(x, y));
-		let block = game.add.sprite(screenCoordinates.x, -100, this.getBlockSprite(blockType));
+		let block = game.add.sprite(screenCoordinates.x, screenCoordinates.y, this.getBlockSprite(blockType));
 		block.anchor.y = 1;
-		game.add.tween(block).to({ y: screenCoordinates.y }, game.rnd.integerInRange(1500, 2000), Phaser.Easing.Bounce.Out).start();
 	}
 
 	private getBlockSprite(blockType: WorldConstants.BlockType): string {

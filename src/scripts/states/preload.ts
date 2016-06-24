@@ -21,6 +21,7 @@ namespace States {
 
 			this.load.image("gnome_facing_nw", "assets/images/gnome_facing_nw.png");
 			this.load.image("gnome_facing_se", "assets/images/gnome_facing_se.png");
+			this.load.image("gnome_drowning", "assets/images/gnome_drowning.png");
 
 			this.load.image("control_left", "assets/images/control_left.png");
 			this.load.image("control_right", "assets/images/control_right.png");

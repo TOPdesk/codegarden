@@ -4,11 +4,8 @@
 class Gnome extends Phaser.Sprite {
 	private _location: Point;
 	set location(location: Point) {
-		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(location);
-		this.game.add.tween(this).to({
-			x: screenCoordinates.x + 60, y: screenCoordinates.y - 180,
-		}, 500, Phaser.Easing.Quartic.Out).start();
 		this._location = location;
+		this.tweenToLocation().start();
 	}
 	get location(): Point {
 		return this._location;
@@ -17,9 +14,12 @@ class Gnome extends Phaser.Sprite {
 	public direction: Direction = Direction.SE;
 
 	constructor(game: Phaser.Game, x: number, y: number) {
-		super(game, x, y, "gnome_facing_se");
-		this.anchor.x = 0.4;
-		this.location = new Point(2, 2);
+		super(game, 0, 0, "gnome_facing_se");
+		this.anchor.set(0.4, 1);
+		this._location = new Point(x, y);
+		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
+		this.x = screenCoordinates.x + 60;
+		this.y = screenCoordinates.y - 100;
 		game.add.existing(this);
 	}
 
@@ -33,9 +33,30 @@ class Gnome extends Phaser.Sprite {
 		this.faceDirection();
 	}
 
-	moveForward() {
-		let newLocation = this.location.getNeighbor(this.direction);
-		this.location = newLocation;
+	die(cause: CauseOfDeath) {
+		this.game.tweens.removeFrom(this);
+		let tween = this.tweenToLocation();
+
+		switch (cause) {
+			case (CauseOfDeath.FALLING):
+				tween.onChildComplete.add(() => {
+					if (this.location.x < 0 || this.location.y < 0) {
+						this.sendToBack();
+					}
+				});
+				tween.chain().to({y: this.y + 500, alpha: 0}, 500, Phaser.Easing.Quartic.In);
+				break;
+			case (CauseOfDeath.DROWNING):
+				tween.onChildComplete.add(() => {
+					this.loadTexture("gnome_drowning");
+					this.anchor.y = 0.7;
+				});
+				tween.to({alpha: 0}, 500, Phaser.Easing.Quartic.Out);
+				break;
+		}
+
+		tween.start();
+		tween.onComplete.add(() => this.destroy(false), this);
 	}
 
 	private faceDirection() {
@@ -58,4 +79,17 @@ class Gnome extends Phaser.Sprite {
 				break;
 		}
 	}
+
+	private tweenToLocation() {
+		let tween = this.game.add.tween(this);
+		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
+		return tween.to({
+			x: screenCoordinates.x + 60, y: screenCoordinates.y - 100,
+		}, 500, Phaser.Easing.Quartic.Out);
+	}
+}
+
+enum CauseOfDeath {
+	FALLING,
+	DROWNING
 }
