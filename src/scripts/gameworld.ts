@@ -53,6 +53,7 @@ class GameWorld {
 }
 
 class Level {
+	//Array access should be done in [y][x] order!
 	private layout: Array<Array<WorldConstants.BlockType>>;
 
 	constructor(levelDefinition) {
@@ -60,23 +61,29 @@ class Level {
 	}
 
 	pointIsPassable(point: Point): boolean {
-		if (this.layout[point.x] === undefined || this.layout[point.x][point.y] === undefined) {
-			return true;
-		}
 		//TODO some entities are impassable
 		return true;
 	}
 
 	getPointCauseOfDeath(point: Point): CauseOfDeath {
-		if (this.layout[point.x] === undefined || this.layout[point.x][point.y] === undefined) {
+		let block = this.getBlock(point);
+		if (block === null) {
 			return CauseOfDeath.FALLING;
 		}
 
-		if (this.layout[point.x][point.y] === WorldConstants.BlockType.WATER) {
+		if (block === WorldConstants.BlockType.WATER) {
 			return CauseOfDeath.DROWNING;
 		}
 
 		return null;
+	}
+
+	private getBlock(point: Point) {
+		if (this.layout[point.y] === undefined || this.layout[point.y][point.x] === undefined) {
+			return null;
+		}
+
+		return this.layout[point.y][point.x];
 	}
 
 	renderStage(game: Phaser.Game) {
@@ -85,7 +92,7 @@ class Level {
 
 		for (let row = 0; row < rows; row++) {
 			for (let column = 0; column < columns; column++) {
-				this.renderBlock(game, row, column, this.layout[row][column]);
+				this.renderBlock(game, column, row, this.layout[row][column]);
 			}
 		}
 	}
