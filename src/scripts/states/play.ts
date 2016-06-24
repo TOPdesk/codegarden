@@ -64,14 +64,9 @@ namespace States {
 
 		renderBlock(x: number, y: number, blockType: WorldConstants.BlockType) {
 			let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new Point(x, y));
-
-			let finalPositionY = screenCoordinates.y;
-			if (blockType === WorldConstants.BlockType.WATER) {
-				finalPositionY += 20;
-			}
-
 			let block = this.game.add.sprite(screenCoordinates.x, -100, this.getBlockSprite(blockType));
-			this.game.add.tween(block).to({ y: finalPositionY }, this.rnd.integerInRange(1500, 2000), Phaser.Easing.Bounce.Out).start();
+			block.anchor.y = 1;
+			this.game.add.tween(block).to({ y: screenCoordinates.y }, this.rnd.integerInRange(1500, 2000), Phaser.Easing.Bounce.Out).start();
 		}
 
 		private getBlockSprite(blockType: WorldConstants.BlockType): string {
