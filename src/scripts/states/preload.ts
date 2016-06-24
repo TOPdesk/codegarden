@@ -30,6 +30,13 @@ namespace States {
 			this.load.image("control_right", "assets/images/control_right.png");
 			this.load.image("control_forward", "assets/images/control_forward.png");
 
+			this.load.image("tree-1", "assets/images/element_tree-1.png");
+			this.load.image("tree-2", "assets/images/element_tree-2.png");
+			this.load.image("tree-3", "assets/images/element_tree-3.png");
+			this.load.image("tree-4", "assets/images/element_tree-4.png");
+			this.load.image("tree-5", "assets/images/element_tree-5.png");
+			this.load.image("tree-6", "assets/images/element_tree-6.png");
+
 			this.load.json("example_level", "assets/levels/example_level.json");
 		}
 

@@ -23,6 +23,7 @@ class GameWorld {
 		this.level.renderStage(this.game);
     this.gnome = this.level.renderGnome(this.game);
     this.level.renderObjects(this.game);
+    new Tree(this.game, 1, 4);
 	}
 
 
