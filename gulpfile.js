@@ -17,6 +17,7 @@ var browserSync = require('browser-sync');
 var del = require('del');
 var runSequence = require('run-sequence');
 var sourcemaps = require('gulp-sourcemaps');
+var jasmineBrowser = require('gulp-jasmine-browser');
 
 // definition of source paths
 var srcs = {
@@ -111,11 +112,6 @@ gulp.task('styles', function () {
 		.pipe(browserSync.reload({ stream: true }));
 });
 
-gulp.task('copy-test-results-html', function () {
-	return gulp.src('src/specs/SpecRunner.html')
-		.pipe(gulp.dest('build/specs/'));
-});
-
 gulp.task('ts-to-be-tested', function () {
 	return gulp.src('src/scripts/coordinates.ts')
 		.pipe(typescript({
@@ -136,8 +132,14 @@ gulp.task('ts-test', function () {
 		.pipe(gulp.dest('build/specs/'));
 });
 
+gulp.task('jasmine-browser', function() {
+	return gulp.src(['build/scripts/coordinates.js', 'build/specs/coordinates.spec.js'])
+  			.pipe(jasmineBrowser.specRunner())
+    		.pipe(jasmineBrowser.server({port: 8888}));
+});
+
 gulp.task('test', function (done) {
-	runSequence('clean', 'copy', 'copy-test-results-html', 'ts-to-be-tested', 'ts-test', 'browserSync', function() {
+	runSequence('clean', 'ts-to-be-tested', 'ts-test', 'jasmine-browser', function() {
 		done();
 	});
 });
