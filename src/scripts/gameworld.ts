@@ -21,8 +21,10 @@ class GameWorld {
 		let levelDefinition = this.game.cache.getJSON(levelName).LEVEL_DEFINITION;
 		this.level = new Level(levelDefinition);
 		this.level.renderStage(this.game);
-		this.gnome = new Gnome(this.game, 2, 2);
+    this.gnome = this.level.renderGnome(this.game);
+    this.level.renderObjects(this.game);
 	}
+
 
 	/**
 	 * Rotate active gnome left
@@ -62,7 +64,7 @@ class GameWorld {
 		let causeOfDeath = this.level.getPointCauseOfDeath(newLocation);
 		if (causeOfDeath !== null) {
 			this.gnome.die(causeOfDeath);
-			this.gnome = new Gnome(this.game, 2, 2);
+			this.gnome = new Gnome(this.game, this.level.spawnpoint.positionX, this.level.spawnpoint.positionY);
 		}
 	}
 }
@@ -73,6 +75,9 @@ class Level {
 
 	constructor(levelDefinition) {
 		this.layout = levelDefinition.layout;
+    this.spawnpoint = levelDefinition.spawnpoint;
+    this.gnome = levelDefinition.gnome;
+    this.objects = levelDefinition.objects;
 	}
 
 	pointIsPassable(point: Point): boolean {
@@ -115,6 +120,21 @@ class Level {
 			}
 		}
 	}
+
+  renderGnome(game: Phaser.game) : Gnome {
+    return new Gnome(game, this.gnome.positionX, this.gnome.positionY);
+  }
+
+  renderObjects(game: Phaser.game) {
+
+    for (let i = 0; i < this.objects.length; i++) {
+      console.log(this.objects[i]);
+    }
+  }
+
+  renderObject(type: String, x: number, y: number) {
+
+  }
 
 	renderBlock(game: Phaser.Game, x: number, y: number, blockType: WorldConstants.BlockType) {
 		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new Point(x, y));
