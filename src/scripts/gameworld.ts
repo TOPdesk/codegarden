@@ -38,6 +38,21 @@ class GameWorld {
 		this.gnome.rotateRight();
 	}
 
+	/**
+	 * Performs an action with the active gnome. Results depend on gnome location
+	 */
+	doGnomeAction() {
+		let actionLocation = this.gnome.location.getNeighbor(this.gnome.direction);
+		let block = this.level.getBlock(actionLocation);
+		if (this.gnome.wateringCan) {
+			this.level.waterBlock(actionLocation);
+			this.gnome.wateringCan = false;
+		}
+		else if (block === WorldConstants.BlockType.WATER) {
+			this.gnome.wateringCan = true;
+		}
+	}
+
 	tryMove() {
 		let newLocation = this.gnome.location.getNeighbor(this.gnome.direction);
 		if (this.level.pointIsPassable(newLocation)) {
@@ -78,12 +93,16 @@ class Level {
 		return null;
 	}
 
-	private getBlock(point: Point) {
+	getBlock(point: Point) {
 		if (this.layout[point.y] === undefined || this.layout[point.y][point.x] === undefined) {
 			return null;
 		}
 
 		return this.layout[point.y][point.x];
+	}
+
+	waterBlock(point: Point) {
+		//TODO when trees are implemented, this should water them
 	}
 
 	renderStage(game: Phaser.Game) {

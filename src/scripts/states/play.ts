@@ -18,9 +18,10 @@ namespace States {
 		}
 
 		drawButtons() {
-			this.drawButton(10, 10, "control_forward", () => this.gameWorld.tryMove());
+			this.drawButton(10, 10, "control_forward", this.gameWorld.tryMove);
 			this.drawButton(10, 94, "control_left", this.gameWorld.rotateLeft);
 			this.drawButton(10, 178, "control_right", this.gameWorld.rotateRight);
+			this.drawButton(10, 262, "control_action", this.gameWorld.doGnomeAction);
 		}
 
 		private drawButton(x: number, y: number, pictureKey, trigger: Function) {

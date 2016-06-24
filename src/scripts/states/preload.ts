@@ -19,10 +19,13 @@ namespace States {
 			this.load.image("stage_block", "assets/images/stage_block.png");
 			this.load.image("water_block", "assets/images/water_block.png");
 
-			this.load.image("gnome_facing_nw", "assets/images/gnome_facing_nw.png");
-			this.load.image("gnome_facing_se", "assets/images/gnome_facing_se.png");
+			this.load.image("gnome_regular_front", "assets/images/gnome_regular_front.png");
+			this.load.image("gnome_regular_back", "assets/images/gnome_regular_back.png");
+			this.load.image("gnome_water_front", "assets/images/gnome_water_front.png");
+			this.load.image("gnome_water_back", "assets/images/gnome_water_back.png");
 			this.load.image("gnome_drowning", "assets/images/gnome_drowning.png");
 
+			this.load.image("control_action", "assets/images/control_action.png");
 			this.load.image("control_left", "assets/images/control_left.png");
 			this.load.image("control_right", "assets/images/control_right.png");
 			this.load.image("control_forward", "assets/images/control_forward.png");

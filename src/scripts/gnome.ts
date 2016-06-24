@@ -1,6 +1,9 @@
 /// <reference path="coordinates.ts"/>
 /// <reference path="world_constants.ts"/>
 
+const GNOME_X_OFFSET = 60;
+const GNOME_Y_OFFSET = -65;
+
 class Gnome extends Phaser.Sprite {
 	private _location: Point;
 	set location(location: Point) {
@@ -13,13 +16,22 @@ class Gnome extends Phaser.Sprite {
 
 	public direction: Direction = Direction.SE;
 
+	private _wateringCan: boolean = false;
+	set wateringCan(wateringCan: boolean) {
+		this._wateringCan = wateringCan;
+		this.faceDirection();
+	}
+	get wateringCan(): boolean {
+		return this._wateringCan;
+	}
+
 	constructor(game: Phaser.Game, x: number, y: number) {
-		super(game, 0, 0, "gnome_facing_se");
-		this.anchor.set(0.4, 1);
+		super(game, 0, 0, "gnome_regular_front");
+		this.anchor.set(0.5, 1);
 		this._location = new Point(x, y);
 		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
-		this.x = screenCoordinates.x + 60;
-		this.y = screenCoordinates.y - 100;
+		this.x = screenCoordinates.x + GNOME_X_OFFSET;
+		this.y = screenCoordinates.y + GNOME_Y_OFFSET;
 		game.add.existing(this);
 	}
 
@@ -49,7 +61,6 @@ class Gnome extends Phaser.Sprite {
 			case (CauseOfDeath.DROWNING):
 				tween.onChildComplete.add(() => {
 					this.loadTexture("gnome_drowning");
-					this.anchor.y = 0.7;
 				});
 				tween.to({alpha: 0}, 500, Phaser.Easing.Quartic.Out);
 				break;
@@ -60,31 +71,24 @@ class Gnome extends Phaser.Sprite {
 	}
 
 	private faceDirection() {
-		switch (this.direction) {
-			case Direction.NW:
-				this.loadTexture("gnome_facing_nw");
-				this.scale.x = 1;
-				break;
-			case Direction.NE:
-				this.loadTexture("gnome_facing_nw");
-				this.scale.x = -1;
-				break;
-			case Direction.SE:
-				this.loadTexture("gnome_facing_se");
-				this.scale.x = 1;
-				break;
-			case Direction.SW:
-				this.loadTexture("gnome_facing_se");
-				this.scale.x = -1;
-				break;
+		if (this.direction === Direction.NE || this.direction === Direction.SW) {
+			this.scale.x = -1;
 		}
+		else {
+			this.scale.x = 1;
+		}
+
+		let facingFront = (this.direction === Direction.SE || this.direction === Direction.SW);
+		let gnomeTextureBase = (this.wateringCan ? "gnome_water" : "gnome_regular");
+		let gnomeTexture = gnomeTextureBase + (facingFront ? "_front" : "_back");
+		this.loadTexture(gnomeTexture);
 	}
 
 	private tweenToLocation() {
 		let tween = this.game.add.tween(this);
 		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
 		return tween.to({
-			x: screenCoordinates.x + 60, y: screenCoordinates.y - 100,
+			x: screenCoordinates.x + GNOME_X_OFFSET, y: screenCoordinates.y + GNOME_Y_OFFSET,
 		}, 500, Phaser.Easing.Quartic.Out);
 	}
 }
