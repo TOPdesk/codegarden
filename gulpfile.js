@@ -17,7 +17,6 @@ var browserSync = require('browser-sync');
 var del = require('del');
 var runSequence = require('run-sequence');
 var sourcemaps = require('gulp-sourcemaps');
-var jasmine = require('gulp-jasmine');
 
 // definition of source paths
 var srcs = {
