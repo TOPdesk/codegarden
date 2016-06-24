@@ -89,7 +89,8 @@ gulp.task('scripts', function () {
 		.pipe(typescript({
 			declarationFiles: true,
 			noExternalResolve: false,
-			sortOutput: true
+			sortOutput: true,
+			target: 'es5'
 		}))
 		.pipe(concat('script.min.js'))
 		// .pipe(stripDebug())
@@ -136,7 +137,7 @@ gulp.task('ts-test', function () {
 });
 
 gulp.task('test', function (done) {
-	runSequence('clean', 'copy', 'copy-test-results-html', 'ts-to-be-tested', 'ts-test', 'browserSync', function() { 
+	runSequence('clean', 'copy', 'copy-test-results-html', 'ts-to-be-tested', 'ts-test', 'browserSync', function() {
 		done();
 	});
 });

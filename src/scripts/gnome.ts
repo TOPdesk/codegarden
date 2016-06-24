@@ -2,12 +2,24 @@
 /// <reference path="world_constants.ts"/>
 
 class Gnome extends Phaser.Sprite {
-	private location: Point = new Point(0, 0);
-	private direction: Direction = Direction.SE;
+	private _location: Point;
+	set location(location: Point) {
+		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(location);
+		this.game.add.tween(this).to({
+			x: screenCoordinates.x + 60, y: screenCoordinates.y - 180,
+		}, 500, Phaser.Easing.Quartic.Out).start();
+		this._location = location;
+	}
+	get location(): Point {
+		return this._location;
+	}
+
+	public direction: Direction = Direction.SE;
 
 	constructor(game: Phaser.Game, x: number, y: number) {
 		super(game, x, y, "gnome_facing_se");
-		this.anchor.setTo(.4, .5);
+		this.anchor.x = 0.4;
+		this.location = new Point(2, 2);
 		game.add.existing(this);
 	}
 
@@ -24,10 +36,6 @@ class Gnome extends Phaser.Sprite {
 	moveForward() {
 		let newLocation = this.location.getNeighbor(this.direction);
 		this.location = newLocation;
-		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(newLocation);
-		this.game.add.tween(this).to({
-			x: screenCoordinates.x + 60, y: screenCoordinates.y,
-		}, 500, Phaser.Easing.Quartic.Out).start();
 	}
 
 	private faceDirection() {
