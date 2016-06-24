@@ -55,6 +55,7 @@ class Gnome extends Phaser.Sprite {
 					if (this.location.x < 0 || this.location.y < 0) {
 						this.sendToBack();
 					}
+					this.game.add.sound("falling_gnome_scream").play();
 				});
 				tween.chain().to({y: this.y + 500, alpha: 0}, 500, Phaser.Easing.Quartic.In);
 				break;
