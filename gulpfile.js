@@ -18,6 +18,7 @@ var del = require('del');
 var runSequence = require('run-sequence');
 var sourcemaps = require('gulp-sourcemaps');
 var jasmineBrowser = require('gulp-jasmine-browser');
+var karma = require("gulp-karma-runner");
 
 // definition of source paths
 var srcs = {
@@ -138,8 +139,21 @@ gulp.task('jasmine-browser', function() {
     		.pipe(jasmineBrowser.server({port: 8888}));
 });
 
+gulp.task('jasmine-karma', function () {
+	gulp.src([
+		'build/scripts/coordinates.js',
+		'build/specs/coordinates.spec.js'
+	], { 'read': false })
+	.pipe(karma.server({
+			'singleRun': true,
+			'frameworks': ['jasmine'],
+			'browsers': ['PhantomJS']
+		})
+    );
+});
+
 gulp.task('test', function (done) {
-	runSequence('clean', 'ts-to-be-tested', 'ts-test', 'jasmine-browser', function() {
+	runSequence('clean', 'ts-to-be-tested', 'ts-test', 'jasmine-karma', function() {
 		done();
 	});
 });
