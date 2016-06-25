@@ -141,8 +141,8 @@ gulp.task('jasmine-browser', function() {
 
 gulp.task('jasmine-karma', function () {
 	gulp.src([
-		'build/scripts/coordinates.js',
-		'build/specs/coordinates.spec.js'
+		'build/scripts/**/*.js',
+		'build/specs/**/*.spec.js'
 	], { 'read': false })
 	.pipe(karma.server({
 			'singleRun': true,
