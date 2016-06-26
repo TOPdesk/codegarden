@@ -11,19 +11,19 @@ function comparePoints(expected: Point, actual: Point): void {
 }
 
 describe("Neighbors of point x=1, y=1", () => {
-    const POINT: Point = new Point(1, 1);
+    const POINT: MapPoint = new MapPoint(1, 1);
     
     it("NW is x=0, y=1", () => {
-        comparePoints(new Point(0, 1), POINT.getNeighbor(Direction.NW));
+        comparePoints(new MapPoint(0, 1), POINT.getNeighbor(Direction.NW));
     });
     it("NE is x=1, y=0", () => {
-        comparePoints(new Point(1, 0), POINT.getNeighbor(Direction.NE));
+        comparePoints(new MapPoint(1, 0), POINT.getNeighbor(Direction.NE));
     });
     it("SE is x=2, y=1", () => {
-        comparePoints(new Point(2, 1), POINT.getNeighbor(Direction.SE));
+        comparePoints(new MapPoint(2, 1), POINT.getNeighbor(Direction.SE));
     });
     it("SW is x=1, y=2", () => {
-        comparePoints(new Point(1, 2), POINT.getNeighbor(Direction.SW));
+        comparePoints(new MapPoint(1, 2), POINT.getNeighbor(Direction.SW));
     });
 });
 
@@ -104,18 +104,18 @@ describe("CoordinateTransformer", () => {
     let transformer: CoordinateTransformer = new CoordinateTransformer(25, 50);
 
     it("Returns correct screen coordinates on map coordinates(x=0, y=0)", () => {
-        comparePoints(transformer.map_to_screen(new Point(0, 0)), new Point(0, 0));
+        comparePoints(transformer.map_to_screen(new MapPoint(0, 0)), new ScreenPoint(0, 0));
     });
     it("Returns correct screen coordinates on map coordinates(x=0, y=1)", () => {
-        comparePoints(transformer.map_to_screen(new Point(0, 1)), new Point(-12.5, 25));
+        comparePoints(transformer.map_to_screen(new MapPoint(0, 1)), new ScreenPoint(-12.5, 25));
     });
     it("Returns correct screen coordinates on map coordinates(x=1, y=0)", () => {
-        comparePoints(transformer.map_to_screen(new Point(1, 0)), new Point(12.5, 25));
+        comparePoints(transformer.map_to_screen(new MapPoint(1, 0)), new ScreenPoint(12.5, 25));
     });
     it("Returns correct screen coordinates on map coordinates(x=2, y=1)", () => {
-        comparePoints(transformer.map_to_screen(new Point(2, 1)), new Point(12.5, 75));
+        comparePoints(transformer.map_to_screen(new MapPoint(2, 1)), new ScreenPoint(12.5, 75));
     });
     it("Returns correct screen coordinates on map coordinates(x=0, y=2)", () => {
-        comparePoints(transformer.map_to_screen(new Point(0, 2)), new Point(-25, 50));
+        comparePoints(transformer.map_to_screen(new MapPoint(0, 2)), new ScreenPoint(-25, 50));
     });
 });

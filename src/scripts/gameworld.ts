@@ -2,13 +2,14 @@
 
 /// <reference path="coordinates.ts"/>
 /// <reference path="gnome.ts"/>
+/// <reference path="tree.ts"/>
 /// <reference path="world_constants.ts"/>
 
 /**
  * This class is responsible for keeping track of the world state and handling collisions.
  */
 class GameWorld {
-	constructor(public game: Phaser.Game) {}
+	constructor(public game: Phaser.Game) { }
 
 	public level: Level;
 	public gnome: Gnome;
@@ -21,11 +22,10 @@ class GameWorld {
 		let levelDefinition = this.game.cache.getJSON(levelName).LEVEL_DEFINITION;
 		this.level = new Level(levelDefinition);
 		this.level.renderStage(this.game);
-    this.gnome = this.level.renderGnome(this.game);
-    this.level.renderObjects(this.game);
-    new Tree(this.game, 1, 4);
+		this.gnome = this.level.renderGnome(this.game);
+		this.level.renderObjects(this.game);
+		new Tree(this.game, 1, 4);
 	}
-
 
 	/**
 	 * Rotate active gnome left
@@ -73,12 +73,15 @@ class GameWorld {
 class Level {
 	//Array access should be done in [y][x] order!
 	private layout: Array<Array<WorldConstants.BlockType>>;
+	spawnpoint: any;
+	private gnome: any;
+	private objects: any;
 
 	constructor(levelDefinition) {
 		this.layout = levelDefinition.layout;
-    this.spawnpoint = levelDefinition.spawnpoint;
-    this.gnome = levelDefinition.gnome;
-    this.objects = levelDefinition.objects;
+		this.spawnpoint = levelDefinition.spawnpoint;
+		this.gnome = levelDefinition.gnome;
+		this.objects = levelDefinition.objects;
 	}
 
 	pointIsPassable(point: Point): boolean {
@@ -86,7 +89,7 @@ class Level {
 		return true;
 	}
 
-	getPointCauseOfDeath(point: Point): CauseOfDeath {
+	getPointCauseOfDeath(point: MapPoint): CauseOfDeath {
 		let block = this.getBlock(point);
 		if (block === null) {
 			return CauseOfDeath.FALLING;
@@ -99,7 +102,7 @@ class Level {
 		return null;
 	}
 
-	getBlock(point: Point) {
+	getBlock(point: MapPoint) {
 		if (this.layout[point.y] === undefined || this.layout[point.y][point.x] === undefined) {
 			return null;
 		}
@@ -107,7 +110,7 @@ class Level {
 		return this.layout[point.y][point.x];
 	}
 
-	waterBlock(point: Point) {
+	waterBlock(point: MapPoint) {
 		//TODO when trees are implemented, this should water them
 	}
 
@@ -122,23 +125,21 @@ class Level {
 		}
 	}
 
-  renderGnome(game: Phaser.game) : Gnome {
-    return new Gnome(game, this.gnome.positionX, this.gnome.positionY);
-  }
+	renderGnome(game: Phaser.Game): Gnome {
+		return new Gnome(game, this.gnome.positionX, this.gnome.positionY);
+	}
 
-  renderObjects(game: Phaser.game) {
+	renderObjects(game: Phaser.Game) {
 
-    for (let i = 0; i < this.objects.length; i++) {
-      console.log(this.objects[i]);
-    }
-  }
+		for (let i = 0; i < this.objects.length; i++) {
+			console.log(this.objects[i]);
+		}
+	}
 
-  renderObject(type: String, x: number, y: number) {
-
-  }
+	renderObject(type: String, x: number, y: number) {}
 
 	renderBlock(game: Phaser.Game, x: number, y: number, blockType: WorldConstants.BlockType) {
-		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new Point(x, y));
+		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new MapPoint(x, y));
 		let block = game.add.sprite(screenCoordinates.x, screenCoordinates.y, this.getBlockSprite(blockType));
 		block.anchor.y = 1;
 	}

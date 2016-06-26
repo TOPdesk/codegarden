@@ -19,13 +19,22 @@ let q: Point = ct.map_to_screen(p);
 document.body.innerHTML = q.x + " " + q.y;
 */
 
-class Point {
+interface Point {
+	x: number;
+	y: number;
+}
+
+class MapPoint implements Point {
 	constructor(public x: number, public y: number) {}
 
 	getNeighbor(direction: Direction) {
-		return new Point(this.x + Direction.getXDelta(direction), this.y + Direction.getYDelta(direction));
+		return new MapPoint(this.x + Direction.getXDelta(direction), this.y + Direction.getYDelta(direction));
 	}
 };
+
+class ScreenPoint implements Point {
+	constructor(public x: number, public y: number) {}
+}
 
 enum Direction {
 	//These should be in ascending order of right rotation!
@@ -75,15 +84,15 @@ class CoordinateTransformer {
 		this.halfTileHeight = tileHeight / 2;
 	}
 
-	map_to_screen(map: Point): Point {
+	map_to_screen(map: MapPoint): ScreenPoint {
 		let x = (map.x - map.y) * this.halfTileWidth;
 		let y = (map.x + map.y) * this.halfTileHeight;
-		return new Point(x, y);
+		return new MapPoint(x, y);
 	}
 
-	screen_to_map(screen: Point): Point {
+	screen_to_map(screen: ScreenPoint): MapPoint {
 		let x = (screen.x / this.halfTileWidth + screen.y / this.halfTileHeight) / 2;
 		let y = (screen.y / this.halfTileHeight - screen.x / this.halfTileWidth) / 2;
-		return new Point(x, y);
+		return new MapPoint(x, y);
 	}
 }
