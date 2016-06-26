@@ -19,6 +19,9 @@ Then finally, run the following command in the command line interface to start a
 
 Changes to the sourcecode will automatically cause the browser to refresh, but Gulp will stop running if you save a broken file. You can just run it again with 'gulp'.
 
+To run tests run:
+- gulp test
+
 ### Debian specific instructions
 
 Just as the general recipe above, but install the npm and nodejs-legacy
