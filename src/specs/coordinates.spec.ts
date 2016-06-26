@@ -1,17 +1,17 @@
 /// <reference path="../scripts/coordinates.ts" />
 /// <reference path="../libs/dt-jasmine/jasmine.d.ts" />
 
+function comparePoints(expected: Point, actual: Point): void {
+    expect(actual).toEqual(
+        jasmine.objectContaining({
+            x: expected.x,
+            y: expected.y
+        })
+    );
+}
+
 describe("Neighbors of point x=1, y=1", () => {
     const POINT: Point = new Point(1, 1);
-    
-    function comparePoints(expected: Point, actual: Point): void {
-         expect(actual).toEqual(
-            jasmine.objectContaining({
-                x: expected.x,
-                y: expected.y
-            })
-        );
-    }
     
     it("NW is x=0, y=1", () => {
         comparePoints(new Point(0, 1), POINT.getNeighbor(Direction.NW));
@@ -67,5 +67,55 @@ describe("Left rotation of Direction starting from NW", () => {
     it("then it's NW again", () => {
         direction = Direction.rotateLeft(direction);
         expect(direction).toBe(Direction.NW); 
+    });
+});
+
+describe("X delta when moving to Directions", () => {
+    it("is -1 when NW", () => {
+        expect(Direction.getXDelta(Direction.NW)).toBe(-1);
+    });
+    it("is 0 when NE", () => {
+        expect(Direction.getXDelta(Direction.NE)).toBe(0);
+    });
+    it("is 1 when SE", () => {
+        expect(Direction.getXDelta(Direction.SE)).toBe(1);
+    });
+    it("is 0 when SW", () => {
+        expect(Direction.getXDelta(Direction.SW)).toBe(0);
+    });
+});
+
+describe("Y delta when moving to Directions", () => {
+    it("is 0 when NW", () => {
+        expect(Direction.getYDelta(Direction.NW)).toBe(0);
+    });
+    it("is -1 when NE", () => {
+        expect(Direction.getYDelta(Direction.NE)).toBe(-1);
+    });
+    it("is 0 when SE", () => {
+        expect(Direction.getYDelta(Direction.SE)).toBe(0);
+    });
+    it("is 1 when SW", () => {
+        expect(Direction.getYDelta(Direction.SW)).toBe(1);
+    });
+});
+
+describe("CoordinateTransformer", () => {
+    let transformer: CoordinateTransformer = new CoordinateTransformer(25, 50);
+
+    it("Returns correct screen coordinates on map coordinates(x=0, y=0)", () => {
+        comparePoints(transformer.map_to_screen(new Point(0, 0)), new Point(0, 0));
+    });
+    it("Returns correct screen coordinates on map coordinates(x=0, y=1)", () => {
+        comparePoints(transformer.map_to_screen(new Point(0, 1)), new Point(-12.5, 25));
+    });
+    it("Returns correct screen coordinates on map coordinates(x=1, y=0)", () => {
+        comparePoints(transformer.map_to_screen(new Point(1, 0)), new Point(12.5, 25));
+    });
+    it("Returns correct screen coordinates on map coordinates(x=2, y=1)", () => {
+        comparePoints(transformer.map_to_screen(new Point(2, 1)), new Point(12.5, 75));
+    });
+    it("Returns correct screen coordinates on map coordinates(x=0, y=2)", () => {
+        comparePoints(transformer.map_to_screen(new Point(0, 2)), new Point(-25, 50));
     });
 });

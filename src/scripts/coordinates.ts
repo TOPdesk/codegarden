@@ -67,8 +67,8 @@ namespace Direction {
 }
 
 class CoordinateTransformer {
-	halfTileWidth: number;
-	halfTileHeight: number;
+	private halfTileWidth: number;
+	private halfTileHeight: number;
 
 	constructor(tileWidth, tileHeight) {
 		this.halfTileWidth = tileWidth / 2;
@@ -81,7 +81,7 @@ class CoordinateTransformer {
 		return new Point(x, y);
 	}
 
-	screen_to_map(screen: Point) {
+	screen_to_map(screen: Point): Point {
 		let x = (screen.x / this.halfTileWidth + screen.y / this.halfTileHeight) / 2;
 		let y = (screen.y / this.halfTileHeight - screen.x / this.halfTileWidth) / 2;
 		return new Point(x, y);
