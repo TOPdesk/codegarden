@@ -30,6 +30,10 @@ class MapPoint implements Point {
 	getNeighbor(direction: Direction) {
 		return new MapPoint(this.x + Direction.getXDelta(direction), this.y + Direction.getYDelta(direction));
 	}
+
+  toString() {
+    return "MapPoint: " + this.x + "-" + this.y;
+  }
 };
 
 class ScreenPoint implements Point {

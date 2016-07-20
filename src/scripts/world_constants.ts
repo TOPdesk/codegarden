@@ -10,4 +10,9 @@ namespace WorldConstants {
 		GRASS,
 		WATER
 	}
+
+	export enum ObjectType {
+		NOTHING,
+		TREE
+	}
 }
