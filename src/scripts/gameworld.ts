@@ -47,8 +47,9 @@ class GameWorld {
 		let actionLocation = this.gnome.location.getNeighbor(this.gnome.direction);
 		let block = this.level.getBlock(actionLocation);
     if (this.gnome.wateringCan) {
-			this.level.waterObject(actionLocation);
-			this.gnome.wateringCan = false;
+			if (this.level.waterObject(actionLocation)) {
+        this.gnome.wateringCan = false;
+      }
 		}
 		else if (block === WorldConstants.BlockType.WATER) {
 			this.gnome.wateringCan = true;
@@ -115,8 +116,15 @@ class Level {
   }
 
 	waterObject(point: MapPoint) {
-    var object = this.objectMap.get(point.toString()));
-    object.addWater();
+    var object = this.objectMap.get(point.toString());
+    if (object) {
+      if (object.addWater) {
+        object.addWater();
+      }
+      return true;
+    }
+
+    return false;
 	}
 
 	renderStage(game: Phaser.Game) {
