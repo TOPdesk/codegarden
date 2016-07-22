@@ -16,12 +16,12 @@ class GnomeCode {
 	 * Executes the next command.
 	 */
 	executeNextCommand(gameWorld: GameWorld) {
-		if (this.futureCommandStack.length === 0) {
+		let command = this.futureCommandStack.pop();
+		if (command === undefined) {
 			gameWorld.killGnome(CauseOfDeath.CODE_RAN_OUT);
 			return;
 		}
 
-		let command = this.futureCommandStack.pop();
 		switch (command.type) {
 			case CommandType.WALK:
 				gameWorld.tryMove();
