@@ -37,6 +37,9 @@ namespace States {
 			this.load.image("tree-5", "assets/images/element_tree-5.png");
 			this.load.image("tree-6", "assets/images/element_tree-6.png");
 
+			this.load.image("waterdrop_empty", "assets/images/waterdrop_empty.png");
+			this.load.image("waterdrop_filled", "assets/images/waterdrop_filled.png");
+
 			this.load.audio("falling_gnome_scream", "assets/sound/wilhelm_scream.ogg");
 			this.load.json("example_level", "assets/levels/example_level.json");
 		}
