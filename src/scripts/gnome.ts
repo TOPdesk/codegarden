@@ -1,5 +1,6 @@
 /// <reference path="../libs/phaser/typescript/phaser.d.ts"/>
 /// <reference path="coordinates.ts"/>
+/// <reference path="gnome_code.ts"/>
 /// <reference path="world_constants.ts"/>
 
 const GNOME_X_OFFSET = 60;
@@ -25,6 +26,8 @@ class Gnome extends Phaser.Sprite {
 	get wateringCan(): boolean {
 		return this._wateringCan;
 	}
+
+	gnomeCode: GnomeCode;
 
 	constructor(game: Phaser.Game, x: number, y: number) {
 		super(game, 0, 0, "gnome_regular_front");
@@ -97,5 +100,6 @@ class Gnome extends Phaser.Sprite {
 
 enum CauseOfDeath {
 	FALLING,
-	DROWNING
+	DROWNING,
+	CODE_RAN_OUT
 }

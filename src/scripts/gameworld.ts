@@ -64,9 +64,13 @@ class GameWorld {
 
 		let causeOfDeath = this.level.getPointCauseOfDeath(newLocation);
 		if (causeOfDeath !== null) {
-			this.gnome.die(causeOfDeath);
-			this.gnome = new Gnome(this.game, this.level.spawnpoint.positionX, this.level.spawnpoint.positionY);
+			this.killGnome(causeOfDeath);
 		}
+	}
+
+	killGnome(causeOfDeath: CauseOfDeath) {
+		this.gnome.die(causeOfDeath);
+		this.gnome = new Gnome(this.game, this.level.spawnpoint.positionX, this.level.spawnpoint.positionY);
 	}
 }
 

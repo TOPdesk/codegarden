@@ -1,5 +1,6 @@
 /// <reference path="../../libs/phaser/typescript/phaser.d.ts"/>
 /// <reference path="../gnome.ts"/>
+/// <reference path="../gnome_code.ts"/>
 /// <reference path="../gameworld.ts"/>
 
 namespace States {
@@ -8,13 +9,38 @@ namespace States {
 
 	export class PlayState extends Phaser.State {
 		private gameWorld: GameWorld;
+		private gnomeCode: GnomeCode;
 
 		create() {
 			this.game.camera.setPosition(CAMERA_OFFSET_X, CAMERA_OFFSET_Y);
 			this.gameWorld = new GameWorld(this.game);
 			this.gameWorld.loadLevel("example_level");
 
+			let exampleRoutine: Array<Command> = [
+				new Command(CommandType.ACT),
+				new Command(CommandType.RIGHT),
+				new Command(CommandType.WALK),
+				new Command(CommandType.RIGHT),
+				new Command(CommandType.ACT),
+				new Command(CommandType.LEFT),
+				new Command(CommandType.WALK)
+			];
+			exampleRoutine.push(new Command(CommandType.WALK));
+			let exampleCode: { [key: string]: Array<Command> } = { main: exampleRoutine };
+			this.gnomeCode = new GnomeCode(exampleCode);
+
 			this.drawButtons();
+
+			let timer = this.game.time.create();
+			timer.loop(1000, () => {
+				if (this.gameWorld.gnome.gnomeCode) {
+					this.gameWorld.gnome.gnomeCode.executeNextCommand(this.gameWorld);
+				}
+				else {
+					this.gameWorld.gnome.gnomeCode = new GnomeCode(exampleCode);
+				}
+			});
+			timer.start();
 		}
 
 		drawButtons() {
