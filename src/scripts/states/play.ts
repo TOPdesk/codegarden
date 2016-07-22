@@ -20,10 +20,13 @@ namespace States {
 				new Command(CommandType.ACT),
 				new Command(CommandType.RIGHT),
 				new Command(CommandType.WALK),
+				new Command(CommandType.LEFT),
+				new Command(CommandType.ACT),
 				new Command(CommandType.RIGHT),
 				new Command(CommandType.ACT),
-				new Command(CommandType.LEFT),
-				new Command(CommandType.WALK)
+				new Command(CommandType.RIGHT),
+				new Command(CommandType.ACT),
+				new Command(CommandType.CALL_ROUTINE, ["main"]),
 			];
 			exampleRoutine.push(new Command(CommandType.WALK));
 			let exampleCode: { [key: string]: Array<Command> } = { main: exampleRoutine };
@@ -32,7 +35,7 @@ namespace States {
 			this.drawButtons();
 
 			let timer = this.game.time.create();
-			timer.loop(1000, () => {
+			timer.loop(200, () => {
 				if (this.gameWorld.gnome.gnomeCode) {
 					this.gameWorld.gnome.gnomeCode.executeNextCommand(this.gameWorld);
 				}

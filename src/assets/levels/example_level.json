@@ -24,6 +24,18 @@
           "positionX": 1,
           "positionY": 4,
           "color" : "default"
+      },
+	  {
+          "type" : "TREE",
+          "positionX": 0,
+          "positionY": 4,
+          "color" : "default"
+      },
+	  {
+          "type" : "TREE",
+          "positionX": 3,
+          "positionY": 4,
+          "color" : "default"
       }
     ]
 	}
