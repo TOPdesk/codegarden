@@ -6,9 +6,9 @@ and back.
 Example tile coordinate in ASCII art:
 
   NW      (0,0)      NE
-     (0,1)     (1,0)
+	 (0,1)     (1,0)
 (0,2)     (1,1)     (2,0)
-     (1,2)     (2,1)
+	 (1,2)     (2,1)
   SW      (2,2)      SE
 
 Example of usage:
@@ -25,19 +25,19 @@ interface Point {
 }
 
 class MapPoint implements Point {
-	constructor(public x: number, public y: number) {}
+	constructor(public x: number, public y: number) { }
 
 	getNeighbor(direction: Direction) {
 		return new MapPoint(this.x + Direction.getXDelta(direction), this.y + Direction.getYDelta(direction));
 	}
 
-  toString() {
-    return "MapPoint: " + this.x + "-" + this.y;
-  }
+	toString() {
+		return "MapPoint: " + this.x + "-" + this.y;
+	}
 };
 
 class ScreenPoint implements Point {
-	constructor(public x: number, public y: number) {}
+	constructor(public x: number, public y: number) { }
 }
 
 enum Direction {

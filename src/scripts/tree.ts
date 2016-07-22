@@ -49,9 +49,9 @@ class Tree extends Phaser.Sprite {
 		game.add.existing(this);
 	}
 
-  addWater() {
-    this.waterContent = this.waterContent + 1;
-  }
+	addWater() {
+		this.waterContent = this.waterContent + 1;
+	}
 
 	updateRequiredWater() {
 		if (this.requiredWater === MAX_TREE_LEVEL) {

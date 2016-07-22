@@ -46,10 +46,10 @@ class GameWorld {
 	doGnomeAction() {
 		let actionLocation = this.gnome.location.getNeighbor(this.gnome.direction);
 		let block = this.level.getBlock(actionLocation);
-    if (this.gnome.wateringCan) {
+		if (this.gnome.wateringCan) {
 			if (this.level.waterObject(actionLocation)) {
-        this.gnome.wateringCan = false;
-      }
+				this.gnome.wateringCan = false;
+			}
 		}
 		else if (block === WorldConstants.BlockType.WATER) {
 			this.gnome.wateringCan = true;
@@ -76,7 +76,7 @@ class Level {
 	spawnpoint: any;
 	private gnome: any;
 	private objects: any;
-  private objectMap = new Map();
+	private objectMap = new Map();
 
 	constructor(levelDefinition) {
 		this.layout = levelDefinition.layout;
@@ -111,20 +111,20 @@ class Level {
 		return this.layout[point.y][point.x];
 	}
 
-  getObject(point: MapPoint) {
-    return this.objectMap.get(point.toString());
-  }
+	getObject(point: MapPoint) {
+		return this.objectMap.get(point.toString());
+	}
 
 	waterObject(point: MapPoint) {
-    var object = this.objectMap.get(point.toString());
-    if (object) {
-      if (object.addWater) {
-        object.addWater();
-      }
-      return true;
-    }
+		let object = this.objectMap.get(point.toString());
+		if (object) {
+			if (object.addWater) {
+				object.addWater();
+			}
+			return true;
+		}
 
-    return false;
+		return false;
 	}
 
 	renderStage(game: Phaser.Game) {
@@ -143,18 +143,18 @@ class Level {
 	}
 
 	renderObjects(game: Phaser.Game) {
-    for (let i = 0; i < this.objects.length; i++) {
-      let object = this.objects[i];
-      let objectInstance = this.renderObject(game, object.type, object.positionX, object.positionY)
-      this.objectMap.set(new MapPoint(object.positionX, object.positionY).toString(), objectInstance);
+		for (let i = 0; i < this.objects.length; i++) {
+			let object = this.objects[i];
+			let objectInstance = this.renderObject(game, object.type, object.positionX, object.positionY)
+			this.objectMap.set(new MapPoint(object.positionX, object.positionY).toString(), objectInstance);
 		}
 	}
 
 	renderObject(game: Phaser.Game, type: String, x: number, y: number) {
-    if (type === "TREE") {
-      return new Tree(game, x, y);
-    }
-  }
+		if (type === "TREE") {
+			return new Tree(game, x, y);
+		}
+	}
 
 	renderBlock(game: Phaser.Game, x: number, y: number, blockType: WorldConstants.BlockType) {
 		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new MapPoint(x, y));
