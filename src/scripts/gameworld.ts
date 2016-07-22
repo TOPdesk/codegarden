@@ -76,7 +76,7 @@ class Level {
 	spawnpoint: any;
 	private gnome: any;
 	private objects: any;
-	private objectMap = new Map();
+	private objectMap = {};
 
 	constructor(levelDefinition) {
 		this.layout = levelDefinition.layout;
@@ -86,8 +86,8 @@ class Level {
 	}
 
 	pointIsPassable(point: Point): boolean {
-		//TODO some entities are impassable
-		return true;
+		//All objects are impassable for now
+		return !(point.toString() in this.objectMap);
 	}
 
 	getPointCauseOfDeath(point: MapPoint): CauseOfDeath {
@@ -112,15 +112,13 @@ class Level {
 	}
 
 	getObject(point: MapPoint) {
-		return this.objectMap.get(point.toString());
+		return this.objectMap[point.toString()];
 	}
 
 	waterObject(point: MapPoint) {
-		let object = this.objectMap.get(point.toString());
-		if (object) {
-			if (object.addWater) {
-				object.addWater();
-			}
+		let object = this.objectMap[point.toString()];
+		if (object && object.addWater) {
+			object.addWater();
 			return true;
 		}
 
@@ -145,12 +143,12 @@ class Level {
 	renderObjects(game: Phaser.Game) {
 		for (let i = 0; i < this.objects.length; i++) {
 			let object = this.objects[i];
-			let objectInstance = this.renderObject(game, object.type, object.positionX, object.positionY)
-			this.objectMap.set(new MapPoint(object.positionX, object.positionY).toString(), objectInstance);
+			let objectInstance = this.renderObject(game, object.type, object.positionX, object.positionY);
+			this.objectMap[new MapPoint(object.positionX, object.positionY).toString()] = objectInstance;
 		}
 	}
 
-	renderObject(game: Phaser.Game, type: String, x: number, y: number) {
+	renderObject(game: Phaser.Game, type: String, x: number, y: number): Phaser.Sprite {
 		if (type === "TREE") {
 			return new Tree(game, x, y);
 		}
