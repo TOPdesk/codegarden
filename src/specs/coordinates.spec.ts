@@ -13,16 +13,16 @@ function comparePoints(expected: Point, actual: Point): void {
 describe("Neighbors of point x=1, y=1", () => {
 	const POINT: MapPoint = new MapPoint(1, 1);
 
-	it("NW is x=0, y=1", () => {
+	it("is x=0, y=1 at NW", () => {
 		comparePoints(new MapPoint(0, 1), POINT.getNeighbor(Direction.NW));
 	});
-	it("NE is x=1, y=0", () => {
+	it("is x=1, y=0 at NE", () => {
 		comparePoints(new MapPoint(1, 0), POINT.getNeighbor(Direction.NE));
 	});
-	it("SE is x=2, y=1", () => {
+	it("is x=2, y=1 at SE", () => {
 		comparePoints(new MapPoint(2, 1), POINT.getNeighbor(Direction.SE));
 	});
-	it("SW is x=1, y=2", () => {
+	it("is x=1, y=2 at SW", () => {
 		comparePoints(new MapPoint(1, 2), POINT.getNeighbor(Direction.SW));
 	});
 });
@@ -30,19 +30,19 @@ describe("Neighbors of point x=1, y=1", () => {
 describe("Right rotation of Direction starting from NW", () => {
 	let direction: Direction = Direction.NW;
 
-	it("first it's NE ", () => {
+	it("is first NE ", () => {
 		direction = Direction.rotateRight(direction);
 		expect(direction).toBe(Direction.NE);
 	});
-	it("then it's SE ", () => {
+	it("is SE then", () => {
 		direction = Direction.rotateRight(direction);
 		expect(direction).toBe(Direction.SE);
 	});
-	it("then it's SW ", () => {
+	it("is SW then", () => {
 		direction = Direction.rotateRight(direction);
 		expect(direction).toBe(Direction.SW);
 	});
-	it("then it's NW again", () => {
+	it("is NW again", () => {
 		direction = Direction.rotateRight(direction);
 		expect(direction).toBe(Direction.NW);
 	});
@@ -52,19 +52,19 @@ describe("Left rotation of Direction starting from NW", () => {
 	let direction: Direction;
 	beforeAll(() => direction = Direction.NW);
 
-	it("first it's SW ", () => {
+	it("is first SW ", () => {
 		direction = Direction.rotateLeft(direction);
 		expect(direction).toBe(Direction.SW);
 	});
-	it("then it's SE ", () => {
+	it("is SE then", () => {
 		direction = Direction.rotateLeft(direction);
 		expect(direction).toBe(Direction.SE);
 	});
-	it("then it's NE ", () => {
+	it("is NE then", () => {
 		direction = Direction.rotateLeft(direction);
 		expect(direction).toBe(Direction.NE);
 	});
-	it("then it's NW again", () => {
+	it("is NW again", () => {
 		direction = Direction.rotateLeft(direction);
 		expect(direction).toBe(Direction.NW);
 	});
