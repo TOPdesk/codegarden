@@ -9,7 +9,6 @@ namespace States {
 
 	export class PlayState extends Phaser.State {
 		private gameWorld: GameWorld;
-		private spawnedGnomeRoutine: { [key: string]: Array<Command> };
 		private gnomeCodeGraphics: Phaser.Graphics;
 		private gnomeCodeButtonElements: Phaser.Group;
 
@@ -25,31 +24,20 @@ namespace States {
 				new Command(CommandType.WALK),
 				new Command(CommandType.WALK),
 			];
-			this.spawnedGnomeRoutine = { main: exampleCode };
+			this.gameWorld.spawnedGnomeRoutine = { main: exampleCode };
 
 			this.gnomeCodeGraphics = this.game.add.graphics(20, 500);
 			this.gnomeCodeGraphics.fixedToCamera = true;
 			this.gnomeCodeButtonElements = this.game.add.group();
 			this.redrawGnomeCodeGui();
 			this.drawButtons();
-
-			let timer = this.game.time.create();
-			timer.loop(200, () => {
-				if (this.gameWorld.gnome.gnomeCode) {
-					this.gameWorld.gnome.gnomeCode.executeNextCommand(this.gameWorld);
-				}
-				else {
-					this.gameWorld.gnome.gnomeCode = new GnomeCode(this.spawnedGnomeRoutine);
-				}
-			});
-			timer.start();
 		}
 
 		redrawGnomeCodeGui() {
 			this.gnomeCodeGraphics.clear();
-			this.gnomeCodeButtonElements.removeChildren();
+			this.gnomeCodeButtonElements.removeAll(true);
 
-			let numberOfCommands = this.spawnedGnomeRoutine["main"].length;
+			let numberOfCommands = this.gameWorld.spawnedGnomeRoutine["main"].length;
 			if (numberOfCommands < 1) {
 				return;
 			}
@@ -61,7 +49,7 @@ namespace States {
 			this.gnomeCodeGraphics.drawRoundedRect(0, 0, rectangleWidth, rectangleHeight, 5);
 			this.gnomeCodeGraphics.endFill();
 
-			this.spawnedGnomeRoutine["main"].forEach((command, index, array) => this.drawGnomeRoutineCommand(command, index, array));
+			this.gameWorld.spawnedGnomeRoutine["main"].forEach((command, index, array) => this.drawGnomeRoutineCommand(command, index, array));
 		}
 
 		drawGnomeRoutineCommand(command: Command, index: number, array: Command[]) {
@@ -80,11 +68,12 @@ namespace States {
 			this.drawAddCommandButton(10, 94, CommandType.LEFT);
 			this.drawAddCommandButton(10, 178, CommandType.RIGHT);
 			this.drawAddCommandButton(10, 262, CommandType.ACT);
+			this.drawButton(94, 10, "play_button", () => this.gameWorld.spawnGnome());
 		}
 
 		private drawAddCommandButton(x: number, y: number, type: CommandType) {
 			this.drawButton(x, y, CommandType.imageKey(type), () => {
-				this.spawnedGnomeRoutine["main"].push(new Command(type));
+				this.gameWorld.spawnedGnomeRoutine["main"].push(new Command(type));
 				this.redrawGnomeCodeGui();
 			});
 		}
