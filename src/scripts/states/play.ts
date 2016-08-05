@@ -68,7 +68,14 @@ namespace States {
 			this.drawAddCommandButton(10, 94, CommandType.LEFT);
 			this.drawAddCommandButton(10, 178, CommandType.RIGHT);
 			this.drawAddCommandButton(10, 262, CommandType.ACT);
-			this.drawButton(94, 10, "play_button", () => this.gameWorld.spawnGnome());
+
+			let spawnButton = this.drawButton(94, 10, "play_button", () => this.gameWorld.spawnGnome());
+			spawnButton.events.onInputOver.add(() => {
+				this.gameWorld.toggleSpawnPointIndicator(true);
+			});
+			spawnButton.events.onInputOut.add(() => {
+				this.gameWorld.toggleSpawnPointIndicator(false);
+			});
 		}
 
 		private drawAddCommandButton(x: number, y: number, type: CommandType) {

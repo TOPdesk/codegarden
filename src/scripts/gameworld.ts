@@ -12,6 +12,7 @@ class GameWorld {
 	constructor(public game: Phaser.Game) {
 		this.blockGroup = game.add.group(game.world, "blocks");
 		this.entityGroup = game.add.group(game.world, "entities");
+		this.spawnIndicator = this.createSpawnIndicator();
 
 		this.startCodeTimer();
 	}
@@ -21,6 +22,7 @@ class GameWorld {
 	private gnomes: Array<Gnome>;
 	private blockGroup: Phaser.Group;
 	private entityGroup: Phaser.Group;
+	private spawnIndicator: Phaser.Graphics;
 
 	/**
 	 * Loads the level with the provided name. It should be a JSON file that is loaded into the cache
@@ -55,17 +57,6 @@ class GameWorld {
 		}
 	}
 
-	private startCodeTimer() {
-		let timer = this.game.time.create();
-		timer.loop(200, () => {
-			for (let i = this.gnomes.length - 1; i >= 0; i--) {
-				let gnome = this.gnomes[i];
-				gnome.executeNextCommand(this);
-			}
-		});
-		timer.start();
-	}
-
 	/**
 	 * Try to move the gnome forward. Depending on what's in the way, this might succeed, fail, or kill the gnome.
 	 */
@@ -80,6 +71,14 @@ class GameWorld {
 		if (causeOfDeath !== null) {
 			this.killGnome(gnome, causeOfDeath);
 		}
+	}
+
+	/**
+	 * Show/hide the spawn point
+	 */
+	toggleSpawnPointIndicator(show: boolean) {
+		let newAlpha = show ? 1 : 0;
+		this.game.add.tween(this.spawnIndicator).to({alpha: newAlpha}, 300, null, true);
 	}
 
 	killGnome(gnome: Gnome, causeOfDeath: CauseOfDeath) {
@@ -108,6 +107,35 @@ class GameWorld {
 				}
 				return 0;
 			});
+	}
+
+	private startCodeTimer() {
+		let timer = this.game.time.create();
+		timer.loop(200, () => {
+			for (let i = this.gnomes.length - 1; i >= 0; i--) {
+				let gnome = this.gnomes[i];
+				gnome.executeNextCommand(this);
+			}
+		});
+		timer.start();
+	}
+
+	private createSpawnIndicator(): Phaser.Graphics {
+		let indicator = this.game.add.graphics(0, 0);
+		indicator.beginFill(0xffff00, 0.3);
+		indicator.moveTo(0, -1000);
+		indicator.lineTo(0, -100);
+		indicator.lineTo(WorldConstants.BLOCK_WIDTH / 2, -100 + WorldConstants.BLOCK_HEIGHT / 2);
+		indicator.lineTo(WorldConstants.BLOCK_WIDTH, -100);
+		indicator.lineTo(WorldConstants.BLOCK_WIDTH, -1000);
+		indicator.endFill();
+
+		let spawnScreenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new MapPoint(1, 1));
+		indicator.x = spawnScreenCoordinates.x;
+		indicator.y = spawnScreenCoordinates.y;
+
+		indicator.alpha = 0;
+		return indicator;
 	}
 }
 
