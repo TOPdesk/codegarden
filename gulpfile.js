@@ -138,7 +138,7 @@ gulp.task('jasmine-karma', () => {
 });
 
 gulp.task('test', function (done) {
-	runSequence('clean', 'copy', 'scripts', 'ts-test', 'jasmine-karma', () => {
+	runSequence('clean', 'copy', 'assets', 'scripts', 'ts-test', 'jasmine-karma', () => {
 		done();
 	});
 });
