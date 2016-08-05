@@ -83,6 +83,7 @@ namespace States {
 			button.inputEnabled = true;
 			button.fixedToCamera = true;
 			button.events.onInputDown.add(trigger, this);
+			button.input.useHandCursor = true;
 			return button;
 		}
 	}
