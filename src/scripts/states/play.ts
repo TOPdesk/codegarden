@@ -5,7 +5,7 @@
 
 namespace States {
 	const CAMERA_OFFSET_X = -400;
-	const CAMERA_OFFSET_Y = -200;
+	const CAMERA_OFFSET_Y = -300;
 
 	export class PlayState extends Phaser.State {
 		private gameWorld: GameWorld;
