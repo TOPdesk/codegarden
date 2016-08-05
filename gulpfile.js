@@ -146,6 +146,7 @@ gulp.task('jasmine-karma', function () {
 	], { 'read': false })
 	.pipe(karma.server({
 			'singleRun': true,
+			'plugins': ['karma-jasmine', 'karma-phantomjs-launcher'],
 			'frameworks': ['jasmine'],
 			'browsers': ['PhantomJS']
 		})
