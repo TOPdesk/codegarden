@@ -12,10 +12,13 @@ class GameWorld {
 	constructor(public game: Phaser.Game) {
 		this.blockGroup = game.add.group(game.world, "blocks");
 		this.entityGroup = game.add.group(game.world, "entities");
+
+		this.startCodeTimer();
 	}
 
 	public level: Level;
-	public gnome: Gnome;
+	public spawnedGnomeRoutine: { [key: string]: Array<Command> } = {};
+	private gnomes: Array<Gnome>;
 	private blockGroup: Phaser.Group;
 	private entityGroup: Phaser.Group;
 
@@ -24,62 +27,72 @@ class GameWorld {
 	 * in the preloader.
 	 */
 	loadLevel(levelName: string) {
+		this.blockGroup.removeAll(true);
+		this.entityGroup.removeAll(true);
+		this.gnomes = [];
+
 		let levelDefinition = this.game.cache.getJSON(levelName).LEVEL_DEFINITION;
 		this.level = new Level(levelDefinition);
 		this.level.renderStage(this.blockGroup);
-		this.gnome = this.level.renderGnome(this.entityGroup);
 		this.level.renderObjects(this.entityGroup);
-	}
 
-	/**
-	 * Rotate active gnome left
-	 */
-	rotateLeft() {
-		this.gnome.rotateLeft();
-	}
-
-	/**
-	 * Rotate active gnome right
-	 */
-	rotateRight() {
-		this.gnome.rotateRight();
+		this.spawnGnome();
 	}
 
 	/**
 	 * Performs an action with the active gnome. Results depend on gnome location
 	 */
-	doGnomeAction() {
-		let actionLocation = this.gnome.location.getNeighbor(this.gnome.direction);
+	doGnomeAction(gnome: Gnome) {
+		let actionLocation = gnome.location.getNeighbor(gnome.direction);
 		let block = this.level.getBlock(actionLocation);
-		if (this.gnome.wateringCan) {
+		if (gnome.wateringCan) {
 			if (this.level.waterObject(actionLocation)) {
-				this.gnome.wateringCan = false;
+				gnome.wateringCan = false;
 			}
 		}
 		else if (block === WorldConstants.BlockType.WATER) {
-			this.gnome.wateringCan = true;
+			gnome.wateringCan = true;
 		}
 	}
 
-	tryMove() {
-		let newLocation = this.gnome.location.getNeighbor(this.gnome.direction);
+	private startCodeTimer() {
+		let timer = this.game.time.create();
+		timer.loop(200, () => {
+			for (let i = this.gnomes.length - 1; i >= 0; i--) {
+				let gnome = this.gnomes[i];
+				gnome.executeNextCommand(this);
+			}
+		});
+		timer.start();
+	}
+
+	/**
+	 * Try to move the gnome forward. Depending on what's in the way, this might succeed, fail, or kill the gnome.
+	 */
+	tryMove(gnome: Gnome) {
+		let newLocation = gnome.location.getNeighbor(gnome.direction);
 		if (this.level.pointIsPassable(newLocation)) {
-			this.gnome.location = newLocation;
+			gnome.location = newLocation;
 			this.determineEntityZIndices();
 		}
 
 		let causeOfDeath = this.level.getPointCauseOfDeath(newLocation);
 		if (causeOfDeath !== null) {
-			this.killGnome(causeOfDeath);
+			this.killGnome(gnome, causeOfDeath);
 		}
 	}
 
-	killGnome(causeOfDeath: CauseOfDeath) {
-		this.entityGroup.remove(this.gnome);
-		this.game.world.add(this.gnome);
-		this.gnome.die(causeOfDeath);
-		this.gnome = new Gnome(this.game, this.level.spawnpoint.positionX, this.level.spawnpoint.positionY);
-		this.entityGroup.add(this.gnome);
+	killGnome(gnome: Gnome, causeOfDeath: CauseOfDeath) {
+		this.gnomes.splice(this.gnomes.indexOf(gnome), 1);
+		this.entityGroup.remove(gnome);
+		this.game.world.add(gnome);
+		gnome.die(causeOfDeath);
+	}
+
+	spawnGnome() {
+		let newGnome = new Gnome(this.game, this.level.spawnpoint.positionX, this.level.spawnpoint.positionY, this.spawnedGnomeRoutine);
+		this.entityGroup.add(newGnome);
+		this.gnomes.push(newGnome);
 		this.determineEntityZIndices();
 	}
 
@@ -162,12 +175,6 @@ class Level {
 				this.renderBlock(blockGroup, column, row, this.layout[row][column]);
 			}
 		}
-	}
-
-	renderGnome(entityGroup: Phaser.Group): Gnome {
-		let gnome = new Gnome(entityGroup.game, this.gnome.positionX, this.gnome.positionY);
-		entityGroup.add(gnome);
-		return gnome;
 	}
 
 	renderObjects(entityGroup: Phaser.Group) {

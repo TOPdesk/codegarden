@@ -27,10 +27,11 @@ class Gnome extends Phaser.Sprite {
 		return this._wateringCan;
 	}
 
-	gnomeCode: GnomeCode;
+	private gnomeCode: GnomeCode;
 
-	constructor(game: Phaser.Game, x: number, y: number) {
+	constructor(game: Phaser.Game, x: number, y: number, code: { [key: string]: Array<Command> }) {
 		super(game, 0, 0, "gnome_regular_front");
+		this.gnomeCode = new GnomeCode(this, code);
 		this.anchor.set(0.5, 1);
 		this._location = new MapPoint(x, y);
 		let screenCoordinates: ScreenPoint = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
@@ -38,6 +39,10 @@ class Gnome extends Phaser.Sprite {
 		this.y = screenCoordinates.y + GNOME_Y_OFFSET;
 		this.game.add.tween(this).from({alpha: 0}, 500, Phaser.Easing.Quartic.Out, true);
 		game.add.existing(this);
+	}
+
+	executeNextCommand(world: GameWorld) {
+		this.gnomeCode.executeNextCommand(world);
 	}
 
 	rotateLeft() {

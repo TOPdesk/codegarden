@@ -30,6 +30,8 @@ namespace States {
 			this.load.image("control_right", "assets/images/control_right.png");
 			this.load.image("control_forward", "assets/images/control_forward.png");
 
+			this.load.image("play_button", "assets/images/play_button.png");
+
 			this.load.image("tree-1", "assets/images/element_tree-1.png");
 			this.load.image("tree-2", "assets/images/element_tree-2.png");
 			this.load.image("tree-3", "assets/images/element_tree-3.png");

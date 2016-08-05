@@ -8,16 +8,11 @@
 			"positionX": 1,
 			"positionY": 1
 		},
-		"gnome": {
-			"positionX": 1,
-			"positionY": 1
-		},
 		"objects": [
 			{
 				"type": "TREE",
 				"positionX": 0,
-				"positionY": 2,
-				"color": "default"
+				"positionY": 2
 			}
 		]
 	}

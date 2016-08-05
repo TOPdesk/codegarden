@@ -2,10 +2,12 @@
 /// <reference path="gnome.ts"/>
 
 class GnomeCode {
+	private gnome: Gnome;
 	private routineMap: { [key: string]: Array<Command> };
 	private futureCommandStack: Array<Command> = [];
 
-	constructor(routineMap: { [key: string]: Array<Command> }) {
+	constructor(gnome: Gnome, routineMap: { [key: string]: Array<Command> }) {
+		this.gnome = gnome;
 		this.routineMap = routineMap;
 		if ("main" in routineMap) {
 			this.queueUpRoutine(routineMap["main"]);
@@ -18,22 +20,22 @@ class GnomeCode {
 	executeNextCommand(gameWorld: GameWorld) {
 		let command = this.futureCommandStack.pop();
 		if (command === undefined) {
-			gameWorld.killGnome(CauseOfDeath.CODE_RAN_OUT);
+			gameWorld.killGnome(this.gnome, CauseOfDeath.CODE_RAN_OUT);
 			return;
 		}
 
 		switch (command.type) {
 			case CommandType.WALK:
-				gameWorld.tryMove();
+				gameWorld.tryMove(this.gnome);
 				break;
 			case CommandType.LEFT:
-				gameWorld.rotateLeft();
+				this.gnome.rotateLeft();
 				break;
 			case CommandType.RIGHT:
-				gameWorld.rotateRight();
+				this.gnome.rotateRight();
 				break;
 			case CommandType.ACT:
-				gameWorld.doGnomeAction();
+				gameWorld.doGnomeAction(this.gnome);
 				break;
 			case CommandType.CALL_ROUTINE:
 				this.queueUpRoutine(this.routineMap[command.args[0]]); //TODO kill gnome if the routine doesn't exist
@@ -68,7 +70,7 @@ enum CommandType {
 }
 namespace CommandType {
 	export function imageKey(type: CommandType): string {
-		switch(type) {
+		switch (type) {
 			case CommandType.WALK:
 				return "control_forward";
 			case CommandType.LEFT:
