@@ -66,3 +66,19 @@ enum CommandType {
 	ACT,
 	CALL_ROUTINE
 }
+namespace CommandType {
+	export function imageKey(type: CommandType): string {
+		switch(type) {
+			case CommandType.WALK:
+				return "control_forward";
+			case CommandType.LEFT:
+				return "control_left";
+			case CommandType.RIGHT:
+				return "control_right";
+			case CommandType.ACT:
+				return "control_action";
+			default:
+				return "logo";
+		}
+	}
+}
