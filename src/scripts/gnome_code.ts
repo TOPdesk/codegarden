@@ -70,7 +70,7 @@ enum CommandType {
 }
 namespace CommandType {
 	export function imageKey(type: CommandType): string {
-		switch(type) {
+		switch (type) {
 			case CommandType.WALK:
 				return "control_forward";
 			case CommandType.LEFT:

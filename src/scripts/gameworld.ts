@@ -177,12 +177,6 @@ class Level {
 		}
 	}
 
-	renderGnome(entityGroup: Phaser.Group): Gnome {
-		let gnome = new Gnome(entityGroup.game, this.gnome.positionX, this.gnome.positionY);
-		entityGroup.add(gnome);
-		return gnome;
-	}
-
 	renderObjects(entityGroup: Phaser.Group) {
 		for (let i = 0; i < this.objects.length; i++) {
 			let object = this.objects[i];
