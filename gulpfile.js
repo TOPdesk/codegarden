@@ -1,8 +1,6 @@
 require('es6-promise').polyfill();
 
 var gulp = require('gulp');
-
-// plug-ins
 var tslint = require('gulp-tslint');
 var changed = require('gulp-changed');
 var minifyHtml = require('gulp-minify-html');
@@ -20,7 +18,6 @@ var sourcemaps = require('gulp-sourcemaps');
 var jasmineBrowser = require('gulp-jasmine-browser');
 var karma = require("gulp-karma-runner");
 
-// definition of source paths
 var srcs = {
 	scripts: 'src/scripts/**/*.ts',
 	html: ['src/*.html', 'src/templates/*.html'],
@@ -37,8 +34,7 @@ var dests = {
 	styles: 'build/styles/'
 };
 
-// browser sychnoization
-gulp.task('browserSync', function () {
+gulp.task('browserSync', () => {
 	browserSync({
 		server: {
 			baseDir: dests.base
@@ -46,35 +42,30 @@ gulp.task('browserSync', function () {
 	});
 });
 
-// clean
-gulp.task('clean', function () {
+gulp.task('clean', () => {
 	return del([dests.base]);
 });
 
-// copy files needed
-gulp.task('copy', function () {
+gulp.task('copy', () => {
 	return gulp.src(srcs.libs)
 		.pipe(gulp.dest(dests.libs))
 		.pipe(browserSync.reload({ stream: true }));
 });
 
-// TS lint task
-gulp.task('tslint', function () {
+gulp.task('tslint', () => {
 	return gulp.src(srcs.scripts)
         .pipe(tslint())
         .pipe(tslint.report('verbose'));
 });
 
-// copy assets
-gulp.task('assets', function () {
+gulp.task('assets', () => {
 	return gulp.src(srcs.assets)
 		.pipe(changed(dests.assets))
 		.pipe(gulp.dest(dests.assets))
 		.pipe(browserSync.reload({ stream: true }));
 });
 
-// minify html
-gulp.task('html', function () {
+gulp.task('html', () => {
 	var htmlDest = './build';
 
 	return gulp.src(srcs.html)
@@ -84,8 +75,7 @@ gulp.task('html', function () {
 		.pipe(browserSync.reload({ stream: true }));
 });
 
-// JS concat, strip debugging and minify
-gulp.task('scripts', function () {
+gulp.task('scripts', () => {
 	return gulp.src(srcs.scripts)
 		.pipe(sourcemaps.init())
 		.pipe(typescript({
@@ -95,15 +85,13 @@ gulp.task('scripts', function () {
 			target: 'es5'
 		}))
 		.pipe(concat('script.min.js'))
-		// .pipe(stripDebug())
 		.pipe(uglify())
 		.pipe(sourcemaps.write('../maps'))
 		.pipe(gulp.dest(dests.scripts))
 		.pipe(browserSync.reload({ stream: true }));
 });
 
-// CSS concat, auto-prefix and minify
-gulp.task('styles', function () {
+gulp.task('styles', () => {
 	return gulp.src(srcs.styles)
 		.pipe(sass())
 		.pipe(concat('styles.min.css'))
@@ -113,58 +101,53 @@ gulp.task('styles', function () {
 		.pipe(browserSync.reload({ stream: true }));
 });
 
-gulp.task('ts-to-be-tested', function () {
-	return gulp.src('src/scripts/coordinates.ts')
+gulp.task('ts-test', () => {
+	return gulp.src('src/specs/**/*.spec.ts')
 		.pipe(typescript({
 			declarationFiles: true,
 			noExternalResolve: false,
-			sortOutput: true
-		}))
-		.pipe(gulp.dest('build/scripts/'))
-});
-
-gulp.task('ts-test', function () {
-	return gulp.src('src/specs/coordinates.spec.ts')
-		.pipe(typescript({
-			declarationFiles: true,
-			noExternalResolve: false,
-			sortOutput: true
+			sortOutput: true,
+			target: 'es5'
 		}))
 		.pipe(gulp.dest('build/specs/'));
 });
 
-gulp.task('jasmine-browser', function() {
-	return gulp.src(['build/scripts/coordinates.js', 'build/specs/coordinates.spec.js'])
-  			.pipe(jasmineBrowser.specRunner())
-    		.pipe(jasmineBrowser.server({port: 8888}));
+gulp.task('jasmine-browser', () => {
+	return gulp.src([
+		'build/libs/phaser.min.js',
+		'build/scripts/**/*.js',
+		'build/specs/**/*.spec.js'
+	])
+		.pipe(jasmineBrowser.specRunner())
+		.pipe(jasmineBrowser.server({ port: 8888 }));
 });
 
-gulp.task('jasmine-karma', function () {
+gulp.task('jasmine-karma', () => {
 	gulp.src([
+		'build/libs/phaser.min.js',
 		'build/scripts/**/*.js',
 		'build/specs/**/*.spec.js'
 	], { 'read': false })
-	.pipe(karma.server({
+		.pipe(karma.server({
 			'singleRun': true,
+			'plugins': ['karma-jasmine', 'karma-phantomjs-launcher'],
 			'frameworks': ['jasmine'],
 			'browsers': ['PhantomJS']
 		})
-    );
+		);
 });
 
 gulp.task('test', function (done) {
-	runSequence('clean', 'ts-to-be-tested', 'ts-test', 'jasmine-karma', function() {
+	runSequence('clean', 'copy', 'scripts', 'ts-test', 'jasmine-karma', () => {
 		done();
 	});
 });
 
-// build only
-gulp.task('build', ['tslint', 'copy', 'assets', 'html', 'scripts', 'styles', 'browserSync'], function () {
+gulp.task('build', ['tslint', 'copy', 'assets', 'html', 'scripts', 'styles', 'browserSync'], () => {
 });
 
-// default task
 gulp.task('default', function (done) {
-    runSequence('clean', 'build', function () {
+    runSequence('clean', 'build', () => {
 		gulp.watch(srcs.html, ['html']);
 		gulp.watch(srcs.assets, ['assets']);
 		gulp.watch(srcs.scripts, ['scripts']);
@@ -172,5 +155,3 @@ gulp.task('default', function (done) {
         done();
     });
 });
-
-
