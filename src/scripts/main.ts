@@ -13,5 +13,4 @@ class Game extends Phaser.Game {
 	}
 }
 
-let myGame = new Game();
-myGame.start();
+let codeGarden = new Game();

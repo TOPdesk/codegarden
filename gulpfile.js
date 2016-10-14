@@ -101,8 +101,6 @@ gulp.task('ts-test', () => {
 	return gulp.src('src/specs/**/*.spec.ts')
 		.pipe(typescript({
 			declarationFiles: true,
-			noExternalResolve: false,
-			sortOutput: true,
 			target: 'es5'
 		}))
 		.pipe(gulp.dest('build/specs/'));
@@ -128,9 +126,9 @@ gulp.task('jasmine-karma', () => {
 			'singleRun': true,
 			'plugins': ['karma-jasmine', 'karma-phantomjs-launcher'],
 			'frameworks': ['jasmine'],
-			'browsers': ['PhantomJS']
+			'browsers': ['PhantomJS'],
 		})
-		);
+	);
 });
 
 gulp.task('test', function (done) {
