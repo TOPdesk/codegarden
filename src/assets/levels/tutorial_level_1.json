@@ -1,6 +1,6 @@
 {
 	"LEVEL_DEFINITION": 	{
-	"layout": [
+		"layout": [
 			[0, 0, 0],
 			[0, 0, 0],
 			[0, 0, 1]],
@@ -13,6 +13,19 @@
 				"type": "TREE",
 				"positionX": 0,
 				"positionY": 2
+			}
+		],
+		"victoryConditions": [
+			{
+				"type": "ENTITY_EXISTS",
+				"entityType": "TREE",
+				"requiredProperties": [
+					{
+						"name": "treeLevel",
+						"requirementType": "GREATER_THAN",
+						"value": 1
+					}
+				]
 			}
 		]
 	}

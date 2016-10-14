@@ -4,6 +4,7 @@
 /// <reference path="gnome.ts"/>
 /// <reference path="tree.ts"/>
 /// <reference path="world_constants.ts"/>
+///<reference path="victory_condition.ts"/>
 
 /**
  * This class is responsible for keeping track of the world state and handling collisions.
@@ -115,6 +116,7 @@ class GameWorld {
 			for (let i = this.gnomes.length - 1; i >= 0; i--) {
 				let gnome = this.gnomes[i];
 				gnome.executeNextCommand(this);
+				this.checkVictory();
 			}
 		});
 		timer.start();
@@ -137,6 +139,15 @@ class GameWorld {
 		indicator.alpha = 0;
 		return indicator;
 	}
+
+	private checkVictory() {
+		if (!this.level.checkVictory()) {
+			return;
+		}
+
+		//TODO: Go to the next level upon achieving victory
+		console.log("Level won!");
+	}
 }
 
 class Level {
@@ -145,6 +156,7 @@ class Level {
 	spawnpoint: any;
 	private gnome: any;
 	private objects: any;
+	private victoryConditions: Array<VictoryCondition>;
 	private objectMap = {};
 
 	constructor(levelDefinition) {
@@ -152,6 +164,7 @@ class Level {
 		this.spawnpoint = levelDefinition.spawnpoint;
 		this.gnome = levelDefinition.gnome;
 		this.objects = levelDefinition.objects;
+		this.victoryConditions = levelDefinition.victoryConditions;
 	}
 
 	pointIsPassable(point: Point): boolean {
@@ -184,6 +197,18 @@ class Level {
 		return this.objectMap[point.toString()];
 	}
 
+	checkVictory() {
+		if (!this.victoryConditions) {
+			return false;
+		}
+		for (let victoryCondition of this.victoryConditions) {
+			if (!VictoryCondition.check(victoryCondition, this.objects)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	waterObject(point: MapPoint) {
 		let object = this.objectMap[point.toString()];
 		if (object && object.addWater) {
@@ -207,16 +232,16 @@ class Level {
 
 	renderObjects(entityGroup: Phaser.Group) {
 		for (let i = 0; i < this.objects.length; i++) {
-			let object = this.objects[i];
-			let objectInstance = this.renderObject(entityGroup.game, object.type, object.positionX, object.positionY);
+			let model = this.objects[i];
+			let objectInstance = this.renderObject(entityGroup.game, model);
 			entityGroup.add(objectInstance);
-			this.objectMap[new MapPoint(object.positionX, object.positionY).toString()] = objectInstance;
+			this.objectMap[new MapPoint(model.positionX, model.positionY).toString()] = objectInstance;
 		}
 	}
 
-	renderObject(game: Phaser.Game, type: String, x: number, y: number): Phaser.Sprite {
-		if (type === "TREE") {
-			return new Tree(game, x, y);
+	renderObject(game: Phaser.Game, model): Phaser.Sprite {
+		if (model.type === "TREE") {
+			return new Tree(game, model);
 		}
 	}
 
