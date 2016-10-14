@@ -1,24 +1,24 @@
+'use strict';
 require('es6-promise').polyfill();
 
-var gulp = require('gulp');
-var tslint = require('gulp-tslint');
-var changed = require('gulp-changed');
-var minifyHtml = require('gulp-minify-html');
-var concat = require('gulp-concat');
-var stripDebug = require('gulp-strip-debug');
-var uglify = require('gulp-uglify');
-var autoprefix = require('gulp-autoprefixer');
-var minifyCSS = require('gulp-minify-css');
-var sass = require('gulp-sass');
-var typescript = require('gulp-typescript');
-var browserSync = require('browser-sync');
-var del = require('del');
-var runSequence = require('run-sequence');
-var sourcemaps = require('gulp-sourcemaps');
-var jasmineBrowser = require('gulp-jasmine-browser');
-var karma = require("gulp-karma-runner");
+const gulp = require('gulp');
+const tslint = require('gulp-tslint');
+const changed = require('gulp-changed');
+const minifyHtml = require('gulp-minify-html');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const autoprefix = require('gulp-autoprefixer');
+const minifyCSS = require('gulp-minify-css');
+const sass = require('gulp-sass');
+const typescript = require('gulp-typescript');
+const browserSync = require('browser-sync');
+const del = require('del');
+const runSequence = require('run-sequence');
+const sourcemaps = require('gulp-sourcemaps');
+const jasmineBrowser = require('gulp-jasmine-browser');
+const karma = require("gulp-karma-runner");
 
-var srcs = {
+const srcs = {
 	scripts: 'src/scripts/**/*.ts',
 	html: ['src/*.html', 'src/templates/*.html'],
 	styles: 'src/styles/**/*.scss',
@@ -26,7 +26,7 @@ var srcs = {
 	libs: ['src/libs/phaser/build/phaser.min.js', 'src/libs/jasmine-core/**/*']
 };
 
-var dests = {
+const dests = {
 	base: 'build',
 	libs: 'build/libs/',
 	assets: 'build/assets/',
@@ -54,8 +54,10 @@ gulp.task('copy', () => {
 
 gulp.task('tslint', () => {
 	return gulp.src(srcs.scripts)
-        .pipe(tslint())
-        .pipe(tslint.report('verbose'));
+        .pipe(tslint({
+			formatter: 'verbose'
+		}))
+        .pipe(tslint.report());
 });
 
 gulp.task('assets', () => {
@@ -66,7 +68,7 @@ gulp.task('assets', () => {
 });
 
 gulp.task('html', () => {
-	var htmlDest = './build';
+	const htmlDest = './build';
 
 	return gulp.src(srcs.html)
 		.pipe(changed(dests.base))
@@ -76,17 +78,11 @@ gulp.task('html', () => {
 });
 
 gulp.task('scripts', () => {
-	return gulp.src(srcs.scripts)
-		.pipe(sourcemaps.init())
-		.pipe(typescript({
-			declarationFiles: true,
-			noExternalResolve: false,
-			sortOutput: true,
-			target: 'es5'
-		}))
-		.pipe(concat('script.min.js'))
+	let tsProject = typescript.createProject('tsconfig.json');
+	return tsProject.src()
+		.pipe(tsProject())
 		.pipe(uglify())
-		.pipe(sourcemaps.write('../maps'))
+		.pipe(sourcemaps.write('build/maps'))
 		.pipe(gulp.dest(dests.scripts))
 		.pipe(browserSync.reload({ stream: true }));
 });

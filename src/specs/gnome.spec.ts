@@ -5,7 +5,7 @@ describe("Rotating left", () => {
     let gnome: Gnome;
 
     beforeAll(() => {
-        gnome = new Gnome(new Phaser.Game(), 0, 0);
+        gnome = new Gnome(new Phaser.Game(), 0, 0, {});
     });
     it("initializes with SE", () => {
         expect(gnome.direction).toBe(Direction.SE);
@@ -25,15 +25,15 @@ describe("Rotating left", () => {
     it("faces back SE when turning left again", () => {
         gnome.rotateLeft();
         expect(gnome.direction).toBe(Direction.SE);
-    });      
+    });
 });
 
 describe("Rotating right", () => {
     let gnome: Gnome;
 
     beforeAll(() => {
-        gnome = new Gnome(new Phaser.Game(), 0, 0);
-    });    
+        gnome = new Gnome(new Phaser.Game(), 0, 0, {});
+    });
     it("faces SW when turning right", () => {
         gnome.rotateRight();
         expect(gnome.direction).toBe(Direction.SW);
@@ -49,7 +49,7 @@ describe("Rotating right", () => {
     it("faces back SE when turning right again", () => {
         gnome.rotateRight();
         expect(gnome.direction).toBe(Direction.SE);
-    }); 
+    });
 });
 
 // describe("Setting fields", () => {
