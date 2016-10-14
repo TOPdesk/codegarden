@@ -34,7 +34,7 @@ class MapPoint implements Point {
 	toString() {
 		return "MapPoint: " + this.x + "-" + this.y;
 	}
-};
+}
 
 class ScreenPoint implements Point {
 	constructor(public x: number, public y: number) { }
@@ -80,8 +80,8 @@ namespace Direction {
 }
 
 class CoordinateTransformer {
-	private halfTileWidth: number;
-	private halfTileHeight: number;
+	private readonly halfTileWidth: number;
+	private readonly halfTileHeight: number;
 
 	constructor(tileWidth, tileHeight) {
 		this.halfTileWidth = tileWidth / 2;
