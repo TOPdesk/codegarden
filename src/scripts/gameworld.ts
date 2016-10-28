@@ -39,6 +39,9 @@ class GameWorld {
 		this.level = new Level(levelDefinition);
 		this.level.renderStage(this.blockGroup);
 		this.level.renderObjects(this.entityGroup);
+		if (levelDefinition.introMessage) {
+			Messages.show(levelDefinition.introMessage);
+		}
 
 		this.spawnGnome();
 	}
@@ -147,7 +150,9 @@ class GameWorld {
 		}
 
 		//TODO: Go to the next level upon achieving victory
-		Messages.show("You won!");
+		Messages.show("You won!", {
+			callback: () => this.loadLevel("tutorial_level_2")
+		});
 	}
 }
 

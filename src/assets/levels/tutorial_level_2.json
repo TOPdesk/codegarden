@@ -1,0 +1,22 @@
+{
+	"LEVEL_DEFINITION": 	{
+		"layout": [
+			[0, 0, 0, 0, 1, 1],
+			[0, 0, 0, 1, 1, 1],
+			[0, 1, 0, 1, 0, 0],
+			[0, 0, 0, 1, 1, 0],
+			[0, 0, 0, 0, 1, 0],
+			[0, 0, 1, 1, 1, 0]],
+		"spawnpoint": {
+			"positionX": 1,
+			"positionY": 1
+		},
+		"objects": [
+			{
+				"type": "TREE",
+				"positionX": 0,
+				"positionY": 2
+			}
+		]
+	}
+}

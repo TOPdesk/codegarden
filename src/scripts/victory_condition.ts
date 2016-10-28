@@ -7,7 +7,7 @@ interface VictoryCondition {
 namespace VictoryCondition {
 	function checkPropertyRequirements(entity: any, requirements?: Array<PropertyRequirement>) {
 		if (!requirements) {
-			return true;
+			return false;
 		}
 
 		for (let requirement of requirements) {

@@ -18,11 +18,13 @@ namespace States {
 			this.gameWorld.loadLevel("tutorial_level_1");
 
 			let exampleCode = [
-				new Command(CommandType.ACT),
-				new Command(CommandType.WALK),
 				new Command(CommandType.RIGHT),
 				new Command(CommandType.WALK),
-				new Command(CommandType.WALK),
+				new Command(CommandType.LEFT),
+				new Command(CommandType.ACT),
+				new Command(CommandType.LEFT),
+				new Command(CommandType.LEFT),
+				new Command(CommandType.ACT),
 			];
 			this.gameWorld.spawnedGnomeRoutine = { main: exampleCode };
 
