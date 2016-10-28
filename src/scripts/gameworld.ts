@@ -4,7 +4,8 @@
 /// <reference path="gnome.ts"/>
 /// <reference path="tree.ts"/>
 /// <reference path="world_constants.ts"/>
-///<reference path="victory_condition.ts"/>
+/// <reference path="victory_condition.ts"/>
+/// <reference path="messages/message.ts"/>
 
 /**
  * This class is responsible for keeping track of the world state and handling collisions.
@@ -146,7 +147,7 @@ class GameWorld {
 		}
 
 		//TODO: Go to the next level upon achieving victory
-		console.log("Level won!");
+		Messages.show("You won!");
 	}
 }
 

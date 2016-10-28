@@ -1,4 +1,5 @@
-interface VictoryCondition { //Currently the only victory condition type is 'ENTITY_EXISTS': check if entities following some requirements exist.
+interface VictoryCondition {
+//Currently the only victory condition type is 'ENTITY_EXISTS': check if entities following some requirements exist.
 	type: "ENTITY_EXISTS";
 	entityType: string;
 	requiredProperties?: Array<PropertyRequirement>;

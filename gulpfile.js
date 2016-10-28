@@ -9,7 +9,7 @@ const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const autoprefix = require('gulp-autoprefixer');
 const minifyCSS = require('gulp-minify-css');
-const sass = require('gulp-sass');
+const less = require('gulp-less');
 const typescript = require('gulp-typescript');
 const browserSync = require('browser-sync');
 const del = require('del');
@@ -21,7 +21,7 @@ const karma = require("gulp-karma-runner");
 const srcs = {
 	scripts: 'src/scripts/**/*.ts',
 	html: ['src/*.html', 'src/templates/*.html'],
-	styles: 'src/styles/**/*.scss',
+	styles: 'src/styles/**/*.less',
 	assets: 'src/assets/**/*',
 	libs: ['src/libs/phaser/build/phaser.min.js', 'src/libs/jasmine-core/**/*']
 };
@@ -89,7 +89,7 @@ gulp.task('scripts', () => {
 
 gulp.task('styles', () => {
 	return gulp.src(srcs.styles)
-		.pipe(sass())
+		.pipe(less())
 		.pipe(concat('styles.min.css'))
 		.pipe(autoprefix('last 2 versions'))
 		.pipe(minifyCSS())

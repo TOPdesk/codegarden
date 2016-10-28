@@ -13,4 +13,4 @@ class Game extends Phaser.Game {
 	}
 }
 
-let codeGarden = new Game();
+(window as any).codeGarden = new Game();
