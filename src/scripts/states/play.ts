@@ -28,11 +28,14 @@ namespace States {
 			this.gameWorld.spawnedGnomeRoutine = { main: exampleCode };
 
 			this.initializeButtons();
+			this.initializeCodeEditor();
 			this.drawSpawnButton();
 		}
 
 		initializeButtons() {
 			let gnomeCodeButtons = document.getElementById("gnomeCodeButtons");
+			gnomeCodeButtons.addEventListener("click", evt => this.handleCommandButtonClick(evt));
+
 
 			Sortable.create(gnomeCodeButtons, {
 				group: {
@@ -43,13 +46,16 @@ namespace States {
 				sort: false
 			});
 
-			this.appendCommandToGui(gnomeCodeButtons, CommandType.WALK);
-			this.appendCommandToGui(gnomeCodeButtons, CommandType.LEFT);
-			this.appendCommandToGui(gnomeCodeButtons, CommandType.RIGHT);
-			this.appendCommandToGui(gnomeCodeButtons, CommandType.ACT);
+			PlayState.appendCommandToGui(gnomeCodeButtons, CommandType.WALK);
+			PlayState.appendCommandToGui(gnomeCodeButtons, CommandType.LEFT);
+			PlayState.appendCommandToGui(gnomeCodeButtons, CommandType.RIGHT);
+			PlayState.appendCommandToGui(gnomeCodeButtons, CommandType.ACT);
+		}
 
+		initializeCodeEditor() {
+			let codeEditor = document.getElementById("gnomeCodeEditor");
 			let routine = this.gameWorld.spawnedGnomeRoutine["main"];
-			Sortable.create(document.getElementById("gnomeCodeEditor"), {
+			Sortable.create(codeEditor, {
 				group: {
 					name: "gnomeCode",
 					pull: false,
@@ -62,12 +68,12 @@ namespace States {
 					routine.splice(evt.newIndex, 0, command);
 				}
 			});
-			let codeEditor = document.getElementById("gnomeCodeEditor");
 
 			codeEditor.innerHTML = "";
 			this.gameWorld.spawnedGnomeRoutine["main"].forEach(command => {
-				this.appendCommandToGui(codeEditor, command.type);
+				PlayState.appendCommandToGui(codeEditor, command.type);
 			});
+			codeEditor.addEventListener("click", evt => this.handleCommandClick(evt));
 		}
 
 		drawSpawnButton() {
@@ -89,25 +95,34 @@ namespace States {
 			return button;
 		}
 
-		private appendCommandToGui(gui: HTMLElement, commandType: CommandType) {
+		private handleCommandButtonClick(evt: MouseEvent) {
+			let target = evt.target as HTMLElement;
+			if (!target.classList.contains("commandButton")) {
+				return;
+			}
+			let gnomeCodeButtons = document.getElementById("gnomeCodeButtons");
+			let commandType = parseInt(target.dataset["commandType"]);
+			this.gameWorld.spawnedGnomeRoutine["main"].push(new Command(commandType));
+			PlayState.appendCommandToGui(document.getElementById("gnomeCodeEditor"), commandType);
+		}
+
+		private handleCommandClick(evt: MouseEvent) {
+			let target = evt.target as HTMLElement;
+			if (!target.classList.contains("commandButton")) {
+				return;
+			}
+			let editor = document.getElementById("gnomeCodeEditor");
+			let index = Array.prototype.indexOf.call(editor.children, target);
+			this.gameWorld.spawnedGnomeRoutine["main"].splice(index, 1);
+			editor.removeChild(target);
+		}
+
+		private static appendCommandToGui(gui: HTMLElement, commandType: CommandType) {
 			let button = document.createElement("DIV");
 			button.classList.add("commandButton");
 			button.classList.add(CommandType.imageClass(commandType));
 			button.dataset["commandType"] = commandType.toString();
 			gui.appendChild(button);
-
-			button.addEventListener("click", () => {
-				let container = button.parentElement;
-				if (button.parentElement.id === "gnomeCodeButtons") {
-					this.gameWorld.spawnedGnomeRoutine["main"].push(new Command(commandType));
-					this.appendCommandToGui(document.getElementById("gnomeCodeEditor"), commandType);
-				}
-				else {
-					let index = Array.prototype.indexOf.call(container.children, button);
-					this.gameWorld.spawnedGnomeRoutine["main"].splice(index, 1);
-					container.removeChild(button);
-				}
-			});
 		}
 	}
 }
