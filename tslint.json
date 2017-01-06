@@ -29,10 +29,6 @@
     ],
     "quotemark": [true, "double", "avoid-escape"],
     "semicolon": [true, "always"],
-    "trailing-comma": [true, {
-      "singleline": "never",
-      "multiline": "always"
-    }],
     "triple-equals": [true, "allow-null-check"],
     "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
     "whitespace": [true,

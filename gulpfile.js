@@ -137,11 +137,11 @@ gulp.task('test', function (done) {
 	});
 });
 
-gulp.task('build', ['tslint', 'copy', 'assets', 'html', 'scripts', 'styles', 'browserSync'], () => {
+gulp.task('build', ['tslint', 'copy', 'assets', 'html', 'scripts', 'styles'], () => {
 });
 
 gulp.task('default', function (done) {
-    runSequence('clean', 'build', () => {
+    runSequence('clean', 'build', 'browserSync', () => {
 		gulp.watch(srcs.html, ['html']);
 		gulp.watch(srcs.assets, ['assets']);
 		gulp.watch(srcs.scripts, ['scripts']);
