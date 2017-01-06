@@ -9,6 +9,16 @@
 <body>
     <div id="content"></div>
 
+	<div id="gnomeCodeButtons">
+		<button id="commandButtonMoveForward" class="commandMoveForward commandButton"></button>
+		<button id="commandButtonTurnLeft" class="commandTurnLeft commandButton"></button>
+		<button id="commandButtonTurnRight" class="commandTurnRight commandButton"></button>
+		<button id="commandButtonPerformAction" class="commandPerformAction commandButton"></button>
+	</div>
+
+	<div id="gnomeCodeEditor">
+	</div>
+
 	<div id="outerMessageArea" style="display:none">
 		<!-- This entire div becomes visible when a message is displayed to the player -->
 		<div id="jetpackGnome"><img src="assets/images/gnome_father.png"></div>
@@ -16,6 +26,8 @@
 	</div>
 
     <script src="libs/phaser.min.js"></script>
+    <script src="libs/phaser.min.js"></script>
+    <script src="libs/Sortable.js"></script>
     <script src="scripts/script.min.js"></script>
 	<script>codeGarden.start();</script>
 </body>

@@ -9,6 +9,7 @@ body {
 	top: 0;
 	height: 100%;
 	width: 100%;
+	background-color: rgba(120, 120, 120, 0.6);
 }
 
 #jetpackGnome {
@@ -25,4 +26,50 @@ body {
 	background-color: white;
 	padding: 30px;
 	border-radius: 30px;
+}
+
+#gnomeCodeButtons {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 74px;
+}
+
+#gnomeCodeEditor {
+	position: absolute;
+	bottom: 5px;
+	left: 5px;
+	border: solid 4px #ff5555;
+	border-radius: 5px;
+	background: white;
+}
+
+.commandButton {
+	display: inline-block;
+	cursor: pointer;
+	width: 74px;
+	height: 74px;
+	background: none;
+	border: none;
+	margin: 5px;
+}
+
+.commandMoveForward {
+	background: url("../assets/images/control_forward.png");
+}
+
+.commandTurnLeft {
+	background: url("../assets/images/control_left.png");
+}
+
+.commandTurnRight {
+	background: url("../assets/images/control_right.png");
+}
+
+.commandPerformAction {
+	background: url("../assets/images/control_action.png");
+}
+
+.sortable-ghost {
+	visibility: hidden;
 }

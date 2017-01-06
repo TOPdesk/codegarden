@@ -2,6 +2,7 @@
 /// <reference path="../gnome.ts"/>
 /// <reference path="../gnome_code.ts"/>
 /// <reference path="../gameworld.ts"/>
+///<reference path="../../../node_modules/@types/sortablejs/index.d.ts"/>
 
 namespace States {
 	const CAMERA_OFFSET_X = -400;
@@ -9,8 +10,6 @@ namespace States {
 
 	export class PlayState extends Phaser.State {
 		private gameWorld: GameWorld;
-		private gnomeCodeGraphics: Phaser.Graphics;
-		private gnomeCodeButtonElements: Phaser.Group;
 
 		create() {
 			this.game.camera.setPosition(CAMERA_OFFSET_X, CAMERA_OFFSET_Y);
@@ -28,48 +27,40 @@ namespace States {
 			];
 			this.gameWorld.spawnedGnomeRoutine = { main: exampleCode };
 
-			this.gnomeCodeGraphics = this.game.add.graphics(20, 500);
-			this.gnomeCodeGraphics.fixedToCamera = true;
-			this.gnomeCodeButtonElements = this.game.add.group();
-			this.redrawGnomeCodeGui();
+			let codeEditor = document.getElementById("gnomeCodeEditor");
+			let routine = this.gameWorld.spawnedGnomeRoutine["main"];
+			Sortable.create(codeEditor, {
+				animation: 150,
+				onSort: (evt) => {
+					let command = routine.splice(evt.oldIndex, 1);
+					routine.splice(evt.newIndex, 0, command[0]);
+				}
+			});
+			this.redrawCommandButtons();
 			this.drawButtons();
 		}
 
-		redrawGnomeCodeGui() {
-			this.gnomeCodeGraphics.clear();
-			this.gnomeCodeButtonElements.removeAll(true);
+		redrawCommandButtons() {
+			let codeEditor = document.getElementById("gnomeCodeEditor");
 
-			let numberOfCommands = this.gameWorld.spawnedGnomeRoutine["main"].length;
-			if (numberOfCommands < 1) {
-				return;
-			}
-
-			let rectangleWidth = 10 + 84 * Math.min(numberOfCommands, 7);
-			let rectangleHeight = 10 + 84 * Math.ceil(numberOfCommands / 7);
-			this.gnomeCodeGraphics.lineStyle(4, 0xff5555, 1);
-			this.gnomeCodeGraphics.beginFill(0xffffff, 1);
-			this.gnomeCodeGraphics.drawRoundedRect(0, 0, rectangleWidth, rectangleHeight, 5);
-			this.gnomeCodeGraphics.endFill();
-
-			this.gameWorld.spawnedGnomeRoutine["main"].forEach((command, index, array) => this.drawGnomeRoutineCommand(command, index, array));
-		}
-
-		drawGnomeRoutineCommand(command: Command, index: number, array: Command[]) {
-			let x = 30 + (index % 7) * 84;
-			let y = 510 + Math.floor(index / 7) * 84;
-
-			let button = this.drawButton(x, y, CommandType.imageKey(command.type), () => {
-				array.splice(index, 1);
-				this.redrawGnomeCodeGui();
+			codeEditor.innerHTML = "";
+			this.gameWorld.spawnedGnomeRoutine["main"].forEach((command, index, array) => {
+				let button = document.createElement("DIV");
+				button.classList.add("commandButton");
+				button.classList.add(CommandType.imageClass(command.type));
+				button.addEventListener("click", () => {
+					array.splice(index, 1);
+					this.redrawCommandButtons();
+				});
+				codeEditor.appendChild(button);
 			});
-			this.gnomeCodeButtonElements.add(button);
 		}
 
 		drawButtons() {
-			this.drawAddCommandButton(10, 10, CommandType.WALK);
-			this.drawAddCommandButton(10, 94, CommandType.LEFT);
-			this.drawAddCommandButton(10, 178, CommandType.RIGHT);
-			this.drawAddCommandButton(10, 262, CommandType.ACT);
+			this.addCommandButtonListener("commandButtonMoveForward", CommandType.WALK);
+			this.addCommandButtonListener("commandButtonTurnLeft", CommandType.LEFT);
+			this.addCommandButtonListener("commandButtonTurnRight", CommandType.RIGHT);
+			this.addCommandButtonListener("commandButtonPerformAction", CommandType.ACT);
 
 			let spawnButton = this.drawButton(94, 10, "play_button", () => this.gameWorld.spawnGnome());
 			spawnButton.events.onInputOver.add(() => {
@@ -80,10 +71,10 @@ namespace States {
 			});
 		}
 
-		private drawAddCommandButton(x: number, y: number, type: CommandType) {
-			this.drawButton(x, y, CommandType.imageKey(type), () => {
-				this.gameWorld.spawnedGnomeRoutine["main"].push(new Command(type));
-				this.redrawGnomeCodeGui();
+		private addCommandButtonListener(id: string, commandType: CommandType) {
+			document.getElementById(id).addEventListener("click", () => {
+				this.gameWorld.spawnedGnomeRoutine["main"].push(new Command(commandType));
+				this.redrawCommandButtons();
 			});
 		}
 

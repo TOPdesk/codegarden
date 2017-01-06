@@ -69,18 +69,18 @@ enum CommandType {
 	CALL_ROUTINE
 }
 namespace CommandType {
-	export function imageKey(type: CommandType): string {
+	export function imageClass(type: CommandType): string {
 		switch (type) {
 			case CommandType.WALK:
-				return "control_forward";
+				return "commandMoveForward";
 			case CommandType.LEFT:
-				return "control_left";
+				return "commandTurnLeft";
 			case CommandType.RIGHT:
-				return "control_right";
+				return "commandTurnRight";
 			case CommandType.ACT:
-				return "control_action";
+				return "commandPerformAction";
 			default:
-				return "logo";
+				return "unknownCommandType";
 		}
 	}
 }
