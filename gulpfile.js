@@ -23,7 +23,7 @@ const srcs = {
 	html: ['src/*.html', 'src/templates/*.html'],
 	styles: 'src/styles/**/*.less',
 	assets: 'src/assets/**/*',
-	libs: ['src/libs/phaser/build/phaser.min.js', 'src/libs/jasmine-core/**/*']
+	libs: ['src/libs/phaser/build/phaser.min.js', 'src/libs/jasmine-core/**/*', 'src/libs/Sortable/Sortable.js']
 };
 
 const dests = {
@@ -137,8 +137,7 @@ gulp.task('test', function (done) {
 	});
 });
 
-gulp.task('build', ['tslint', 'copy', 'assets', 'html', 'scripts', 'styles'], () => {
-});
+gulp.task('build', ['tslint', 'copy', 'assets', 'html', 'scripts', 'styles']);
 
 gulp.task('default', function (done) {
     runSequence('clean', 'build', 'browserSync', () => {

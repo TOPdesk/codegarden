@@ -19,6 +19,7 @@
   "dependencies": {
     "phaser": "^2.4.8",
     "dt-jasmine": "^2.2.0",
-    "jasmine-core": "^2.4.1"
+    "jasmine-core": "^2.4.1",
+    "Sortable": "sortablejs#^1.4.2"
   }
 }
