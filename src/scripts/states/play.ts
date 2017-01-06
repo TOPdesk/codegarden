@@ -27,54 +27,56 @@ namespace States {
 			];
 			this.gameWorld.spawnedGnomeRoutine = { main: exampleCode };
 
-			let codeEditor = document.getElementById("gnomeCodeEditor");
-			let routine = this.gameWorld.spawnedGnomeRoutine["main"];
-			Sortable.create(codeEditor, {
-				animation: 150,
-				onSort: (evt) => {
-					let command = routine.splice(evt.oldIndex, 1);
-					routine.splice(evt.newIndex, 0, command[0]);
-				}
-			});
-			this.redrawCommandButtons();
-			this.drawButtons();
+			this.initializeButtons();
+			this.drawSpawnButton();
 		}
 
-		redrawCommandButtons() {
+		initializeButtons() {
+			let gnomeCodeButtons = document.getElementById("gnomeCodeButtons");
+
+			Sortable.create(gnomeCodeButtons, {
+				group: {
+					name: "gnomeCode",
+					pull: "clone",
+					put: false
+				},
+				sort: false
+			});
+
+			this.appendCommandToGui(gnomeCodeButtons, CommandType.WALK);
+			this.appendCommandToGui(gnomeCodeButtons, CommandType.LEFT);
+			this.appendCommandToGui(gnomeCodeButtons, CommandType.RIGHT);
+			this.appendCommandToGui(gnomeCodeButtons, CommandType.ACT);
+
+			let routine = this.gameWorld.spawnedGnomeRoutine["main"];
+			Sortable.create(document.getElementById("gnomeCodeEditor"), {
+				group: {
+					name: "gnomeCode",
+					pull: false,
+					put: true
+				},
+				animation: 150,
+				onSort: (evt) => {
+					let command = evt.from.id === "gnomeCodeEditor" ?
+						routine.splice(evt.oldIndex, 1)[0] : new Command(parseInt(evt.item.dataset["commandType"]));
+					routine.splice(evt.newIndex, 0, command);
+				}
+			});
 			let codeEditor = document.getElementById("gnomeCodeEditor");
 
 			codeEditor.innerHTML = "";
-			this.gameWorld.spawnedGnomeRoutine["main"].forEach((command, index, array) => {
-				let button = document.createElement("DIV");
-				button.classList.add("commandButton");
-				button.classList.add(CommandType.imageClass(command.type));
-				button.addEventListener("click", () => {
-					array.splice(index, 1);
-					this.redrawCommandButtons();
-				});
-				codeEditor.appendChild(button);
+			this.gameWorld.spawnedGnomeRoutine["main"].forEach(command => {
+				this.appendCommandToGui(codeEditor, command.type);
 			});
 		}
 
-		drawButtons() {
-			this.addCommandButtonListener("commandButtonMoveForward", CommandType.WALK);
-			this.addCommandButtonListener("commandButtonTurnLeft", CommandType.LEFT);
-			this.addCommandButtonListener("commandButtonTurnRight", CommandType.RIGHT);
-			this.addCommandButtonListener("commandButtonPerformAction", CommandType.ACT);
-
+		drawSpawnButton() {
 			let spawnButton = this.drawButton(94, 10, "play_button", () => this.gameWorld.spawnGnome());
 			spawnButton.events.onInputOver.add(() => {
 				this.gameWorld.toggleSpawnPointIndicator(true);
 			});
 			spawnButton.events.onInputOut.add(() => {
 				this.gameWorld.toggleSpawnPointIndicator(false);
-			});
-		}
-
-		private addCommandButtonListener(id: string, commandType: CommandType) {
-			document.getElementById(id).addEventListener("click", () => {
-				this.gameWorld.spawnedGnomeRoutine["main"].push(new Command(commandType));
-				this.redrawCommandButtons();
 			});
 		}
 
@@ -85,6 +87,27 @@ namespace States {
 			button.events.onInputDown.add(trigger, this);
 			button.input.useHandCursor = true;
 			return button;
+		}
+
+		private appendCommandToGui(gui: HTMLElement, commandType: CommandType) {
+			let button = document.createElement("DIV");
+			button.classList.add("commandButton");
+			button.classList.add(CommandType.imageClass(commandType));
+			button.dataset["commandType"] = commandType.toString();
+			gui.appendChild(button);
+
+			button.addEventListener("click", () => {
+				let container = button.parentElement;
+				if (button.parentElement.id === "gnomeCodeButtons") {
+					this.gameWorld.spawnedGnomeRoutine["main"].push(new Command(commandType));
+					this.appendCommandToGui(document.getElementById("gnomeCodeEditor"), commandType);
+				}
+				else {
+					let index = Array.prototype.indexOf.call(container.children, button);
+					this.gameWorld.spawnedGnomeRoutine["main"].splice(index, 1);
+					container.removeChild(button);
+				}
+			});
 		}
 	}
 }
