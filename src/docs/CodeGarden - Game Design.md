@@ -179,7 +179,7 @@ House orientation:
 H1 => SW (down)
 
 Required program to win the level:  
-H1 [FFFLFFLARA]
+H1 [FFLFFLARA]
 
 #### Level 2 - Multiple gnomes
 Level two introduces the following concepts:
@@ -191,7 +191,7 @@ Level layout (D = desert, H = house, W = water, T = tree):
 ```
 DDDWDD
 WWWWDD
-DWHWHT
+MWHWHT
 DDDDDD
 TDDDDD
 ```
@@ -201,8 +201,8 @@ H1 => SW (down)
 H2 => SW (down)
 
 Required programs to win the level:   
-H1 [FLFLARFFLA] => this program is fixed and cannot be changed   
-H2 [FFRFFFRFALFLA] => Note that starting out with [FRF] will cause both gnomes to end up on the same tile.
+H1 [LFLARFFLA] => this program is fixed and cannot be changed   
+H2 [FRFFFRFALFLA] => Note that starting out with [RF] will cause both gnomes to end up on the same tile.
 This will cause a problem as they will bump into each other, returning them to their previous position.
 
 #### Level 3 - Subroutines
@@ -212,10 +212,10 @@ Level three introduces the following concepts:
 
 Level layout (L= library, D = desert, H = house, M = mushroom, W = Water, T = tree)
 ```
-LHDDM
+HDDDM
 WWWDM
 TDWWW
-DDDDW
+LDDDW
 ```
 
 House orientation:   
@@ -232,9 +232,9 @@ Level four introduces the following concepts:
 
 Level layout (D = desert, R = rock, W = water, H = house, L = library, T = tree)
 ```
-DRDDW
-HLDDH
-DDDRD
+HRDDW
+DLDDD
+DDDRH
 DTDDD
 ```
 
