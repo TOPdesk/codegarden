@@ -23,7 +23,7 @@ namespace States {
 			this.initializeButtons();
 			this.drawSpawnButton();
 
-			document.getElementById("gnomeCodeEditor").addEventListener("click", evt => this.handleCommandClick(evt));
+			document.getElementById("innerCodeEditor").addEventListener("click", evt => this.handleCommandClick(evt));
 
 			this.gameWorld.selectionListener = house => {
 				this.selectedSpawnPoint = house;
@@ -53,16 +53,16 @@ namespace States {
 		}
 
 		showCodeInEditor() {
-			let codeEditor = document.getElementById("gnomeCodeEditor");
-			codeEditor.innerHTML = "";
+			document.getElementById("gnomeCodeEditor").style.display = this.selectedSpawnPoint ? "block" : "none";
 			if (!this.selectedSpawnPoint) {
-				codeEditor.style.display = "none";
 				return;
 			}
 
-			codeEditor.style.display = "block";
+			this.updateCommandsLabel();
+			let innerCodeEditor = document.getElementById("innerCodeEditor");
+			innerCodeEditor.innerHTML = "";
 			let routine = this.selectedSpawnPoint.gnomeCode["main"];
-			Sortable.create(codeEditor, {
+			Sortable.create(innerCodeEditor, {
 				group: {
 					name: "gnomeCode",
 					pull: false,
@@ -70,22 +70,29 @@ namespace States {
 				},
 				animation: 150,
 				onSort: (evt) => {
-					let command = evt.from.id === "gnomeCodeEditor" ?
+					let command = evt.from.id === "innerCodeEditor" ?
 						routine.splice(evt.oldIndex, 1)[0] : new Command(parseInt(evt.item.dataset["commandType"]));
 					routine.splice(evt.newIndex, 0, command);
 
 					if (routine.length > this.selectedSpawnPoint.model.sizeLimit) {
 						routine.splice(this.selectedSpawnPoint.model.sizeLimit);
-						while (codeEditor.children.length > this.selectedSpawnPoint.model.sizeLimit) {
-							codeEditor.removeChild(codeEditor.children.item(this.selectedSpawnPoint.model.sizeLimit));
+						while (innerCodeEditor.children.length > this.selectedSpawnPoint.model.sizeLimit) {
+							innerCodeEditor.removeChild(innerCodeEditor.children.item(this.selectedSpawnPoint.model.sizeLimit));
 						}
 					}
+
+					this.updateCommandsLabel();
 				}
 			});
 
 			this.selectedSpawnPoint.gnomeCode["main"].forEach(command => {
-				PlayState.appendCommandToGui(codeEditor, command.type);
+				PlayState.appendCommandToGui(innerCodeEditor, command.type);
 			});
+		}
+
+		updateCommandsLabel() {
+			let label = document.getElementById("codeEditorLabel");
+			label.innerText = this.selectedSpawnPoint.gnomeCode["main"].length + "/" + this.selectedSpawnPoint.model.sizeLimit + " commands used";
 		}
 
 		initializeSpawnIndicator() {
@@ -139,7 +146,8 @@ namespace States {
 
 			let commandType = parseInt(target.dataset["commandType"]);
 			this.selectedSpawnPoint.gnomeCode["main"].push(new Command(commandType));
-			PlayState.appendCommandToGui(document.getElementById("gnomeCodeEditor"), commandType);
+			PlayState.appendCommandToGui(document.getElementById("innerCodeEditor"), commandType);
+			this.updateCommandsLabel();
 		}
 
 		private handleCommandClick(evt: MouseEvent) {
@@ -147,10 +155,11 @@ namespace States {
 			if (!target.classList.contains("commandButton")) {
 				return;
 			}
-			let editor = document.getElementById("gnomeCodeEditor");
+			let editor = document.getElementById("innerCodeEditor");
 			let index = Array.prototype.indexOf.call(editor.children, target);
 			this.selectedSpawnPoint.gnomeCode["main"].splice(index, 1);
 			editor.removeChild(target);
+			this.updateCommandsLabel();
 		}
 
 		private static appendCommandToGui(gui: HTMLElement, commandType: CommandType) {
