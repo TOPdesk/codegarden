@@ -96,7 +96,7 @@ class GameWorld {
 
 	spawnGnomes() {
 		this.level.houses.forEach(house => {
-			let newGnome = new Gnome(this.game, house.model.positionX, house.model.positionY, house.model.gnomeCode);
+			let newGnome = new Gnome(this.game, house.model.positionX, house.model.positionY, house.gnomeCode);
 			this.entityGroup.add(newGnome);
 			this.gnomes.push(newGnome);
 			this.determineEntityZIndices();

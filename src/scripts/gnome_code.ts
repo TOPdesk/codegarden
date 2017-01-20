@@ -83,4 +83,13 @@ namespace CommandType {
 				return "unknownCommandType";
 		}
 	}
+
+	export function getCommandTypeForShorthand(shorthand: string) {
+		switch (shorthand) {
+			case "W": return new Command(CommandType.WALK);
+			case "L": return new Command(CommandType.LEFT);
+			case "R": return new Command(CommandType.RIGHT);
+			case "A": return new Command(CommandType.ACT);
+		}
+	}
 }

@@ -1,6 +1,8 @@
 /// <reference path="../libs/phaser/typescript/phaser.d.ts"/>
 
 class House extends Phaser.Sprite {
+	public gnomeCode: { [key: string]: Array<Command> };
+
 	get location(): MapPoint {
 		return new MapPoint(this.model.positionX, this.model.positionY);
 	}
@@ -15,16 +17,13 @@ class House extends Phaser.Sprite {
 		this.input.pixelPerfectClick = true;
 		this.input.useHandCursor = true;
 
-		let exampleCode = [
-			new Command(CommandType.RIGHT),
-			new Command(CommandType.WALK),
-			new Command(CommandType.LEFT),
-			new Command(CommandType.ACT),
-			new Command(CommandType.LEFT),
-			new Command(CommandType.LEFT),
-			new Command(CommandType.ACT),
-		];
-		this.model.gnomeCode = { main: exampleCode }; //TODO starting code should be part of the level definition
+		let code = [];
+		if (model.initialCode) {
+			for (let i = 0; i < model.initialCode.length; i++) {
+				code.push(CommandType.getCommandTypeForShorthand(model.initialCode.charAt(i)));
+			}
+		}
+		this.gnomeCode = { main: code };
 
 		game.add.existing(this);
 	}
@@ -33,5 +32,5 @@ class House extends Phaser.Sprite {
 interface HouseModel {
 	positionX: number;
 	positionY: number;
-	gnomeCode: { [key: string]: Array<Command> };
+	initialCode?: string;
 }

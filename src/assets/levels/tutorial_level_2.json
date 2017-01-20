@@ -16,12 +16,14 @@
 			{
 				"type": "HOUSE",
 				"positionX": 1,
-				"positionY": 0
+				"positionY": 0,
+				"initialCode": "WWW"
 			},
 			{
 				"type": "HOUSE",
 				"positionX": 3,
-				"positionY": 4
+				"positionY": 4,
+				"initialCode": "LLLLRRRR"
 			}
 		]
 	}

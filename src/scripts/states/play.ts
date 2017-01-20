@@ -61,7 +61,7 @@ namespace States {
 			}
 
 			codeEditor.style.display = "block";
-			let routine = this.selectedSpawnPoint.model.gnomeCode["main"];
+			let routine = this.selectedSpawnPoint.gnomeCode["main"];
 			Sortable.create(codeEditor, {
 				group: {
 					name: "gnomeCode",
@@ -76,7 +76,7 @@ namespace States {
 				}
 			});
 
-			this.selectedSpawnPoint.model.gnomeCode["main"].forEach(command => {
+			this.selectedSpawnPoint.gnomeCode["main"].forEach(command => {
 				PlayState.appendCommandToGui(codeEditor, command.type);
 			});
 		}
@@ -127,7 +127,7 @@ namespace States {
 				return;
 			}
 			let commandType = parseInt(target.dataset["commandType"]);
-			this.selectedSpawnPoint.model.gnomeCode["main"].push(new Command(commandType));
+			this.selectedSpawnPoint.gnomeCode["main"].push(new Command(commandType));
 			PlayState.appendCommandToGui(document.getElementById("gnomeCodeEditor"), commandType);
 		}
 
@@ -138,7 +138,7 @@ namespace States {
 			}
 			let editor = document.getElementById("gnomeCodeEditor");
 			let index = Array.prototype.indexOf.call(editor.children, target);
-			this.selectedSpawnPoint.model.gnomeCode["main"].splice(index, 1);
+			this.selectedSpawnPoint.gnomeCode["main"].splice(index, 1);
 			editor.removeChild(target);
 		}
 
