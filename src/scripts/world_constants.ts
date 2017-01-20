@@ -8,12 +8,8 @@ namespace WorldConstants {
 
 	export enum BlockType {
 		GRASS,
-		WATER
-	}
-
-	export enum ObjectType {
-		NOTHING,
-		TREE,
-		HOUSE
+		WATER,
+		DESERT,
+		STONE
 	}
 }

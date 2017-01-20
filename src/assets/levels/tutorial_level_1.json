@@ -1,22 +1,28 @@
 {
 	"LEVEL_DEFINITION": 	{
 		"layout": [
-			[0, 0, 0],
-			[0, 0, 0],
-			[0, 0, 1]],
+			[2, 2, 2, 1, 2],
+			[2, 2, 2, 1, 2],
+			[2, 2, 3, 1, 1],
+			[2, 2, 2, 2, 2]],
 		"objects": [
 			{
 				"type": "TREE",
-				"positionX": 0,
+				"positionX": 4,
+				"positionY": 3
+			},
+			{
+				"type": "ROCK",
+				"positionX": 2,
 				"positionY": 2
 			},
 			{
 				"type": "HOUSE",
 				"positionX": 1,
-				"positionY": 1,
-				"initialCode": "WRAW",
+				"positionY": 0,
+				"initialCode": "LWAW",
 				"sizeLimit": 10,
-				"direction": 2
+				"direction": 3
 			}
 		],
 		"victoryConditions": [

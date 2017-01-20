@@ -18,6 +18,8 @@ namespace States {
 
 			this.load.image("stage_block", "assets/images/stage_block.png");
 			this.load.image("water_block", "assets/images/water_block.png");
+			this.load.image("desert_block", "assets/images/desert_block.png");
+			this.load.image("stone_block", "assets/images/stone_block.png");
 
 			this.load.image("gnome_regular_front", "assets/images/gnome_regular_front.png");
 			this.load.image("gnome_regular_back", "assets/images/gnome_regular_back.png");
@@ -43,6 +45,9 @@ namespace States {
 			this.load.image("house_nw", "assets/images/house_back_left.png");
 			this.load.image("house_se", "assets/images/house_front_right.png");
 			this.load.image("house_sw", "assets/images/house_front_left.png");
+
+			this.load.image("mushrooms", "assets/images/mushrooms.png");
+			this.load.image("rock", "assets/images/rock.png");
 
 			this.load.image("waterdrop_empty", "assets/images/waterdrop_empty.png");
 			this.load.image("waterdrop_filled", "assets/images/waterdrop_filled.png");

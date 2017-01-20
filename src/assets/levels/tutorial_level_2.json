@@ -1,33 +1,42 @@
 {
 	"LEVEL_DEFINITION": 	{
 		"layout": [
-			[0, 0, 0, 0, 1, 1],
-			[0, 0, 0, 1, 1, 1],
-			[0, 1, 0, 1, 0, 0],
-			[0, 0, 0, 1, 1, 0],
-			[0, 0, 0, 0, 1, 0],
-			[0, 0, 1, 1, 1, 0]],
+			[2, 2, 2, 1, 2, 2],
+			[1, 1, 1, 1, 2, 2],
+			[2, 1, 2, 1, 2, 2],
+			[2, 2, 2, 2, 2, 2],
+			[2, 2, 2, 2, 2, 2]],
 		"objects": [
 			{
 				"type": "TREE",
+				"positionX": 0,
+				"positionY": 4
+			},
+			{
+				"type": "TREE",
+				"positionX": 5,
+				"positionY": 2
+			},
+			{
+				"type": "MUSHROOMS",
 				"positionX": 0,
 				"positionY": 2
 			},
 			{
 				"type": "HOUSE",
-				"positionX": 1,
-				"positionY": 0,
-				"initialCode": "WWW",
+				"positionX": 2,
+				"positionY": 2,
+				"initialCode": "LWLARWWLA",
 				"sizeLimit": 10,
 				"direction": 3
 			},
 			{
 				"type": "HOUSE",
-				"positionX": 3,
-				"positionY": 4,
-				"initialCode": "LLLLRRRR",
+				"positionX": 4,
+				"positionY": 2,
+				"initialCode": "WRWWWRWALWLA",
 				"sizeLimit": 10,
-				"direction": 0
+				"direction": 3
 			}
 		]
 	}

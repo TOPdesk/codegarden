@@ -1,17 +1,12 @@
 /// <reference path="../libs/phaser/typescript/phaser.d.ts"/>
 /// <reference path="coordinates.ts"/>
 /// <reference path="world_constants.ts"/>
+///<reference path="gameObject.ts"/>
 
-const TREE_X_OFFSET = 56;
-const TREE_Y_OFFSET = -88;
 const TREE_IMAGE_PREFIX = "tree-";
 const MAX_TREE_LEVEL = 6;
 
-class Tree extends Phaser.Sprite {
-	get location(): MapPoint {
-		return new MapPoint(this.model.positionX, this.model.positionY);
-	}
-
+class Tree extends GameObject {
 	get waterContent() {
 		return this.model.waterContent;
 	}
@@ -28,7 +23,7 @@ class Tree extends Phaser.Sprite {
 	}
 
 	constructor(game: Phaser.Game, public model: TreeModel) {
-		super(game, 0, 0, TREE_IMAGE_PREFIX + "1");
+		super(game, model, TREE_IMAGE_PREFIX + "1", false);
 		if (!model.treeLevel) {
 			model.treeLevel = 1;
 		}
@@ -38,11 +33,8 @@ class Tree extends Phaser.Sprite {
 		if (!model.waterContent) {
 			model.waterContent = 0;
 		}
-		this.anchor.set(0.5, 1);
 		this.calculateRequiredWater();
-		let screenCoordinates: ScreenPoint = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
-		this.x = screenCoordinates.x + TREE_X_OFFSET;
-		this.y = screenCoordinates.y + TREE_Y_OFFSET;
+
 		game.add.existing(this);
 	}
 
@@ -75,9 +67,7 @@ class Tree extends Phaser.Sprite {
 	}
 }
 
-interface TreeModel {
-	positionX: number;
-	positionY: number;
+interface TreeModel extends GameObjectModel {
 	treeLevel: number;
 	requiredWater: number;
 	waterContent: number;

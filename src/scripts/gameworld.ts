@@ -6,6 +6,7 @@
 /// <reference path="world_constants.ts"/>
 /// <reference path="victory_condition.ts"/>
 /// <reference path="messages/message.ts"/>
+///<reference path="gameObject.ts"/>
 ///<reference path="house.ts"/>
 
 /**
@@ -164,8 +165,8 @@ class Level {
 	}
 
 	pointIsPassable(point: MapPoint): boolean {
-		//All objects are impassable for now
-		return !(this.getObject(point));
+		let object = this.getObject(point);
+		return !object || object.passable;
 	}
 
 	getPointCauseOfDeath(point: MapPoint): CauseOfDeath {
@@ -236,14 +237,11 @@ class Level {
 	}
 
 	renderObject(game: Phaser.Game, model): Phaser.Sprite {
-		if (model.type === "TREE") {
-			return new Tree(game, model);
+		let object = ObjectType.instantiate(game, model);
+		if (object instanceof House) {
+			this.houses.push(object);
 		}
-		else if (model.type === "HOUSE") {
-			let house = new House(game, model);
-			this.houses.push(house);
-			return house;
-		}
+		return object;
 	}
 
 	renderBlock(blockGroup: Phaser.Group, x: number, y: number, blockType: WorldConstants.BlockType) {
@@ -259,6 +257,10 @@ class Level {
 				return "stage_block";
 			case WorldConstants.BlockType.WATER:
 				return "water_block";
+			case WorldConstants.BlockType.DESERT:
+				return "desert_block";
+			case WorldConstants.BlockType.STONE:
+				return "stone_block";
 			default: return "stage_block"; //TODO throw an error instead?
 		}
 	}
