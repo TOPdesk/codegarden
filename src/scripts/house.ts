@@ -8,7 +8,7 @@ class House extends Phaser.Sprite {
 	}
 
 	constructor(game: Phaser.Game, public model: HouseModel) {
-		super(game, 0, 0, "house");
+		super(game, 0, 0, House.determineSprite(model.direction));
 		this.anchor.set(0.5, 1);
 		let screenCoordinates: ScreenPoint = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
 		this.x = screenCoordinates.x + TREE_X_OFFSET;
@@ -27,6 +27,15 @@ class House extends Phaser.Sprite {
 
 		game.add.existing(this);
 	}
+
+	static determineSprite(direction: Direction) {
+		switch (direction) {
+			case Direction.NE: return "house_ne";
+			case Direction.NW: return "house_nw";
+			case Direction.SE: return "house_se";
+			case Direction.SW: return "house_sw";
+		}
+	}
 }
 
 interface HouseModel {
@@ -34,4 +43,5 @@ interface HouseModel {
 	positionY: number;
 	initialCode?: string;
 	sizeLimit: number;
+	direction: Direction;
 }

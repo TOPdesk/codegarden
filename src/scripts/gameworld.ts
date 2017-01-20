@@ -96,7 +96,11 @@ class GameWorld {
 
 	spawnGnomes() {
 		this.level.houses.forEach(house => {
-			let newGnome = new Gnome(this.game, house.model.positionX, house.model.positionY, house.gnomeCode);
+			let newGnome = new Gnome(this.game,
+				house.model.positionX + Direction.getXDelta(house.model.direction),
+				house.model.positionY + Direction.getYDelta(house.model.direction),
+				house.model.direction,
+				house.gnomeCode);
 			this.entityGroup.add(newGnome);
 			this.gnomes.push(newGnome);
 			this.determineEntityZIndices();
@@ -159,8 +163,8 @@ class Level {
 	}
 
 	pointIsPassable(point: MapPoint): boolean {
-		//Only trees are impassable for now
-		return !(this.getObject(point) instanceof Tree);
+		//All objects are impassable for now
+		return !(this.getObject(point));
 	}
 
 	getPointCauseOfDeath(point: MapPoint): CauseOfDeath {

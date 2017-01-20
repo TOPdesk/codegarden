@@ -41,7 +41,7 @@ class ScreenPoint implements Point {
 }
 
 enum Direction {
-	//These should be in ascending order of right rotation!
+	//Ordinal values are used in level definition files; do not change this order
 	NW,
 	NE,
 	SE,

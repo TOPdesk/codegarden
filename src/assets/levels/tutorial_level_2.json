@@ -17,13 +17,17 @@
 				"type": "HOUSE",
 				"positionX": 1,
 				"positionY": 0,
-				"initialCode": "WWW"
+				"initialCode": "WWW",
+				"sizeLimit": 10,
+				"direction": 3
 			},
 			{
 				"type": "HOUSE",
 				"positionX": 3,
 				"positionY": 4,
-				"initialCode": "LLLLRRRR"
+				"initialCode": "LLLLRRRR",
+				"sizeLimit": 10,
+				"direction": 0
 			}
 		]
 	}
