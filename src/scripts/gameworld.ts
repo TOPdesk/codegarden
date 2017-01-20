@@ -6,6 +6,7 @@
 /// <reference path="world_constants.ts"/>
 /// <reference path="victory_condition.ts"/>
 /// <reference path="messages/message.ts"/>
+///<reference path="house.ts"/>
 
 /**
  * This class is responsible for keeping track of the world state and handling collisions.
