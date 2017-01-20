@@ -1,19 +1,23 @@
 Welcome to CodeGarden®
 
 # Story
-//TODO: Backstory
+The GNOMEs want to populate the world.
+Trees spawn GNOMEbabies, so let's go and grow some trees!
 
-Once upon a time, ...
+Just so you know
 - GNOMEs have epic beards
 - GNOMEs are infinite
 
 # Gameplay elements
+In the first few levels, the purpose of a level is to make a tree or number of trees grow enough to produce GNOMEbabies.
+You do this by giving the GNOME a program that tells them exactly what to do to to make the trees grow.
+GNOMEs have a limited number of actions they can undertake and it's your job to ensure all trees grow with the limited number of actions you have.
 
+GNOMEs will loop the set of actions they are given, allowing the player to define a program once and let the GNOME repeat it.
+Each GNOME starts at a house and programs are bound to a house, so the player can create different programs for each house.
+GNOMEs can and should interact with the environment and each other.
 
-
-## GNOMES 
-//TODO: Backstory
-
+Later level will have other win conditions than simply growing trees. 
 
 ### GNOME Movement
 A GNOME moves as a result of player input in the form of functions.
@@ -57,25 +61,29 @@ GNOMEs act in a specific order each level.
 When the level is started, each GNOME executes its first action, until all GNOMEs have finished.
 Then the first GNOME executes its second action and so on. 
 #### End of program
-If a GNOME's program is at its end, it is automatically returned to its spawn point. 
+If a GNOME's program is at its end, it is automatically returned to its house. 
 This takes one turn.
-After returning to the spawn point, the GNOME starts its program from the beginning.    
+After returning to the house, the GNOME starts its program from the beginning.    
 #### Doing nothing
 Not every turn in a program is required to be filled.
 GNOMEs executing programs with empty turns will skip those turns dancing.
 
 ### GNOME death
 A GNOME may die in several ways, but always as the result of a GNOME action.
-A death animation takes one turn, after which a gnome is respawned at its original spawnpoint.
+A death animation takes one turn, after which a gnome is respawned at its original house.
 So, in total, death costs a GNOME two turns. 
 
 
 ## Objects
 There are many different objects to be found in the world of CodeGarden®.
 
+### Houses
+Each house houses a GNOME.
+You can not walk through a tile with a house on it.
+
 ### Trees
-Trees are important in a garden.
-They provide *wood*, *shade* and much more.
+Trees are of vital importance to GNOME reproduction as they spawn GNOMEbabies.
+However, they can also be chopped down to provide *wood*, while a grown tree also is a source of *shade*.
 Trees require water and sunlight to grow.
 You can not walk through a tile with a tree on it.
 
@@ -87,7 +95,6 @@ You can not walk through a tile with a rock on it.
 Items can be picked up. 
 It *is* possible to walk through them as well.
 
-
 ## Tiles
 Tiles represent the landscape of a level.
 There are many different types of tiles, each with their own function.
@@ -96,8 +103,8 @@ There are many different types of tiles, each with their own function.
 Grass tiles are fertile land.
 Many different objects can grow on them and a GNOME can walk freely over an empty grass tile.
 
-### Sand
-Sand tiles contain very little water, meaning that only specific objects can grow on them.
+### Desert
+Desert tiles contain very little water, meaning that only specific objects can grow on them.
 
 ### Water
 Water tiles hold water. 
@@ -128,51 +135,43 @@ Clicking one of the menu options actually starts that option, so the gnome will 
 the ends of the intersection.
 Just for fun, players are allowed to edit the programs that have the gnome move to the correct place, potentially messing up their menu.
 
-### Level 1 - Growing trees 
-Level one introduces two concepts: programming a gnome and watering a tree.
-This level contains a single gnome, a body of water and a tree.
-The tree should be next to water.
-The gnome's program is shown and has two basic actions already, which make it walk forward twice, straight into a body of water, drowning in the process.
-The purpose of this level is to get the tree to height 3.
-Required program to win the level: 
-- Turn left
-- Walk forward
-- Take action (collecting water)
-- Turn right 
-- Walk forward
-- Walk forward
-- Turn right
-- Walk forward
-- Take action (watering tree)
+### Region 1
+Region 1 is a desert. There will be a bit of water here, some rocks and a few trees, but not much else.
+
+#### Level 1 - Growing trees 
+Level one introduces the following concepts:
+- Basic programming
+- Watering a tree
+- Obstacles
+
+Level layout (D = desert, H = house, W = water, R = rock, T = tree):
+```
+DHDWD
+DDDWD
+DDRWW
+DDDDT
+```
+
+Required program to win the level:  
+[FFFLFFLARA]
 
 ### Level 2 - Multiple gnomes
-Level two introduces two concepts: programming multiple gnomes and subroutines
-This level contains two gnomes.
-The level is a copy of level one, with the tree from level one at height 3. 
-A tree at height 3 and gnome are added on the other side of the water
-There is a subroutine, which causes the gnomes to walk forward twice.
-This subroutine takes up the first turn in both gnomes' programs.
-The purpose of this level is to get both trees to height 5.  
-Required programs to win the level:
-- Gnome 1
-    - Turn left
-    - Walk forward
-    - Subroutine 1
-    - Turn right
-    - Walk forward 
-    - Take action (watering tree)
-- Gnome 2
-    - Turn left
-    - Walk forward 
-    - Subroutine 1
-    - Take action
+Level two introduces the following concepts:
+- Multiple gnomes
+- Gnome clashing
+- Fixed functions
 
-- Subroutine 1
-    - Take action
-    - Turn right
-    - Walk forward
-    - Walk forward
-
+Level layout (D = desert, H = house, W = water, T = tree):  
+```
+DDDWDD
+WWWWDD
+DWHWHT
+DDDDDD
+TDDDDD
+```
+Required programs to win the level:   
+H1 [FLFLARFFLA] => this program is fixed and cannot be changed   
+H2 [FFRFFFRFALFLA] => Note that starting out with [FRF] will cause both gnomes to end up on the same tile. This will cause a problem as they will be fighting (or something like that)
 
 ## Planned expansions
 
