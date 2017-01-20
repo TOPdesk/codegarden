@@ -10,32 +10,32 @@ namespace States {
 
 	export class PlayState extends Phaser.State {
 		private gameWorld: GameWorld;
+		private selectedSpawnPoint: House;
+		private spawnIndicator: Phaser.Graphics;
 
 		create() {
 			this.game.camera.setPosition(CAMERA_OFFSET_X, CAMERA_OFFSET_Y);
+
 			this.gameWorld = new GameWorld(this.game);
 			this.gameWorld.loadLevel("tutorial_level_1");
 
-			let exampleCode = [
-				new Command(CommandType.RIGHT),
-				new Command(CommandType.WALK),
-				new Command(CommandType.LEFT),
-				new Command(CommandType.ACT),
-				new Command(CommandType.LEFT),
-				new Command(CommandType.LEFT),
-				new Command(CommandType.ACT),
-			];
-			this.gameWorld.spawnedGnomeRoutine = { main: exampleCode };
-
+			this.initializeSpawnIndicator();
 			this.initializeButtons();
-			this.initializeCodeEditor();
 			this.drawSpawnButton();
+
+			document.getElementById("gnomeCodeEditor").addEventListener("click", evt => this.handleCommandClick(evt));
+
+			this.gameWorld.selectionListener = house => {
+				this.selectedSpawnPoint = house;
+				this.toggleSpawnIndicator(house);
+				document.getElementById("gnomeCodeButtons").style.display = house ? "block" : "none";
+				this.showCodeInEditor();
+			};
 		}
 
 		initializeButtons() {
 			let gnomeCodeButtons = document.getElementById("gnomeCodeButtons");
 			gnomeCodeButtons.addEventListener("click", evt => this.handleCommandButtonClick(evt));
-
 
 			Sortable.create(gnomeCodeButtons, {
 				group: {
@@ -52,9 +52,16 @@ namespace States {
 			PlayState.appendCommandToGui(gnomeCodeButtons, CommandType.ACT);
 		}
 
-		initializeCodeEditor() {
+		showCodeInEditor() {
 			let codeEditor = document.getElementById("gnomeCodeEditor");
-			let routine = this.gameWorld.spawnedGnomeRoutine["main"];
+			codeEditor.innerHTML = "";
+			if (!this.selectedSpawnPoint) {
+				codeEditor.style.display = "none";
+				return;
+			}
+
+			codeEditor.style.display = "block";
+			let routine = this.selectedSpawnPoint.model.gnomeCode["main"];
 			Sortable.create(codeEditor, {
 				group: {
 					name: "gnomeCode",
@@ -69,21 +76,40 @@ namespace States {
 				}
 			});
 
-			codeEditor.innerHTML = "";
-			this.gameWorld.spawnedGnomeRoutine["main"].forEach(command => {
+			this.selectedSpawnPoint.model.gnomeCode["main"].forEach(command => {
 				PlayState.appendCommandToGui(codeEditor, command.type);
 			});
-			codeEditor.addEventListener("click", evt => this.handleCommandClick(evt));
+		}
+
+		initializeSpawnIndicator() {
+			this.spawnIndicator = this.game.add.graphics(0, 0);
+			this.spawnIndicator.beginFill(0xffff00, 0.3);
+			this.spawnIndicator.moveTo(0, -1000);
+			this.spawnIndicator.lineTo(0, -100);
+			this.spawnIndicator.lineTo(WorldConstants.BLOCK_WIDTH / 2, -100 + WorldConstants.BLOCK_HEIGHT / 2);
+			this.spawnIndicator.lineTo(WorldConstants.BLOCK_WIDTH, -100);
+			this.spawnIndicator.lineTo(WorldConstants.BLOCK_WIDTH, -1000);
+			this.spawnIndicator.endFill();
+
+			this.spawnIndicator.alpha = 0;
+		}
+
+		toggleSpawnIndicator(house?: House) {
+			if (house) {
+				let spawnScreenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(house.location);
+				if (this.spawnIndicator.x === spawnScreenCoordinates.x && this.spawnIndicator.y === spawnScreenCoordinates.y) {
+					return;
+				}
+				this.spawnIndicator.x = spawnScreenCoordinates.x;
+				this.spawnIndicator.y = spawnScreenCoordinates.y;
+			}
+
+			this.spawnIndicator.alpha = house ? 0 : 1;
+			this.game.add.tween(this.spawnIndicator).to({alpha: house ? 1 : 0}, 300, null, true);
 		}
 
 		drawSpawnButton() {
-			let spawnButton = this.drawButton(94, 10, "play_button", () => this.gameWorld.spawnGnome());
-			spawnButton.events.onInputOver.add(() => {
-				this.gameWorld.toggleSpawnPointIndicator(true);
-			});
-			spawnButton.events.onInputOut.add(() => {
-				this.gameWorld.toggleSpawnPointIndicator(false);
-			});
+			this.drawButton(94, 10, "play_button", () => this.gameWorld.spawnGnomes());
 		}
 
 		private drawButton(x: number, y: number, pictureKey, trigger: Function): Phaser.Sprite {
@@ -100,9 +126,8 @@ namespace States {
 			if (!target.classList.contains("commandButton")) {
 				return;
 			}
-			let gnomeCodeButtons = document.getElementById("gnomeCodeButtons");
 			let commandType = parseInt(target.dataset["commandType"]);
-			this.gameWorld.spawnedGnomeRoutine["main"].push(new Command(commandType));
+			this.selectedSpawnPoint.model.gnomeCode["main"].push(new Command(commandType));
 			PlayState.appendCommandToGui(document.getElementById("gnomeCodeEditor"), commandType);
 		}
 
@@ -113,7 +138,7 @@ namespace States {
 			}
 			let editor = document.getElementById("gnomeCodeEditor");
 			let index = Array.prototype.indexOf.call(editor.children, target);
-			this.gameWorld.spawnedGnomeRoutine["main"].splice(index, 1);
+			this.selectedSpawnPoint.model.gnomeCode["main"].splice(index, 1);
 			editor.removeChild(target);
 		}
 

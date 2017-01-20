@@ -39,6 +39,8 @@ namespace States {
 			this.load.image("tree-5", "assets/images/element_tree-5.png");
 			this.load.image("tree-6", "assets/images/element_tree-6.png");
 
+			this.load.image("house", "assets/images/gnome_house.png");
+
 			this.load.image("waterdrop_empty", "assets/images/waterdrop_empty.png");
 			this.load.image("waterdrop_filled", "assets/images/waterdrop_filled.png");
 

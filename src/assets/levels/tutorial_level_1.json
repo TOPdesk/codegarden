@@ -4,15 +4,16 @@
 			[0, 0, 0],
 			[0, 0, 0],
 			[0, 0, 1]],
-		"spawnpoint": {
-			"positionX": 1,
-			"positionY": 1
-		},
 		"objects": [
 			{
 				"type": "TREE",
 				"positionX": 0,
 				"positionY": 2
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 1,
+				"positionY": 1
 			}
 		],
 		"victoryConditions": [

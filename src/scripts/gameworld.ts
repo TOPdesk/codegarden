@@ -14,17 +14,17 @@ class GameWorld {
 	constructor(public game: Phaser.Game) {
 		this.blockGroup = game.add.group(game.world, "blocks");
 		this.entityGroup = game.add.group(game.world, "entities");
-		this.spawnIndicator = this.createSpawnIndicator();
 
 		this.startCodeTimer();
 	}
 
 	public level: Level;
-	public spawnedGnomeRoutine: { [key: string]: Array<Command> } = {};
+
 	private gnomes: Array<Gnome>;
 	private blockGroup: Phaser.Group;
 	private entityGroup: Phaser.Group;
-	private spawnIndicator: Phaser.Graphics;
+
+	public selectionListener: (house?: House) => void;
 
 	/**
 	 * Loads the level with the provided name. It should be a JSON file that is loaded into the cache
@@ -34,6 +34,9 @@ class GameWorld {
 		this.blockGroup.removeAll(true);
 		this.entityGroup.removeAll(true);
 		this.gnomes = [];
+		if (this.selectionListener) {
+			this.selectionListener();
+		}
 
 		let levelDefinition = this.game.cache.getJSON(levelName).LEVEL_DEFINITION;
 		this.level = new Level(levelDefinition);
@@ -43,7 +46,13 @@ class GameWorld {
 			Messages.show(levelDefinition.introMessage);
 		}
 
-		this.spawnGnome();
+		this.level.houses.forEach(house => {
+			house.events.onInputDown.add(() => {
+				if (this.selectionListener) {
+					this.selectionListener(house);
+				}
+			});
+		});
 	}
 
 	/**
@@ -78,14 +87,6 @@ class GameWorld {
 		}
 	}
 
-	/**
-	 * Show/hide the spawn point
-	 */
-	toggleSpawnPointIndicator(show: boolean) {
-		let newAlpha = show ? 1 : 0;
-		this.game.add.tween(this.spawnIndicator).to({alpha: newAlpha}, 300, null, true);
-	}
-
 	killGnome(gnome: Gnome, causeOfDeath: CauseOfDeath) {
 		this.gnomes.splice(this.gnomes.indexOf(gnome), 1);
 		this.entityGroup.remove(gnome);
@@ -93,11 +94,13 @@ class GameWorld {
 		gnome.die(causeOfDeath);
 	}
 
-	spawnGnome() {
-		let newGnome = new Gnome(this.game, this.level.spawnpoint.positionX, this.level.spawnpoint.positionY, this.spawnedGnomeRoutine);
-		this.entityGroup.add(newGnome);
-		this.gnomes.push(newGnome);
-		this.determineEntityZIndices();
+	spawnGnomes() {
+		this.level.houses.forEach(house => {
+			let newGnome = new Gnome(this.game, house.model.positionX, house.model.positionY, house.model.gnomeCode);
+			this.entityGroup.add(newGnome);
+			this.gnomes.push(newGnome);
+			this.determineEntityZIndices();
+		});
 	}
 
 	private determineEntityZIndices() {
@@ -126,24 +129,6 @@ class GameWorld {
 		timer.start();
 	}
 
-	private createSpawnIndicator(): Phaser.Graphics {
-		let indicator = this.game.add.graphics(0, 0);
-		indicator.beginFill(0xffff00, 0.3);
-		indicator.moveTo(0, -1000);
-		indicator.lineTo(0, -100);
-		indicator.lineTo(WorldConstants.BLOCK_WIDTH / 2, -100 + WorldConstants.BLOCK_HEIGHT / 2);
-		indicator.lineTo(WorldConstants.BLOCK_WIDTH, -100);
-		indicator.lineTo(WorldConstants.BLOCK_WIDTH, -1000);
-		indicator.endFill();
-
-		let spawnScreenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new MapPoint(1, 1));
-		indicator.x = spawnScreenCoordinates.x;
-		indicator.y = spawnScreenCoordinates.y;
-
-		indicator.alpha = 0;
-		return indicator;
-	}
-
 	private checkVictory() {
 		if (!this.level.checkVictory()) {
 			return;
@@ -159,23 +144,23 @@ class GameWorld {
 class Level {
 	//Array access should be done in [y][x] order!
 	private layout: Array<Array<WorldConstants.BlockType>>;
-	spawnpoint: any;
 	private gnome: any;
 	private objects: any;
 	private victoryConditions: Array<VictoryCondition>;
 	private objectMap = {};
 
+	public houses: House[] = [];
+
 	constructor(levelDefinition) {
 		this.layout = levelDefinition.layout;
-		this.spawnpoint = levelDefinition.spawnpoint;
 		this.gnome = levelDefinition.gnome;
 		this.objects = levelDefinition.objects;
 		this.victoryConditions = levelDefinition.victoryConditions;
 	}
 
-	pointIsPassable(point: Point): boolean {
-		//All objects are impassable for now
-		return !(point.toString() in this.objectMap);
+	pointIsPassable(point: MapPoint): boolean {
+		//Only trees are impassable for now
+		return !(this.getObject(point) instanceof Tree);
 	}
 
 	getPointCauseOfDeath(point: MapPoint): CauseOfDeath {
@@ -248,6 +233,11 @@ class Level {
 	renderObject(game: Phaser.Game, model): Phaser.Sprite {
 		if (model.type === "TREE") {
 			return new Tree(game, model);
+		}
+		else if (model.type === "HOUSE") {
+			let house = new House(game, model);
+			this.houses.push(house);
+			return house;
 		}
 	}
 

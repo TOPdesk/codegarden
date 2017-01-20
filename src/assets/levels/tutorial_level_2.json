@@ -7,15 +7,21 @@
 			[0, 0, 0, 1, 1, 0],
 			[0, 0, 0, 0, 1, 0],
 			[0, 0, 1, 1, 1, 0]],
-		"spawnpoint": {
-			"positionX": 1,
-			"positionY": 1
-		},
 		"objects": [
 			{
 				"type": "TREE",
 				"positionX": 0,
 				"positionY": 2
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 1,
+				"positionY": 0
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 3,
+				"positionY": 4
 			}
 		]
 	}

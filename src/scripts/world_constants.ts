@@ -13,6 +13,7 @@ namespace WorldConstants {
 
 	export enum ObjectType {
 		NOTHING,
-		TREE
+		TREE,
+		HOUSE
 	}
 }
