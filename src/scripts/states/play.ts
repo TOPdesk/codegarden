@@ -21,7 +21,6 @@ namespace States {
 
 			this.initializeSpawnIndicator();
 			this.initializeButtons();
-			this.initializeCodeEditor();
 			this.drawSpawnButton();
 
 			document.getElementById("innerCodeEditor").addEventListener("click", evt => this.handleCommandClick(evt));
@@ -71,9 +70,18 @@ namespace States {
 				},
 				animation: 150,
 				onSort: (evt) => {
-					let command = evt.from.id === "gnomeCodeEditor" ?
+					let command = evt.from.id === "innerCodeEditor" ?
 						routine.splice(evt.oldIndex, 1)[0] : new Command(parseInt(evt.item.dataset["commandType"]));
 					routine.splice(evt.newIndex, 0, command);
+
+					if (routine.length > this.selectedSpawnPoint.model.sizeLimit) {
+						routine.splice(this.selectedSpawnPoint.model.sizeLimit);
+						while (innerCodeEditor.children.length > this.selectedSpawnPoint.model.sizeLimit) {
+							innerCodeEditor.removeChild(innerCodeEditor.children.item(this.selectedSpawnPoint.model.sizeLimit));
+						}
+					}
+
+					this.updateCommandsLabel();
 				}
 			});
 
