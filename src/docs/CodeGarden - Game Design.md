@@ -77,9 +77,15 @@ So, in total, death costs a GNOME two turns.
 ## Objects
 There are many different objects to be found in the world of CodeGarden®.
 
-### Houses
-Each house houses a GNOME.
-You can not walk through a tile with a house on it.
+### Buildings
+
+#### GNHOME
+This is where GNOMEs spawn.
+They start out in their house, with the direction of the door determining which direction the GNOME starts out facing
+
+#### Library
+Used to store subroutines.
+Each GNOME can use a subroutine.
 
 ### Trees
 Trees are of vital importance to GNOME reproduction as they spawn GNOMEbabies.
@@ -111,8 +117,6 @@ Water tiles hold water.
 A GNOME can not walk over an empty water tile without drowning.
 As any gardener will tell you, water is vital to a healthy CodeGarden®.
 
-
-
 # BACKSTAGE INFO
 Here be info not meant for the players
 
@@ -138,6 +142,19 @@ Just for fun, players are allowed to edit the programs that have the gnome move 
 ### Region 1
 Region 1 is a desert. There will be a bit of water here, some rocks and a few trees, but not much else.
 
+#### Level interconnection
+
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 1 | 1 | 1 | 1 | X | X | X | X | X | X |
+| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2 | 2 |
+| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2 | 2 |
+| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2 | 2 |
+| 3 | 3 | 3 | 3 | 3 | 2 | 2 | 2 | 2 | 2 | 2 |
+| 3 | 3 | 3 | 3 | 3 | 2 | 2 | 2 | 2 | 2 | 2 |
+| 3 | 3 | 3 | 3 | 3 | X | X | X | X | X | X |
+| 3 | 3 | 3 | 3 | 3 | X | X | X | X | X | X |
+
 #### Level 1 - Growing trees 
 Level one introduces the following concepts:
 - Basic programming
@@ -155,7 +172,7 @@ DDDDT
 Required program to win the level:  
 [FFFLFFLARA]
 
-### Level 2 - Multiple gnomes
+#### Level 2 - Multiple gnomes
 Level two introduces the following concepts:
 - Multiple gnomes
 - Gnome clashing
@@ -171,23 +188,24 @@ TDDDDD
 ```
 Required programs to win the level:   
 H1 [FLFLARFFLA] => this program is fixed and cannot be changed   
-H2 [FFRFFFRFALFLA] => Note that starting out with [FRF] will cause both gnomes to end up on the same tile. This will cause a problem as they will be fighting (or something like that)
+H2 [FFRFFFRFALFLA] => Note that starting out with [FRF] will cause both gnomes to end up on the same tile.
+This will cause a problem as they will bump into each other, returning them to their previous position.
 
-## Planned expansions
+#### Level 3 - Subroutines
+Level three introduces the following concepts:
+- Subroutines and the library
+- Mushrooms
 
-### Actions
-woodchopping, bridge building, rock carrying, mating (between gnomes)  
-
-### Objects
-#### Tools
-axes, gloves (for carrying rocks?),
-
-### Tiles
-salt water, fresh water, mud, swamp, ice (slide along), lava, puddle
-
-### Programming concepts
-boolean logic, looping, subroutines
-Subroutines should be named and gnome-independent, i.e. able to be used by different gnomes.
+Level layout (L= library, D = desert, H = house, M = mushroom, W = Water, T = tree)
+```
+LHDDM
+WWWDM
+TDWWW
+DDDDD
+```
+Required programs to win the level:   
+H1 [Fn1 RFFR Fn1] => Use subroutine Fn1   
+Fn1 [FFRFLA]
 
 ### Other
 - Death gnomes spawn clouds, 3 clouds make rain, rain waters the ground directly under where the gnome died.
