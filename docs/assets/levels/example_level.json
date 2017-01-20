@@ -1,0 +1,42 @@
+{"LEVEL_DEFINITION":
+	{
+	"layout": [
+		[0, 0, 0, 0, 1, 1],
+		[0, 0, 0, 1, 1, 1],
+		[0, 1, 0, 1, 0, 0],
+		[0, 0, 0, 1, 1, 0],
+		[0, 0, 0, 0, 1, 0],
+		[0, 0, 1, 1, 1, 0]],
+
+  "spawnpoint": {
+    "positionX": 2,
+    "positionY": 3
+  },
+
+  "gnome": {
+    "positionX": 2,
+    "positionY": 3
+  },
+
+  "objects": [
+      {
+          "type" : "TREE",
+          "positionX": 1,
+          "positionY": 3,
+          "color" : "default"
+      },
+	  {
+          "type" : "TREE",
+          "positionX": 0,
+          "positionY": 4,
+          "color" : "default"
+      },
+	  {
+          "type" : "TREE",
+          "positionX": 3,
+          "positionY": 4,
+          "color" : "default"
+      }
+    ]
+	}
+}

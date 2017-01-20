@@ -1,0 +1,37 @@
+{
+	"LEVEL_DEFINITION": 	{
+		"layout": [
+			[0, 0, 0],
+			[0, 0, 0],
+			[0, 0, 1]],
+		"objects": [
+			{
+				"type": "TREE",
+				"positionX": 0,
+				"positionY": 2
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 1,
+				"positionY": 1,
+				"initialCode": "WRAW",
+				"sizeLimit": 10,
+				"direction": 2
+			}
+		],
+		"victoryConditions": [
+			{
+				"type": "ENTITY_EXISTS",
+				"entityType": "TREE",
+				"requiredProperties": [
+					{
+						"name": "treeLevel",
+						"requirementType": "GREATER_THAN",
+						"value": 1
+					}
+				]
+			}
+		],
+		"introMessage": "Greetings, commoner!\nThis puny tree is not large enough to protect my royal beard from the sun. Water that sapling and grant me some shade!"
+	}
+}

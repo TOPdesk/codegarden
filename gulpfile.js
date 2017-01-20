@@ -19,11 +19,12 @@ const jasmineBrowser = require('gulp-jasmine-browser');
 const karma = require("gulp-karma-runner");
 
 const srcs = {
+	buildArtefacts: 'build/**/*',
 	scripts: 'src/scripts/**/*.ts',
 	html: ['src/*.html', 'src/templates/*.html'],
 	styles: 'src/styles/**/*.less',
 	assets: 'src/assets/**/*',
-	libs: ['src/libs/phaser/build/phaser.min.js', 'src/libs/jasmine-core/**/*', 'src/libs/Sortable/Sortable.js']
+	libs: ['src/libs/phaser/build/phaser.min.js', 'src/libs/Sortable/Sortable.js']
 };
 
 const dests = {
@@ -31,7 +32,8 @@ const dests = {
 	libs: 'build/libs/',
 	assets: 'build/assets/',
 	scripts: 'build/scripts/',
-	styles: 'build/styles/'
+	styles: 'build/styles/',
+	githubPages: 'docs/'
 };
 
 gulp.task('browserSync', () => {
@@ -97,6 +99,14 @@ gulp.task('styles', () => {
 		.pipe(browserSync.reload({ stream: true }));
 });
 
+gulp.task('cleanWebsite', () => {
+	return del([dests.githubPages]);
+});
+
+gulp.task('copyWebsite', () => {
+	gulp.src(srcs.buildArtefacts).pipe(gulp.dest(dests.githubPages));
+});
+
 gulp.task('ts-test', () => {
 	return gulp.src('src/specs/**/*.spec.ts')
 		.pipe(typescript({
@@ -138,6 +148,10 @@ gulp.task('test', function (done) {
 });
 
 gulp.task('build', ['tslint', 'copy', 'assets', 'html', 'scripts', 'styles']);
+
+gulp.task('website', done => {
+	runSequence('clean', 'build', 'cleanWebsite', 'copyWebsite', () => done());
+});
 
 gulp.task('default', function (done) {
     runSequence('clean', 'build', 'browserSync', () => {
