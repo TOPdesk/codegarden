@@ -130,6 +130,8 @@ Level design philosophy:
 For example, if we make it rain from the gnomes beards after they die, this should happen in the first level as well even if it's useless.
 - See also: [this video](https://www.youtube.com/watch?v=8FpigqfcvlM)
 
+Houses will be numbered according to their natural order; counting from left to right, then from top to bottom.
+
 ### Level 0 - The start menu
 - Here, we are going to introduce gnome movement.
 The start menu is a T-intersection with three choices at its ends (quit, start, options).
@@ -154,6 +156,10 @@ Region 1 is a desert. There will be a bit of water here, some rocks and a few tr
 | 3 | 3 | 3 | 3 | 3 | 2 | 2 | 2 | 2 | 2 | 2 |
 | 3 | 3 | 3 | 3 | 3 | X | X | X | X | X | X |
 | 3 | 3 | 3 | 3 | 3 | X | X | X | X | X | X |
+| 4 | 4 | 4 | 4 | 4 | X | X | X | X | X | X |
+| 4 | 4 | 4 | 4 | 4 | X | X | X | X | X | X |
+| 4 | 4 | 4 | 4 | 4 | X | X | X | X | X | X |
+| 4 | 4 | 4 | 4 | 4 | X | X | X | X | X | X |
 
 #### Level 1 - Growing trees 
 Level one introduces the following concepts:
@@ -169,8 +175,11 @@ DDRWW
 DDDDT
 ```
 
+House orientation:   
+H1 => SW (down)
+
 Required program to win the level:  
-[FFFLFFLARA]
+H1 [FFFLFFLARA]
 
 #### Level 2 - Multiple gnomes
 Level two introduces the following concepts:
@@ -186,6 +195,11 @@ DWHWHT
 DDDDDD
 TDDDDD
 ```
+
+House orientation:   
+H1 => SW (down)   
+H2 => SW (down)
+
 Required programs to win the level:   
 H1 [FLFLARFFLA] => this program is fixed and cannot be changed   
 H2 [FFRFFFRFALFLA] => Note that starting out with [FRF] will cause both gnomes to end up on the same tile.
@@ -201,11 +215,37 @@ Level layout (L= library, D = desert, H = house, M = mushroom, W = Water, T = tr
 LHDDM
 WWWDM
 TDWWW
-DDDDD
+DDDDW
 ```
+
+House orientation:   
+H1 => SE (right)
+
 Required programs to win the level:   
 H1 [Fn1 RFFR Fn1] => Use subroutine Fn1   
 Fn1 [FFRFLA]
+
+#### Level 4 - Sharing
+Level four introduces the following concepts:
+- Programming two gnomes
+- Sharing
+
+Level layout (D = desert, R = rock, W = water, H = house, L = library, T = tree)
+```
+DRDDW
+HLDDH
+DDDRD
+DTDDD
+```
+
+House orientation:   
+H1 => SW (down)   
+H2 => NE (up)
+
+Required programs to win the level:   
+H1 [F Fn1 LFLFA] => The last action from Fn1 will take water from the other gnome
+H2 [A Fn1] => The last action will give water to the other gnome
+Fn1 [LFFLA] 
 
 ### Other
 - Death gnomes spawn clouds, 3 clouds make rain, rain waters the ground directly under where the gnome died.
