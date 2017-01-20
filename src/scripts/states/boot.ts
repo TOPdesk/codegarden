@@ -1,6 +1,7 @@
 /// <reference path="../../libs/phaser/typescript/phaser.d.ts"/>
 /// <reference path="preload.ts"/>
 /// <reference path="play.ts"/>
+/// <reference path="menu.ts"/>
 
 namespace States {
 	export class BootState extends Phaser.State {
@@ -15,6 +16,7 @@ namespace States {
 			this.game.load.image("logo", "assets/images/logo.png");
 
 			this.game.state.add("preload", PreloadState);
+			this.game.state.add("menu", MenuState);
 			this.game.state.add("play", PlayState);
 		}
 

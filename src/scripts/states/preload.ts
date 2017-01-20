@@ -50,11 +50,12 @@ namespace States {
 			this.load.audio("falling_gnome_scream", "assets/sound/wilhelm_scream.ogg");
 			this.load.json("tutorial_level_1", "assets/levels/tutorial_level_1.json");
 			this.load.json("tutorial_level_2", "assets/levels/tutorial_level_2.json");
+			this.load.json("menu_level", "assets/levels/menu_level.json");
 		}
 
 		create() {
 			this.game.time.events.add(0, () => {
-				this.game.state.start("play");
+				this.game.state.start("menu");
 			}, this);
 		}
 	}
