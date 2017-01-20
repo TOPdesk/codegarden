@@ -2,10 +2,18 @@
 A game about gnomes, programming and gardening
 
 NOTE: Codegarden is still in its early stages of development!
+Expect glorious MS paint placeholder graphics intermixed with the actual good graphics, discrepancies between the design
+document and reality, and a general inability to mute the Wilhelm Scream sound effect that is played whenever your gnome
+falls off the edge of the level.
+
+You can try out a snapshot of its current state [here](https://siriah.github.io/codegarden).
+
+# Developer instructions
 
 ## Building from Source
 
-In order to run the current version, first make sure you have git and npm available as command-line utilities (so you should install Git and NodeJS if you don't have them already). You also need gulp and bower, which you can get from npm by opening a command line window and running the following commands:
+First make sure you have git and npm available as command-line utilities (so you should install Git and NodeJS if you don't have them already).
+You also need gulp and bower, which you can get from npm by opening a command line window and running the following commands:
 
 - npm install -g bower
 - npm install -g gulp
@@ -30,26 +38,15 @@ question](http://stackoverflow.com/questions/21168141/cannot-install-packages-us
 for the reason). The npm install -g commands have to be run using
 sudo, because this installs global packages.
 
-## Gameplay
+## Deploying a new version to Github Pages
+Before deploying, check that the game compiles and starts up without errors. Then run:
+- gulp website
 
-### Tutorial levels
+After this command completes, push the changed files in the 'docs' directory to Github.
 
-In the tutorial there are clear goals to win the current level. Every
-level introduces some gameplay elements that are important for the
-main game. It is recommended you play through the tutorial before you
-start playing in the main game (which is still in development).
-
-### Tutorial Level 1 - Watering the Tree
+# Trees
 
 > Until you dig a hole, you plant a tree, you water it and make it
 > survive, you haven't done a thing. You are just talking.
 >
 > -- <cite>Wangari Maathai</cite>
-
-Welcome to Codegarden! In this game you control gnomes that can alter
-their environment. Gnomes have to be told their task in extreme detail
-before they set off to work. They will follow your orders exactly,
-even if this might cause them to get into trouble!
-
-In this first level, you will have to instruct the gnome to go and
-tend to the tree. It looks really thirsty...
