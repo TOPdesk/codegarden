@@ -14,7 +14,8 @@
 				"type": "HOUSE",
 				"positionX": 1,
 				"positionY": 1,
-				"initialCode": "WRAW"
+				"initialCode": "WRAW",
+				"sizeLimit": 10
 			}
 		],
 		"victoryConditions": [

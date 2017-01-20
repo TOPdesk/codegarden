@@ -33,4 +33,5 @@ interface HouseModel {
 	positionX: number;
 	positionY: number;
 	initialCode?: string;
+	sizeLimit: number;
 }

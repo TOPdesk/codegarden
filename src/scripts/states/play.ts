@@ -73,6 +73,13 @@ namespace States {
 					let command = evt.from.id === "gnomeCodeEditor" ?
 						routine.splice(evt.oldIndex, 1)[0] : new Command(parseInt(evt.item.dataset["commandType"]));
 					routine.splice(evt.newIndex, 0, command);
+
+					if (routine.length > this.selectedSpawnPoint.model.sizeLimit) {
+						routine.splice(this.selectedSpawnPoint.model.sizeLimit);
+						while (codeEditor.children.length > this.selectedSpawnPoint.model.sizeLimit) {
+							codeEditor.removeChild(codeEditor.children.item(this.selectedSpawnPoint.model.sizeLimit));
+						}
+					}
 				}
 			});
 
@@ -126,6 +133,10 @@ namespace States {
 			if (!target.classList.contains("commandButton")) {
 				return;
 			}
+			if (this.selectedSpawnPoint.gnomeCode["main"].length >= this.selectedSpawnPoint.model.sizeLimit) {
+				return;
+			}
+
 			let commandType = parseInt(target.dataset["commandType"]);
 			this.selectedSpawnPoint.gnomeCode["main"].push(new Command(commandType));
 			PlayState.appendCommandToGui(document.getElementById("gnomeCodeEditor"), commandType);
