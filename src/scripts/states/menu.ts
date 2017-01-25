@@ -32,7 +32,8 @@ namespace States {
 		}
 
 		private continueGame(): void {
-			console.log("continue");
+			let level = prompt("Continue from which level?", "tutorial_level_2");
+			this.game.state.start("play", true, false, level);
 		}
 
 		private options(): void {

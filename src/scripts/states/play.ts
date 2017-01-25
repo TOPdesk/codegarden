@@ -13,11 +13,17 @@ namespace States {
 		private selectedSpawnPoint: House;
 		private spawnIndicator: Phaser.Graphics;
 
+		private initialLevel: string;
+
+		init(initialLevel?: string) {
+			this.initialLevel = initialLevel || "tutorial_level_1";
+		}
+
 		create() {
 			this.game.camera.setPosition(CAMERA_OFFSET_X, CAMERA_OFFSET_Y);
 
 			this.gameWorld = new GameWorld(this.game);
-			this.gameWorld.loadLevel("tutorial_level_1");
+			this.gameWorld.loadLevel(this.initialLevel);
 
 			this.initializeSpawnIndicator();
 			this.initializeButtons();
