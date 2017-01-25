@@ -34,4 +34,5 @@ interface HouseModel extends GameObjectModel {
 	initialCode?: string;
 	sizeLimit: number;
 	direction: Direction;
+	readonly?: boolean;
 }

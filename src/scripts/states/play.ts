@@ -12,6 +12,7 @@ namespace States {
 		private gameWorld: GameWorld;
 		private selectedSpawnPoint: House;
 		private spawnIndicator: Phaser.Graphics;
+		private codeEditorSortable;
 
 		private initialLevel: string;
 
@@ -27,6 +28,7 @@ namespace States {
 
 			this.initializeSpawnIndicator();
 			this.initializeButtons();
+			this.initializeEditor();
 			this.drawSpawnButton();
 
 			document.getElementById("innerCodeEditor").addEventListener("click", evt => this.handleCommandClick(evt));
@@ -58,17 +60,9 @@ namespace States {
 			PlayState.appendCommandToGui(gnomeCodeButtons, CommandType.ACT);
 		}
 
-		showCodeInEditor() {
-			document.getElementById("gnomeCodeEditor").style.display = this.selectedSpawnPoint ? "block" : "none";
-			if (!this.selectedSpawnPoint) {
-				return;
-			}
-
-			this.updateCommandsLabel();
+		initializeEditor() {
 			let innerCodeEditor = document.getElementById("innerCodeEditor");
-			innerCodeEditor.innerHTML = "";
-			let routine = this.selectedSpawnPoint.gnomeCode["main"];
-			Sortable.create(innerCodeEditor, {
+			this.codeEditorSortable = Sortable.create(innerCodeEditor, {
 				group: {
 					name: "gnomeCode",
 					pull: false,
@@ -76,6 +70,7 @@ namespace States {
 				},
 				animation: 150,
 				onSort: (evt) => {
+					let routine = this.selectedSpawnPoint.gnomeCode["main"];
 					let command = evt.from.id === "innerCodeEditor" ?
 						routine.splice(evt.oldIndex, 1)[0] : new Command(parseInt(evt.item.dataset["commandType"]));
 					routine.splice(evt.newIndex, 0, command);
@@ -90,6 +85,21 @@ namespace States {
 					this.updateCommandsLabel();
 				}
 			});
+		}
+
+		showCodeInEditor() {
+			let outerEditor = document.getElementById("gnomeCodeEditor");
+			outerEditor.style.display = this.selectedSpawnPoint ? "block" : "none";
+			if (!this.selectedSpawnPoint) {
+				return;
+			}
+
+			outerEditor.classList.toggle("readonly", this.selectedSpawnPoint.model.readonly);
+			outerEditor.classList.toggle("editable", !this.selectedSpawnPoint.model.readonly);
+			this.updateCommandsLabel();
+			let innerCodeEditor = document.getElementById("innerCodeEditor");
+			innerCodeEditor.innerHTML = "";
+			this.codeEditorSortable.options.disabled = this.selectedSpawnPoint.model.readonly;
 
 			this.selectedSpawnPoint.gnomeCode["main"].forEach(command => {
 				PlayState.appendCommandToGui(innerCodeEditor, command.type);
@@ -98,7 +108,12 @@ namespace States {
 
 		updateCommandsLabel() {
 			let label = document.getElementById("codeEditorLabel");
-			label.innerText = this.selectedSpawnPoint.gnomeCode["main"].length + "/" + this.selectedSpawnPoint.model.sizeLimit + " commands used";
+			if (this.selectedSpawnPoint.model.readonly) {
+				label.innerText = "This gnome's routine can't be changed";
+			}
+			else {
+				label.innerText = this.selectedSpawnPoint.gnomeCode["main"].length + "/" + this.selectedSpawnPoint.model.sizeLimit + " commands used";
+			}
 		}
 
 		initializeSpawnIndicator() {
@@ -143,10 +158,9 @@ namespace States {
 
 		private handleCommandButtonClick(evt: MouseEvent) {
 			let target = evt.target as HTMLElement;
-			if (!target.classList.contains("commandButton")) {
-				return;
-			}
-			if (this.selectedSpawnPoint.gnomeCode["main"].length >= this.selectedSpawnPoint.model.sizeLimit) {
+			if (!target.classList.contains("commandButton")
+				|| this.selectedSpawnPoint.model.readonly
+				|| this.selectedSpawnPoint.gnomeCode["main"].length >= this.selectedSpawnPoint.model.sizeLimit) {
 				return;
 			}
 
@@ -158,7 +172,7 @@ namespace States {
 
 		private handleCommandClick(evt: MouseEvent) {
 			let target = evt.target as HTMLElement;
-			if (!target.classList.contains("commandButton")) {
+			if (!target.classList.contains("commandButton") || this.selectedSpawnPoint.model.readonly) {
 				return;
 			}
 			let editor = document.getElementById("innerCodeEditor");

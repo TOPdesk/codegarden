@@ -27,15 +27,15 @@
 				"positionX": 2,
 				"positionY": 2,
 				"initialCode": "LWLARWWLA",
-				"sizeLimit": 10,
-				"direction": 3
+				"direction": 3,
+				"readonly": true
 			},
 			{
 				"type": "HOUSE",
 				"positionX": 4,
 				"positionY": 2,
 				"initialCode": "WRWWWRWALWLA",
-				"sizeLimit": 10,
+				"sizeLimit": 15,
 				"direction": 3
 			}
 		]

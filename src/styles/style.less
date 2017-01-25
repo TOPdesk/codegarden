@@ -42,14 +42,25 @@ body {
 }
 
 #codeEditorLabel {
-	color: #ff5555;
+	.readonly & {
+		color: #999999;
+	}
+	.editable & {
+		color: #ff5555;
+	}
 	font-size: 20px;
 	font-family: "Comic Sans MS", cursive, sans-serif;
 	margin-left: 5px;
 }
 
 #innerCodeEditor {
-	border: solid 4px #ff5555;
+	.readonly & {
+		border-color: #999999;
+	}
+	.editable & {
+		border-color: #ff5555;
+	}
+	border: 4px solid;
 	border-radius: 5px;
 	background: white;
 	min-width: 500px;
@@ -59,6 +70,9 @@ body {
 .commandButton {
 	display: inline-block;
 	cursor: pointer;
+	.readonly & {
+		cursor: default;
+	}
 	width: 74px;
 	height: 74px;
 	background: none;
