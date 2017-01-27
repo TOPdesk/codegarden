@@ -23,6 +23,7 @@ class GameWorld {
 	public level: Level;
 
 	private gnomes: Array<Gnome>;
+	private gnomeCode: GnomeCode;
 	private blockGroup: Phaser.Group;
 	private entityGroup: Phaser.Group;
 
@@ -36,6 +37,7 @@ class GameWorld {
 		this.blockGroup.removeAll(true);
 		this.entityGroup.removeAll(true);
 		this.gnomes = [];
+		this.gnomeCode = new GnomeCode({});
 		if (this.selectionListener) {
 			this.selectionListener();
 		}
@@ -126,20 +128,15 @@ class GameWorld {
 	private startCodeTimer() {
 		let timer = this.game.time.create();
 		timer.loop(200, () => {
-			for (let i = this.gnomes.length - 1; i >= 0; i--) {
-				let gnome = this.gnomes[i];
-				gnome.executeNextCommand(this);
-				this.checkVictory();
+			this.gnomeCode.executeNextCommand(this, this.gnomes);
+			if (this.level.checkVictory()) {
+				this.winLevel();
 			}
 		});
 		timer.start();
 	}
 
-	private checkVictory() {
-		if (!this.level.checkVictory()) {
-			return;
-		}
-
+	private winLevel() {
 		//TODO: Go to the next level upon achieving victory
 		Messages.show("You won!", {
 			callback: () => this.loadLevel("tutorial_level_2")
@@ -150,7 +147,6 @@ class GameWorld {
 class Level {
 	//Array access should be done in [y][x] order!
 	private layout: Array<Array<WorldConstants.BlockType>>;
-	private gnome: any;
 	private objects: any;
 	private victoryConditions: Array<VictoryCondition>;
 	private objectMap = {};
@@ -159,7 +155,6 @@ class Level {
 
 	constructor(levelDefinition) {
 		this.layout = levelDefinition.layout;
-		this.gnome = levelDefinition.gnome;
 		this.objects = levelDefinition.objects;
 		this.victoryConditions = levelDefinition.victoryConditions;
 	}

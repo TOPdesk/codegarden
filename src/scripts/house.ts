@@ -1,7 +1,7 @@
 /// <reference path="../libs/phaser/typescript/phaser.d.ts"/>
 
 class House extends GameObject {
-	public gnomeCode: { [key: string]: Array<Command> };
+	public gnomeCode: Command[];
 
 	constructor(game: Phaser.Game, public model: HouseModel) {
 		super(game, model, House.determineSprite(model.direction), false);
@@ -9,13 +9,12 @@ class House extends GameObject {
 		this.input.pixelPerfectClick = true;
 		this.input.useHandCursor = true;
 
-		let code = [];
+		this.gnomeCode = [];
 		if (model.initialCode) {
 			for (let i = 0; i < model.initialCode.length; i++) {
-				code.push(CommandType.getCommandTypeForShorthand(model.initialCode.charAt(i)));
+				this.gnomeCode.push(CommandType.getCommandTypeForShorthand(model.initialCode.charAt(i)));
 			}
 		}
-		this.gnomeCode = { main: code };
 
 		game.add.existing(this);
 	}

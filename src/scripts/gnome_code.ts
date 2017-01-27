@@ -2,63 +2,45 @@
 /// <reference path="gnome.ts"/>
 
 class GnomeCode {
-	private gnome: Gnome;
-	private routineMap: { [key: string]: Array<Command> };
-	private futureCommandStack: Array<Command> = [];
-
-	constructor(gnome: Gnome, routineMap: { [key: string]: Array<Command> }) {
-		this.gnome = gnome;
-		this.routineMap = routineMap;
-		if ("main" in routineMap) {
-			this.queueUpRoutine(routineMap["main"]);
-		}
-	}
+	constructor(public libraries: { [key: string]: Array<Command> }) {}
 
 	/**
 	 * Executes the next command.
 	 */
-	executeNextCommand(gameWorld: GameWorld) {
-		let command = this.futureCommandStack.pop();
-		if (command === undefined) {
-			gameWorld.killGnome(this.gnome, CauseOfDeath.CODE_RAN_OUT);
+	executeNextCommand(gameWorld: GameWorld, gnomes: Gnome[]) {
+		gnomes.forEach(gnome => {
+			let command = gnome.codeStack.pop();
+			if (command === undefined) {
+				gameWorld.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
+				return;
+			}
+
+			switch (command.type) {
+				case CommandType.WALK: gameWorld.tryMove(gnome); break;
+				case CommandType.LEFT: gnome.rotateLeft(); break;
+				case CommandType.RIGHT: gnome.rotateRight(); break;
+				case CommandType.ACT: gameWorld.doGnomeAction(gnome); break;
+				case CommandType.CALL_ROUTINE: this.queueUpRoutine(gameWorld, gnome, command); break;
+			}
+		});
+	}
+
+	private queueUpRoutine(gameWorld: GameWorld, gnome: Gnome, command: Command) {
+		let routine = this.libraries[command.args[0]];
+		if (!routine || !routine.length) {
+			gameWorld.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
 			return;
 		}
 
-		switch (command.type) {
-			case CommandType.WALK:
-				gameWorld.tryMove(this.gnome);
-				break;
-			case CommandType.LEFT:
-				this.gnome.rotateLeft();
-				break;
-			case CommandType.RIGHT:
-				this.gnome.rotateRight();
-				break;
-			case CommandType.ACT:
-				gameWorld.doGnomeAction(this.gnome);
-				break;
-			case CommandType.CALL_ROUTINE:
-				this.queueUpRoutine(this.routineMap[command.args[0]]); //TODO kill gnome if the routine doesn't exist
-				break;
-			default:
-				break;
-		}
-	}
-
-	private queueUpRoutine(routine: Array<Command>) {
 		for (let i = routine.length; i >= 0; i--) {
-			this.futureCommandStack.push(routine[i]);
+			gnome.codeStack.push(routine[i]);
 		}
 	}
 
 }
 
 class Command {
-	constructor(public type: CommandType, public args: Array<string> = []) {}
-
-	getArgument(index: number): string {
-		return this.args[index];
-	}
+	constructor(public type: CommandType, public args = []) {}
 }
 
 enum CommandType {
@@ -90,6 +72,7 @@ namespace CommandType {
 			case "L": return new Command(CommandType.LEFT);
 			case "R": return new Command(CommandType.RIGHT);
 			case "A": return new Command(CommandType.ACT);
+			default: throw new Error("Cannot parse command " + shorthand);
 		}
 	}
 }

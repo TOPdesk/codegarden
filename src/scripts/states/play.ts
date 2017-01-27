@@ -70,7 +70,7 @@ namespace States {
 				},
 				animation: 150,
 				onSort: (evt) => {
-					let routine = this.selectedSpawnPoint.gnomeCode["main"];
+					let routine = this.selectedSpawnPoint.gnomeCode;
 					let command = evt.from.id === "innerCodeEditor" ?
 						routine.splice(evt.oldIndex, 1)[0] : new Command(parseInt(evt.item.dataset["commandType"]));
 					routine.splice(evt.newIndex, 0, command);
@@ -101,7 +101,7 @@ namespace States {
 			innerCodeEditor.innerHTML = "";
 			this.codeEditorSortable.options.disabled = this.selectedSpawnPoint.model.readonly;
 
-			this.selectedSpawnPoint.gnomeCode["main"].forEach(command => {
+			this.selectedSpawnPoint.gnomeCode.forEach(command => {
 				PlayState.appendCommandToGui(innerCodeEditor, command.type);
 			});
 		}
@@ -112,7 +112,7 @@ namespace States {
 				label.innerText = "This gnome's routine can't be changed";
 			}
 			else {
-				label.innerText = this.selectedSpawnPoint.gnomeCode["main"].length + "/" + this.selectedSpawnPoint.model.sizeLimit + " commands used";
+				label.innerText = this.selectedSpawnPoint.gnomeCode.length + "/" + this.selectedSpawnPoint.model.sizeLimit + " commands used";
 			}
 		}
 
@@ -160,12 +160,12 @@ namespace States {
 			let target = evt.target as HTMLElement;
 			if (!target.classList.contains("commandButton")
 				|| this.selectedSpawnPoint.model.readonly
-				|| this.selectedSpawnPoint.gnomeCode["main"].length >= this.selectedSpawnPoint.model.sizeLimit) {
+				|| this.selectedSpawnPoint.gnomeCode.length >= this.selectedSpawnPoint.model.sizeLimit) {
 				return;
 			}
 
 			let commandType = parseInt(target.dataset["commandType"]);
-			this.selectedSpawnPoint.gnomeCode["main"].push(new Command(commandType));
+			this.selectedSpawnPoint.gnomeCode.push(new Command(commandType));
 			PlayState.appendCommandToGui(document.getElementById("innerCodeEditor"), commandType);
 			this.updateCommandsLabel();
 		}
@@ -177,7 +177,7 @@ namespace States {
 			}
 			let editor = document.getElementById("innerCodeEditor");
 			let index = Array.prototype.indexOf.call(editor.children, target);
-			this.selectedSpawnPoint.gnomeCode["main"].splice(index, 1);
+			this.selectedSpawnPoint.gnomeCode.splice(index, 1);
 			editor.removeChild(target);
 			this.updateCommandsLabel();
 		}
