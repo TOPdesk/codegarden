@@ -128,7 +128,7 @@ class GameWorld {
 
 	private startCodeTimer() {
 		let timer = this.game.time.create();
-		timer.loop(200, () => {
+		timer.loop(WorldConstants.TURN_LENGTH_IN_MILLIS, () => {
 			this.gnomeCode.executeNextCommand(this, this.gnomes);
 			if (this.level.checkVictory()) {
 				this.winLevel();

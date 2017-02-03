@@ -4,7 +4,7 @@
 /// <reference path="world_constants.ts"/>
 
 const GNOME_X_OFFSET = 60;
-const GNOME_Y_OFFSET = -65;
+const GNOME_Y_OFFSET = -85;
 
 class Gnome extends Phaser.Sprite {
 	private _location: MapPoint;
@@ -93,14 +93,16 @@ class Gnome extends Phaser.Sprite {
 		let gnomeTextureBase = (this.wateringCan ? "gnome_water" : "gnome_regular");
 		let gnomeTexture = gnomeTextureBase + (facingFront ? "_front" : "_back");
 		this.loadTexture(gnomeTexture);
+		this.animations.add("walk");
 	}
 
 	private tweenToLocation() {
+		this.animations.play("walk", 30, true);
 		let tween = this.game.add.tween(this);
 		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
 		return tween.to({
 			x: screenCoordinates.x + GNOME_X_OFFSET, y: screenCoordinates.y + GNOME_Y_OFFSET,
-		}, 500, Phaser.Easing.Quartic.Out);
+		}, WorldConstants.TURN_LENGTH_IN_MILLIS, Phaser.Easing.Linear.None);
 	}
 }
 

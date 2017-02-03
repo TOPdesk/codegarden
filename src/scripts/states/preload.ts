@@ -21,10 +21,11 @@ namespace States {
 			this.load.image("desert_block", "assets/images/desert_block.png");
 			this.load.image("stone_block", "assets/images/stone_block.png");
 
-			this.load.image("gnome_regular_front", "assets/images/gnome_regular_front.png");
-			this.load.image("gnome_regular_back", "assets/images/gnome_regular_back.png");
-			this.load.image("gnome_water_front", "assets/images/gnome_water_front.png");
-			this.load.image("gnome_water_back", "assets/images/gnome_water_back.png");
+			this.load.spritesheet("gnome_regular_front", "assets/images/gnome_regular_front.png", 70, 100);
+			this.load.spritesheet("gnome_regular_back", "assets/images/gnome_regular_back.png", 70, 100);
+			this.load.spritesheet("gnome_water_front", "assets/images/gnome_water_front.png", 70, 100);
+			this.load.spritesheet("gnome_water_back", "assets/images/gnome_water_back.png", 70, 100);
+
 			this.load.image("gnome_drowning", "assets/images/gnome_drowning.png");
 
 			this.load.image("control_action", "assets/images/control_action.png");
@@ -56,6 +57,7 @@ namespace States {
 			this.load.json("tutorial_level_1", "assets/levels/tutorial_level_1.json");
 			this.load.json("tutorial_level_2", "assets/levels/tutorial_level_2.json");
 			this.load.json("menu_level", "assets/levels/menu_level.json");
+			this.load.json("test", "assets/levels/example_level.json");
 		}
 
 		create() {
