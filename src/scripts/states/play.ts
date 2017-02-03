@@ -12,6 +12,7 @@ namespace States {
 		private gameWorld: GameWorld;
 		private selectedSpawnPoint: House;
 		private spawnIndicator: Phaser.Graphics;
+
 		private codeEditorSortable;
 
 		private initialLevel: string;
@@ -41,9 +42,21 @@ namespace States {
 			};
 		}
 
+		shutdown() {
+			//Remove all listeners from the relevant DOM elements by cloning them
+			let codeButtonBar = document.getElementById("gnomeCodeButtons");
+			let buttonBarClone = codeButtonBar.cloneNode();
+			codeButtonBar.parentNode.replaceChild(buttonBarClone, codeButtonBar);
+
+			let gnomeCodeEditor = document.getElementById("gnomeCodeEditor");
+			gnomeCodeEditor.style.display = "none";
+			let codeEditorClone = gnomeCodeEditor.cloneNode(true);
+			gnomeCodeEditor.parentNode.replaceChild(codeEditorClone, gnomeCodeEditor);
+		}
+
 		initializeButtons() {
 			let gnomeCodeButtons = document.getElementById("gnomeCodeButtons");
-			gnomeCodeButtons.addEventListener("click", evt => this.handleCommandButtonClick(evt));
+			gnomeCodeButtons.addEventListener("click", (evt) => this.handleCommandButtonClick(evt));
 
 			Sortable.create(gnomeCodeButtons, {
 				group: {
