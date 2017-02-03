@@ -1,6 +1,7 @@
 interface VictoryCondition {
 //Currently the only victory condition type is 'ENTITY_EXISTS': check if entities following some requirements exist.
 	type: "ENTITY_EXISTS";
+	amount?: number;
 	entityType: string;
 	requiredProperties?: Array<PropertyRequirement>;
 }
@@ -35,7 +36,8 @@ namespace VictoryCondition {
 				entitiesMeetingRequirements++;
 			}
 		}
-		if (entitiesMeetingRequirements > 0) {
+		let requiredAmount = victoryCondition.amount !== undefined ? victoryCondition.amount : 1;
+		if (entitiesMeetingRequirements >= requiredAmount) {
 			return true;
 		}
 	}

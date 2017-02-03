@@ -1,5 +1,5 @@
 {
-	"LEVEL_DEFINITION": 	{
+	"LEVEL_DEFINITION": {
 		"layout": [
 			[2, 2, 2, 1, 2, 2],
 			[1, 1, 1, 1, 2, 2],
@@ -34,9 +34,22 @@
 				"type": "HOUSE",
 				"positionX": 4,
 				"positionY": 2,
-				"initialCode": "WRWWWRWALWLA",
 				"sizeLimit": 15,
 				"direction": 3
+			}
+		],
+		"victoryConditions": [
+			{
+				"type": "ENTITY_EXISTS",
+				"entityType": "TREE",
+				"amount": 2,
+				"requiredProperties": [
+					{
+						"name": "treeLevel",
+						"requirementType": "GREATER_THAN",
+						"value": 1
+					}
+				]
 			}
 		]
 	}

@@ -148,16 +148,17 @@ class GameWorld {
 class Level {
 	//Array access should be done in [y][x] order!
 	private layout: Array<Array<WorldConstants.BlockType>>;
-	private objects: any;
+	private objectModels: any;
 	private victoryConditions: Array<VictoryCondition>;
 	private objectMap = {};
 
 	public houses: House[] = [];
 
 	constructor(levelDefinition) {
-		this.layout = levelDefinition.layout;
-		this.objects = levelDefinition.objects;
-		this.victoryConditions = levelDefinition.victoryConditions;
+		let levelDefinitionCopy = JSON.parse(JSON.stringify(levelDefinition));
+		this.layout = levelDefinitionCopy.layout;
+		this.objectModels = levelDefinitionCopy.objects;
+		this.victoryConditions = levelDefinitionCopy.victoryConditions;
 	}
 
 	pointIsPassable(point: MapPoint): boolean {
@@ -195,7 +196,7 @@ class Level {
 			return false;
 		}
 		for (let victoryCondition of this.victoryConditions) {
-			if (!VictoryCondition.check(victoryCondition, this.objects)) {
+			if (!VictoryCondition.check(victoryCondition, this.objectModels)) {
 				return false;
 			}
 		}
@@ -224,8 +225,8 @@ class Level {
 	}
 
 	renderObjects(entityGroup: Phaser.Group) {
-		for (let i = 0; i < this.objects.length; i++) {
-			let model = this.objects[i];
+		for (let i = 0; i < this.objectModels.length; i++) {
+			let model = this.objectModels[i];
 			let objectInstance = this.renderObject(entityGroup.game, model);
 			entityGroup.add(objectInstance);
 			this.objectMap[new MapPoint(model.positionX, model.positionY).toString()] = objectInstance;
