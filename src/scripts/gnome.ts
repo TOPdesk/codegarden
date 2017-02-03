@@ -105,6 +105,7 @@ class Gnome extends Phaser.Sprite {
 }
 
 enum CauseOfDeath {
+	NOTHING, //This should be the first one
 	FALLING,
 	DROWNING,
 	CODE_RAN_OUT

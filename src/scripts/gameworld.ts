@@ -80,13 +80,14 @@ class GameWorld {
 	 */
 	tryMove(gnome: Gnome) {
 		let newLocation = gnome.location.getNeighbor(gnome.direction);
-		if (this.level.pointIsPassable(newLocation)) {
+		let gnomeExistsInLocation = this.gnomes.filter(g => g.location.equals(newLocation)).length;
+		if (!gnomeExistsInLocation && this.level.pointIsPassable(newLocation)) {
 			gnome.location = newLocation;
 			this.determineEntityZIndices();
 		}
 
 		let causeOfDeath = this.level.getPointCauseOfDeath(newLocation);
-		if (causeOfDeath !== null) {
+		if (causeOfDeath) {
 			this.killGnome(gnome, causeOfDeath);
 		}
 	}
@@ -174,7 +175,7 @@ class Level {
 			return CauseOfDeath.DROWNING;
 		}
 
-		return null;
+		return CauseOfDeath.NOTHING;
 	}
 
 	getBlock(point: MapPoint) {

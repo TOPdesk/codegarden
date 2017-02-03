@@ -34,6 +34,10 @@ class MapPoint implements Point {
 	toString() {
 		return "MapPoint: " + this.x + "-" + this.y;
 	}
+
+	equals(other: MapPoint) {
+		return this.x === other.x && this.y === other.y;
+	}
 }
 
 class ScreenPoint implements Point {
