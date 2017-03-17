@@ -20,7 +20,8 @@
 			{
 				"type": "MUSHROOMS",
 				"positionX": 0,
-				"positionY": 2
+				"positionY": 2,
+				"amount": 3
 			},
 			{
 				"type": "HOUSE",

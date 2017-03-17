@@ -47,7 +47,11 @@ namespace States {
 			this.load.image("house_se", "assets/images/house_front_right.png");
 			this.load.image("house_sw", "assets/images/house_front_left.png");
 
-			this.load.image("mushrooms", "assets/images/mushrooms.png");
+			this.load.image("mushrooms_0", "assets/images/mushrooms_0.png");
+			this.load.image("mushrooms_1", "assets/images/mushrooms_1.png");
+			this.load.image("mushrooms_2", "assets/images/mushrooms_2.png");
+			this.load.image("mushrooms_3", "assets/images/mushrooms_3.png");
+
 			this.load.image("rock", "assets/images/rock.png");
 
 			this.load.image("waterdrop_empty", "assets/images/waterdrop_empty.png");

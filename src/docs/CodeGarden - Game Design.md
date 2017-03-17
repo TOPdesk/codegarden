@@ -225,6 +225,9 @@ Required programs to win the level:
 H1 [Fn1 RFFR Fn1] => Use subroutine Fn1   
 Fn1 [FFRFLA]
 
+A mushroom makes the GNOME float across 1 square of space (prevents death by falling/drowning). It's not possible to get water while floating.
+Mushrooms are consumed when using them. A square of mushrooms can be watered to grow more mushrooms (with a maximum of 3).
+
 #### Level 4 - Sharing
 Level four introduces the following concepts:
 - Programming two gnomes

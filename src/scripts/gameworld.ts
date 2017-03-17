@@ -69,7 +69,7 @@ class GameWorld {
 		let block = this.level.getBlock(actionLocation);
 
 		if (!this.level.doObjectAction(actionLocation, gnome)) {
-			if (block === WorldConstants.BlockType.WATER) {
+			if (!gnome.floating && block === WorldConstants.BlockType.WATER) {
 				gnome.wateringCan = true;
 			}
 		}
