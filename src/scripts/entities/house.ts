@@ -1,10 +1,11 @@
 /// <reference path="../../libs/phaser/typescript/phaser.d.ts"/>
+///<reference path="code_building.ts"/>
 
-class House extends GameObject {
+class House extends CodeBuilding {
 	public gnomeCode: Command[];
 
 	constructor(game: Phaser.Game, public model: HouseModel) {
-		super(game, model, House.determineSprite(model.direction), false);
+		super(game, model, House.determineSprite(model.direction));
 		this.inputEnabled = true;
 		this.input.pixelPerfectClick = true;
 		this.input.useHandCursor = true;
@@ -29,9 +30,6 @@ class House extends GameObject {
 	}
 }
 
-interface HouseModel extends GameObjectModel {
-	initialCode?: string;
-	sizeLimit: number;
+interface HouseModel extends CodeBuildingModel {
 	direction: Direction;
-	readonly?: boolean;
 }

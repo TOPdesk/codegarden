@@ -1,5 +1,4 @@
 /// <reference path="../../libs/phaser/typescript/phaser.d.ts"/>
-
 const OBJECT_SPRITE_X_OFFSET = 56;
 const OBJECT_SPRITE_Y_OFFSET = -88;
 
@@ -19,7 +18,7 @@ class GameObject extends Phaser.Sprite {
 	}
 
 	/**
-	 * Can be overridden by game options which have actions
+	 * Can be overridden by game objects which have actions
 	 * @param gnome the gnome acting on the object
 	 * @return true if an action was performed, false otherwise
 	 */
@@ -39,6 +38,7 @@ namespace ObjectType {
 		switch (model.type) {
 			case "TREE": return new Tree(game, model);
 			case "HOUSE": return new House(game, model);
+			case "LIBRARY": return new CodeBuilding(game, model, "library");
 			case "ROCK": return new GameObject(game, model, "rock", false);
 			case "MUSHROOMS": return new Mushrooms(game, model);
 			default: throw new Error("Unknown object type " + model.type);

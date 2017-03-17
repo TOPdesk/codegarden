@@ -28,7 +28,15 @@
 				"positionX": 0,
 				"positionY": 0,
 				"direction": 2,
-				"sizeLimit": 20
+				"sizeLimit": 10
+			},
+			{
+				"type": "LIBRARY",
+				"positionX": 0,
+				"positionY": 3,
+				"direction": 2,
+				"initialCode": "WWRWLA",
+				"readonly": true
 			}
 		],
 		"victoryConditions": [
