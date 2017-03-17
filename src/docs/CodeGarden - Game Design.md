@@ -247,7 +247,7 @@ H1 => SW (down)
 H2 => NE (up)
 
 Required programs to win the level:   
-H1 	[FLFFLALFLA] 	= [F Fn1 LFLA] => The last action from Fn1 will take water from the other gnome
+H1 	[FLFFLALFLA] 	= [F Fn1 LFLA] => The last action from Fn1 will take water from the other gnome    
 H2 	[ALFFLA] 		= [A Fn1] => The last action will give water to the other gnome
 
 Fn1 [LFFLA] 
