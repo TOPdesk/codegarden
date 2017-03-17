@@ -169,17 +169,17 @@ Level one introduces the following concepts:
 
 Level layout (D = desert, H = house, W = water, R = rock, T = tree):
 ```
-DHDWD
+D1DWD
 DDDWD
 DDRWW
 DDDDT
 ```
 
 House orientation:   
-H1 => SW (down)
+1 => SW (down)
 
 Required program to win the level:  
-H1 	[FFLFFLARA]
+1: 	[FFLFFLARA]
 
 #### Level 2 - Multiple gnomes
 Level two introduces the following concepts:
@@ -191,18 +191,18 @@ Level layout (D = desert, H = house, W = water, T = tree):
 ```
 DDDWDD
 WWWWDD
-MWHWHT
+MW1W2T
 DDDDDD
 TDDDDD
 ```
 
 House orientation:   
-H1 => SW (down)   
-H2 => SW (down)
+1 => SW (down)   
+2 => SW (down)
 
 Required programs to win the level:   
-H1 	[LFLARFFLA] => this program is fixed and cannot be changed    
-H2 	[FRFFFRFALFLA] => Note that starting out with [RF] will cause both gnomes to end up on the same tile.
+1: 	[LFLARFFLA] => this program is fixed and cannot be changed    
+2: 	[FRFFFRFALFLA] => Note that starting out with [RF] will cause both gnomes to end up on the same tile.
 This will cause a problem as they will bump into each other, returning them to their previous position.
 
 #### Level 3 - Subroutines
@@ -212,22 +212,24 @@ Level three introduces the following concepts:
 
 Level layout (L= library, D = desert, H = house, M = mushroom, W = Water, T = tree)
 ```
-HDDDM
+1DDDM
 WWWDM
 TDWWW
 LDDDW
 ```
 
 House orientation:   
-H1 => SE (right)
+1 => SE (right)
 
 Required programs to win the level:   
-H1 	[FFRFLARFFRFFRFLA] = [Fn1 RFFR Fn1] => Use subroutine Fn1
+1: 	[FFRFLARFFRFFRFLA] = [F1 RFFR F1] => Use subroutine F1
 
-Fn1 [FFRFLA]
+F1: [FFRFLA]
 
-A mushroom makes the GNOME float across 1 square of space (prevents death by falling/drowning). It's not possible to get water while floating.
-Mushrooms are consumed when using them. A square of mushrooms can be watered to grow more mushrooms (with a maximum of 3).
+A mushroom makes the GNOME float across 1 square of space (prevents death by falling/drowning).
+It's not possible to get water while floating.
+Mushrooms are consumed when using them.
+A square of mushrooms can be watered to grow more mushrooms (with a maximum of 3).
 
 #### Level 4 - Sharing
 Level four introduces the following concepts:
@@ -236,21 +238,21 @@ Level four introduces the following concepts:
 
 Level layout (D = desert, R = rock, W = water, H = house, L = library, T = tree)
 ```
-HRDDW
+1RDDW
 DLDDD
-DDDRH
+DDDR2
 DTDDD
 ```
 
 House orientation:   
-H1 => SW (down)   
-H2 => NE (up)
+1 => SW (down)   
+2 => NE (up)
 
 Required programs to win the level:   
-H1 	[FLFFLALFLA] 	= [F Fn1 LFLA] => The last action from Fn1 will take water from the other gnome    
-H2 	[ALFFLA] 		= [A Fn1] => The last action will give water to the other gnome
+1:	[FLFFLALFLA] 	= [F F1 LFLA] => The last action from Fn1 will take water from the other gnome    
+2: 	[ALFFLA] 		= [A F1] => The last action will give water to the other gnome
 
-Fn1 [LFFLA] 
+F1: [LFFLA] 
 
 #### Level 5 - Delays
 Level five introduces the following concepts:
@@ -260,32 +262,32 @@ Level five introduces the following concepts:
 Level layout (D = desert, R = rock, W = water, H = house, L = library, T = tree, M = mushroom)
 ```
 MDLWW
-DHWWT
+D1WWT
 WWWDD
-DDHRD
+DD3RD
 DDDDD
-DDHDH
+DD2D4
 ```
 
 House orientation:    
-H1 => NW (left)    
-H2 => SW (down)    
-H3 => NW (left)    
-H4 => NE (up)
+1 => NW (left)    
+2 => NW (left)    
+3 => SW (down)    
+4 => NE (up)
 
 House delays:    
-H2 => 2    
-H3 => 7    
-H4 => 11    
+2 => 2    
+3 => 7    
+4 => 11    
 
 Required programs to win the level:    
-H1 	[RARRFA]				= [Fn1]    
-H2 	[XXFRFARFA]				= [F Fn2 Fn2]    
-H3 	[XXXXXXXRARRFA]			= [Fn1]    
-H4 	[XXXXXXXXXXXLARFFA]		= [LARFFA]    
+1: 	[RARRFA]				= [F1]    
+2: 	[XXFRFARFA]				= [F F2 F2]    
+3: 	[XXXXXXXRARRFA]			= [F1]    
+4: 	[XXXXXXXXXXXLARFFA]		= [LARFFA]    
 
-Fn1 [RARRFA]				= [RAR Fn2]    
-Fn2 [RFA]
+F1: [RARRFA]				= [RAR F2]    
+F2: [RFA]
 
 #### Level 6 - Bit of a challenge
 Level six introduces no new concepts
@@ -310,12 +312,12 @@ House delays:
 3 => 11    
 
 Required programs to win the level:    
-1: 	[FARFFRALA]				    = [F Fn1 A]    
-2: 	[XXXXXXXRARRARFFARFFRALLA]	= [RARR Fn2 Fn1 LA]    
-3: 	[XXXXXXXXXXXARFFRA]			= [Fn1]
+1: 	[FARFFRALA]				    = [F F1 A]    
+2: 	[XXXXXXXRARRARFFARFFRALLA]	= [RARR F2 F1 LA]    
+3: 	[XXXXXXXXXXXARFFRA]			= [F1]
 
-Fn1 [ARFFRAL]				    = [Fn2 RAL]    
-Fn2 [ARFF]
+F1: [ARFFRAL]				    = [F2 RAL]    
+F2: [ARFF]
 
 ### Other
 - Death gnomes spawn clouds, 3 clouds make rain, rain waters the ground directly under where the gnome died.
