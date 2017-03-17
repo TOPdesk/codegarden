@@ -67,13 +67,11 @@ class GameWorld {
 	doGnomeAction(gnome: Gnome) {
 		let actionLocation = gnome.location.getNeighbor(gnome.direction);
 		let block = this.level.getBlock(actionLocation);
-		if (gnome.wateringCan) {
-			if (this.level.waterObject(actionLocation)) {
-				gnome.wateringCan = false;
+
+		if (!this.level.doObjectAction(actionLocation, gnome)) {
+			if (block === WorldConstants.BlockType.WATER) {
+				gnome.wateringCan = true;
 			}
-		}
-		else if (block === WorldConstants.BlockType.WATER) {
-			gnome.wateringCan = true;
 		}
 	}
 
@@ -84,10 +82,14 @@ class GameWorld {
 		let newLocation = gnome.location.getNeighbor(gnome.direction);
 		let gnomeExistsInLocation = this.gnomes.filter(g => g.location.equals(newLocation)).length;
 		if (!gnomeExistsInLocation && this.level.pointIsPassable(newLocation)) {
-			gnome.location = newLocation;
+			gnome.walkTo(newLocation);
 			this.determineEntityZIndices();
 		}
 
+		//Right now, terrain can't kill a gnome if it's floating
+		if (gnome.floating) {
+			return;
+		}
 		let causeOfDeath = this.level.getPointCauseOfDeath(newLocation);
 		if (causeOfDeath) {
 			this.killGnome(gnome, causeOfDeath);

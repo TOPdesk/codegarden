@@ -38,8 +38,13 @@ class Tree extends GameObject {
 		game.add.existing(this);
 	}
 
-	addWater() {
-		this.waterContent = this.waterContent + 1;
+	doAction(gnome: Gnome) {
+		if (gnome.wateringCan) {
+			this.waterContent = this.waterContent + 1;
+			gnome.wateringCan = false;
+			return true;
+		}
+		return false;
 	}
 
 	calculateRequiredWater() {

@@ -17,6 +17,15 @@ class GameObject extends Phaser.Sprite {
 
 		game.add.existing(this);
 	}
+
+	/**
+	 * Can be overridden by game options which have actions
+	 * @param gnome the gnome acting on the object
+	 * @return true if an action was performed, false otherwise
+	 */
+	doAction(gnome: Gnome): boolean {
+		return false;
+	}
 }
 
 interface GameObjectModel {
@@ -31,7 +40,7 @@ namespace ObjectType {
 			case "TREE": return new Tree(game, model);
 			case "HOUSE": return new House(game, model);
 			case "ROCK": return new GameObject(game, model, "rock", false);
-			case "MUSHROOMS": return new GameObject(game, model, "mushrooms", true);
+			case "MUSHROOMS": return new Mushrooms(game, model);
 			default: throw new Error("Unknown object type " + model.type);
 		}
 	}

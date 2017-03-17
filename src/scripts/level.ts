@@ -58,11 +58,10 @@ class Level {
 		return true;
 	}
 
-	waterObject(point: MapPoint) {
-		let object = this.objectMap[point.toString()];
-		if (object && object.addWater) {
-			object.addWater();
-			return true;
+	doObjectAction(actionLocation: MapPoint, gnome: Gnome) {
+		let object = this.objectMap[actionLocation.toString()];
+		if (object) {
+			return object.doAction(gnome);
 		}
 
 		return false;

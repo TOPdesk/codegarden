@@ -1,48 +1,39 @@
 {
 	"LEVEL_DEFINITION": {
 		"layout": [
-			[2, 2, 2, 1, 2, 2],
-			[1, 1, 1, 1, 2, 2],
-			[2, 1, 2, 1, 2, 2],
-			[2, 2, 2, 2, 2, 2],
-			[2, 2, 2, 2, 2, 2]],
+			[2, 2, 2, 2, 2],
+			[1, 1, 1, 2, 2],
+			[2, 2, 1, 1, 1],
+			[2, 2, 2, 2, 1]],
 		"objects": [
 			{
 				"type": "TREE",
 				"positionX": 0,
-				"positionY": 4
-			},
-			{
-				"type": "TREE",
-				"positionX": 5,
 				"positionY": 2
 			},
 			{
 				"type": "MUSHROOMS",
-				"positionX": 0,
-				"positionY": 2
-			},
-			{
-				"type": "HOUSE",
-				"positionX": 2,
-				"positionY": 2,
-				"initialCode": "LWLARWWLA",
-				"direction": 3,
-				"readonly": true
-			},
-			{
-				"type": "HOUSE",
 				"positionX": 4,
-				"positionY": 2,
-				"sizeLimit": 15,
-				"direction": 3
+				"positionY": 0
+			},
+			{
+				"type": "MUSHROOMS",
+				"positionX": 4,
+				"positionY": 1
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 0,
+				"positionY": 0,
+				"direction": 2,
+				"sizeLimit": 20
 			}
 		],
 		"victoryConditions": [
 			{
 				"type": "ENTITY_EXISTS",
 				"entityType": "TREE",
-				"amount": 2,
+				"amount": 1,
 				"requiredProperties": [
 					{
 						"name": "treeLevel",

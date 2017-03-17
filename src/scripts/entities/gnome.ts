@@ -7,14 +7,7 @@ const GNOME_X_OFFSET = 60;
 const GNOME_Y_OFFSET = -85;
 
 class Gnome extends Phaser.Sprite {
-	private _location: MapPoint;
-	set location(location: MapPoint) {
-		this._location = location;
-		this.tweenToLocation().start();
-	}
-	get location(): MapPoint {
-		return this._location;
-	}
+	location: MapPoint;
 
 	private _wateringCan: boolean = false;
 	set wateringCan(wateringCan: boolean) {
@@ -23,6 +16,15 @@ class Gnome extends Phaser.Sprite {
 	}
 	get wateringCan(): boolean {
 		return this._wateringCan;
+	}
+
+	private _floating = 0;
+	set floating(floating: number) {
+		this._floating = floating;
+		this.faceDirection();
+	}
+	get floating(): number {
+		return this._floating;
 	}
 
 	public codeStack: Command[];
@@ -34,7 +36,7 @@ class Gnome extends Phaser.Sprite {
 
 		this.faceDirection();
 		this.anchor.set(0.5, 1);
-		this._location = new MapPoint(x, y);
+		this.location = new MapPoint(x, y);
 		let screenCoordinates: ScreenPoint = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
 		this.x = screenCoordinates.x + GNOME_X_OFFSET;
 		this.y = screenCoordinates.y + GNOME_Y_OFFSET;
@@ -50,6 +52,14 @@ class Gnome extends Phaser.Sprite {
 	rotateRight() {
 		this.direction = Direction.rotateRight(this.direction);
 		this.faceDirection();
+	}
+
+	walkTo(newLocation: MapPoint) {
+		this.location = newLocation;
+		if (this.floating) {
+			this.floating--;
+		}
+		this.tweenToLocation().start();
 	}
 
 	die(cause: CauseOfDeath) {
