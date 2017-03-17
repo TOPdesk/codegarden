@@ -1,4 +1,4 @@
-/// <reference path="../libs/phaser/typescript/phaser.d.ts"/>
+/// <reference path="../../libs/phaser/typescript/phaser.d.ts"/>
 
 class House extends GameObject {
 	public gnomeCode: Command[];

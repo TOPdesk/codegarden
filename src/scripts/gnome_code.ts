@@ -1,5 +1,5 @@
 /// <reference path="gameworld.ts"/>
-/// <reference path="gnome.ts"/>
+/// <reference path="entities/gnome.ts"/>
 
 class GnomeCode {
 	constructor(public libraries: { [key: string]: Array<Command> }) {}

@@ -1,5 +1,5 @@
 /// <reference path="../../libs/phaser/typescript/phaser.d.ts"/>
-/// <reference path="../gnome.ts"/>
+/// <reference path="../entities/gnome.ts"/>
 /// <reference path="../gnome_code.ts"/>
 /// <reference path="../gameworld.ts"/>
 ///<reference path="../../../node_modules/@types/sortablejs/index.d.ts"/>

@@ -1,4 +1,4 @@
-/// <reference path="../scripts/gnome.ts" />
+/// <reference path="../scripts/entities/gnome.ts" />
 /// <reference path="../libs/dt-jasmine/jasmine.d.ts" />
 
 describe("Rotating left", () => {

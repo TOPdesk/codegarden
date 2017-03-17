@@ -1,13 +1,13 @@
 /// <reference path="../libs/phaser/typescript/phaser.d.ts"/>
 
 /// <reference path="coordinates.ts"/>
-/// <reference path="gnome.ts"/>
-/// <reference path="tree.ts"/>
+/// <reference path="entities/gnome.ts"/>
+/// <reference path="entities/tree.ts"/>
 /// <reference path="world_constants.ts"/>
 /// <reference path="victory_condition.ts"/>
 /// <reference path="messages/message.ts"/>
-///<reference path="gameObject.ts"/>
-///<reference path="house.ts"/>
+///<reference path="entities/game_object.ts"/>
+///<reference path="entities/house.ts"/>
 
 /**
  * This class is responsible for keeping track of the world state and handling collisions.

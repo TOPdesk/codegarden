@@ -1,7 +1,7 @@
-/// <reference path="../libs/phaser/typescript/phaser.d.ts"/>
-/// <reference path="coordinates.ts"/>
-/// <reference path="gnome_code.ts"/>
-/// <reference path="world_constants.ts"/>
+/// <reference path="../../libs/phaser/typescript/phaser.d.ts"/>
+/// <reference path="../coordinates.ts"/>
+/// <reference path="../gnome_code.ts"/>
+/// <reference path="../world_constants.ts"/>
 
 const GNOME_X_OFFSET = 60;
 const GNOME_Y_OFFSET = -85;

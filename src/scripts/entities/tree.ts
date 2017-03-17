@@ -1,7 +1,7 @@
-/// <reference path="../libs/phaser/typescript/phaser.d.ts"/>
-/// <reference path="coordinates.ts"/>
-/// <reference path="world_constants.ts"/>
-///<reference path="gameObject.ts"/>
+/// <reference path="../../libs/phaser/typescript/phaser.d.ts"/>
+/// <reference path="../coordinates.ts"/>
+/// <reference path="../world_constants.ts"/>
+///<reference path="game_object.ts"/>
 
 const TREE_IMAGE_PREFIX = "tree-";
 const MAX_TREE_LEVEL = 6;
