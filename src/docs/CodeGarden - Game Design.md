@@ -287,6 +287,36 @@ H4 	[XXXXXXXXXXXLARFFA]		= [LARFFA]
 Fn1 [RARRFA]				= [RAR Fn2]    
 Fn2 [RFA]
 
+#### Level 6 - Bit of a challenge
+Level six introduces no new concepts
+
+Level layout (D = desert, R = rock, W = water, H = house, L = library, T = tree, M = mushroom)
+```
+WWDDDT
+MWL2DD
+DWDDD3
+DWWDDD
+1DWDDD
+DTWMDD
+```
+
+House orientation:    
+1 => NE (up)    
+2 => SW (down)    
+3 => NW (left)
+
+House delays:    
+2 => 7    
+3 => 11    
+
+Required programs to win the level:    
+1: 	[FARFFRALA]				    = [F Fn1 A]    
+2: 	[XXXXXXXRARRARFFARFFRALLA]	= [RARR Fn2 Fn1 LA]    
+3: 	[XXXXXXXXXXXARFFRA]			= [Fn1]
+
+Fn1 [ARFFRAL]				    = [Fn2 RAL]    
+Fn2 [ARFF]
+
 ### Other
 - Death gnomes spawn clouds, 3 clouds make rain, rain waters the ground directly under where the gnome died.
 This requires other ways to kill gnomes...
