@@ -146,20 +146,20 @@ Region 1 is a desert. There will be a bit of water here, some rocks and a few tr
 
 #### Level interconnection
 
-| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
-|---|---|---|---|---|---|---|---|---|--- |--- |
-| 1 | 1 | 1 | 1 | 1 | X | X | X | X | X  | X  |
-| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2  | 2  |
-| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2  | 2  |
-| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2  | 2  |
-| 3 | 3 | 3 | 3 | 3 | 2 | 2 | 2 | 2 | 2  | 2  |
-| 3 | 3 | 3 | 3 | 3 | 2 | 2 | 2 | 2 | 2  | 2  |
-| 3 | 3 | 3 | 3 | 3 | 5 | 5 | 5 | 5 | 5  | X  |
-| 3 | 3 | 3 | 3 | 3 | 5 | 5 | 5 | 5 | 5  | X  |
-| 4 | 4 | 4 | 4 | 4 | 5 | 5 | 5 | 5 | 5  | X  |
-| 4 | 4 | 4 | 4 | 4 | 5 | 5 | 5 | 5 | 5  | X  |
-| 4 | 4 | 4 | 4 | 4 | 5 | 5 | 5 | 5 | 5  | X  |
-| 4 | 4 | 4 | 4 | 4 | 5 | 5 | 5 | 5 | 5  | X  |
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
+|---|---|---|---|---|---|---|---|---|--- |--- |--- |--- |--- |--- |--- |
+| 1 | 1 | 1 | 1 | 1 | X | X | X | X | X  | X  | X  | X  | X  | X  | X  |
+| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2  | 2  | X  | X  | X  | X  | X  |
+| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2  | 2  | X  | X  | X  | X  | X  |
+| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2  | 2  | X  | X  | X  | X  | X  |
+| 3 | 3 | 3 | 3 | 3 | 2 | 2 | 2 | 2 | 2  | 2  | X  | X  | X  | X  | X  |
+| 3 | 3 | 3 | 3 | 3 | 2 | 2 | 2 | 2 | 2  | 2  | X  | X  | X  | X  | X  |
+| 3 | 3 | 3 | 3 | 3 | 5 | 5 | 5 | 5 | 5  | 6  | 6  | 6  | 6  | 6  | 6  |
+| 3 | 3 | 3 | 3 | 3 | 5 | 5 | 5 | 5 | 5  | 6  | 6  | 6  | 6  | 6  | 6  |
+| 4 | 4 | 4 | 4 | 4 | 5 | 5 | 5 | 5 | 5  | 6  | 6  | 6  | 6  | 6  | 6  |
+| 4 | 4 | 4 | 4 | 4 | 5 | 5 | 5 | 5 | 5  | 6  | 6  | 6  | 6  | 6  | 6  |
+| 4 | 4 | 4 | 4 | 4 | 5 | 5 | 5 | 5 | 5  | 6  | 6  | 6  | 6  | 6  | 6  |
+| 4 | 4 | 4 | 4 | 4 | 5 | 5 | 5 | 5 | 5  | 6  | 6  | 6  | 6  | 6  | 6  |
 
 #### Level 1 - Growing trees 
 Level one introduces the following concepts:
@@ -167,7 +167,7 @@ Level one introduces the following concepts:
 - Watering a tree
 - Obstacles
 
-Level layout (D = desert, H = house, W = water, R = rock, T = tree):
+Level layout (D = desert, # = house, W = water, R = rock, T = tree):
 ```
 D1DWD
 DDDWD
@@ -187,7 +187,7 @@ Level two introduces the following concepts:
 - Gnome clashing
 - Fixed functions
 
-Level layout (D = desert, H = house, W = water, T = tree):  
+Level layout (D = desert, # = house, W = water, T = tree):  
 ```
 DDDWDD
 WWWWDD
@@ -210,7 +210,7 @@ Level three introduces the following concepts:
 - Library with single subroutine
 - Mushrooms
 
-Level layout (L= library, D = desert, H = house, M = mushroom, W = Water, T = tree)
+Level layout (L= library, D = desert, # = house, M = mushroom, W = Water, T = tree)
 ```
 1DDDM
 WWWDM
@@ -236,7 +236,7 @@ Level four introduces the following concepts:
 - Programming two gnomes
 - Sharing
 
-Level layout (D = desert, R = rock, W = water, H = house, L = library, T = tree)
+Level layout (D = desert, R = rock, W = water, # = house, L = library, T = tree)
 ```
 1RDDW
 DLDDD
@@ -259,7 +259,7 @@ Level five introduces the following concepts:
 - Delayed starting
 - Multiple subroutines
 
-Level layout (D = desert, R = rock, W = water, H = house, L = library, T = tree, M = mushroom)
+Level layout (D = desert, R = rock, W = water, # = house, L = library, T = tree, M = mushroom)
 ```
 MDLWW
 D1WWT
@@ -292,7 +292,7 @@ F2: [RFA]
 #### Level 6 - Bit of a challenge
 Level six introduces no new concepts
 
-Level layout (D = desert, R = rock, W = water, H = house, L = library, T = tree, M = mushroom)
+Level layout (D = desert, R = rock, W = water, # = house, L = library, T = tree, M = mushroom)
 ```
 WWDDDT
 MWL2DD
