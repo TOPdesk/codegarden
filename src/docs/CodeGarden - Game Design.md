@@ -147,19 +147,19 @@ Region 1 is a desert. There will be a bit of water here, some rocks and a few tr
 #### Level interconnection
 
 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | 1 | 1 | 1 | 1 | X | X | X | X | X | X |
-| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2 | 2 |
-| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2 | 2 |
-| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2 | 2 |
-| 3 | 3 | 3 | 3 | 3 | 2 | 2 | 2 | 2 | 2 | 2 |
-| 3 | 3 | 3 | 3 | 3 | 2 | 2 | 2 | 2 | 2 | 2 |
-| 3 | 3 | 3 | 3 | 3 | X | X | X | X | X | X |
-| 3 | 3 | 3 | 3 | 3 | X | X | X | X | X | X |
-| 4 | 4 | 4 | 4 | 4 | X | X | X | X | X | X |
-| 4 | 4 | 4 | 4 | 4 | X | X | X | X | X | X |
-| 4 | 4 | 4 | 4 | 4 | X | X | X | X | X | X |
-| 4 | 4 | 4 | 4 | 4 | X | X | X | X | X | X |
+|---|---|---|---|---|---|---|---|---|--- |--- |
+| 1 | 1 | 1 | 1 | 1 | X | X | X | X | X  | X  |
+| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2  | 2  |
+| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2  | 2  |
+| 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2  | 2  |
+| 3 | 3 | 3 | 3 | 3 | 2 | 2 | 2 | 2 | 2  | 2  |
+| 3 | 3 | 3 | 3 | 3 | 2 | 2 | 2 | 2 | 2  | 2  |
+| 3 | 3 | 3 | 3 | 3 | 5 | 5 | 5 | 5 | 5  | X  |
+| 3 | 3 | 3 | 3 | 3 | 5 | 5 | 5 | 5 | 5  | X  |
+| 4 | 4 | 4 | 4 | 4 | 5 | 5 | 5 | 5 | 5  | X  |
+| 4 | 4 | 4 | 4 | 4 | 5 | 5 | 5 | 5 | 5  | X  |
+| 4 | 4 | 4 | 4 | 4 | 5 | 5 | 5 | 5 | 5  | X  |
+| 4 | 4 | 4 | 4 | 4 | 5 | 5 | 5 | 5 | 5  | X  |
 
 #### Level 1 - Growing trees 
 Level one introduces the following concepts:
@@ -179,7 +179,7 @@ House orientation:
 H1 => SW (down)
 
 Required program to win the level:  
-H1 [FFLFFLARA]
+H1 	[FFLFFLARA]
 
 #### Level 2 - Multiple gnomes
 Level two introduces the following concepts:
@@ -201,13 +201,13 @@ H1 => SW (down)
 H2 => SW (down)
 
 Required programs to win the level:   
-H1 [LFLARFFLA] => this program is fixed and cannot be changed   
-H2 [FRFFFRFALFLA] => Note that starting out with [RF] will cause both gnomes to end up on the same tile.
+H1 	[LFLARFFLA] => this program is fixed and cannot be changed    
+H2 	[FRFFFRFALFLA] => Note that starting out with [RF] will cause both gnomes to end up on the same tile.
 This will cause a problem as they will bump into each other, returning them to their previous position.
 
 #### Level 3 - Subroutines
 Level three introduces the following concepts:
-- Subroutines and the library
+- Library with single subroutine
 - Mushrooms
 
 Level layout (L= library, D = desert, H = house, M = mushroom, W = Water, T = tree)
@@ -222,7 +222,8 @@ House orientation:
 H1 => SE (right)
 
 Required programs to win the level:   
-H1 [Fn1 RFFR Fn1] => Use subroutine Fn1   
+H1 	[FFRFLARFFRFFRFLA] = [Fn1 RFFR Fn1] => Use subroutine Fn1
+
 Fn1 [FFRFLA]
 
 A mushroom makes the GNOME float across 1 square of space (prevents death by falling/drowning). It's not possible to get water while floating.
@@ -246,9 +247,45 @@ H1 => SW (down)
 H2 => NE (up)
 
 Required programs to win the level:   
-H1 [F Fn1 LFLFA] => The last action from Fn1 will take water from the other gnome
-H2 [A Fn1] => The last action will give water to the other gnome
+H1 	[FLFFLALFLA] 	= [F Fn1 LFLA] => The last action from Fn1 will take water from the other gnome
+H2 	[ALFFLA] 		= [A Fn1] => The last action will give water to the other gnome
+
 Fn1 [LFFLA] 
+
+#### Level 5 - Delays
+Level five introduces the following concepts:
+- Delayed starting
+- Multiple subroutines
+
+Level layout (D = desert, R = rock, W = water, H = house, L = library, T = tree, M = mushroom)
+```
+MDLWW
+DHWWT
+WWWDD
+DDHRD
+DDDDD
+DDHDH
+```
+
+House orientation:    
+H1 => NW (left)    
+H2 => SW (down)    
+H3 => NW (left)    
+H4 => NE (up)
+
+House delays:    
+H2 => 2    
+H3 => 7    
+H4 => 11    
+
+Required programs to win the level:    
+H1 	[RARRFA]				= [Fn1]    
+H2 	[XXFRFARFA]				= [F Fn2 Fn2]    
+H3 	[XXXXXXXRARRFA]			= [Fn1]    
+H4 	[XXXXXXXXXXXLARFFA]		= [LARFFA]    
+
+Fn1 [RARRFA]				= [RAR Fn2]    
+Fn2 [RFA]
 
 ### Other
 - Death gnomes spawn clouds, 3 clouds make rain, rain waters the ground directly under where the gnome died.
