@@ -261,9 +261,9 @@ Level five introduces the following concepts:
 
 Level layout (D = desert, W = water, # = house, L = library, T = tree, M = mushroom)
 ```
-MDLWW
-D1WWT
-WWWDD
+MLWWW
+WWWDT
+D1WDD
 DD3LD
 DDDDD
 DD2D4
