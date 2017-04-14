@@ -82,10 +82,10 @@ class Level {
 				let blockType = this.layout[row][column];
 				this.renderBlock(blockGroup, column, row, blockType);
 				if (blockType === WorldConstants.BlockType.WATER) {
-					if (row == rows - 1) {
+					if (row === rows - 1) {
 						this.renderWaterFall(blockGroup, column, row, true);
 					}
-					if (column == columns - 1) {
+					if (column === columns - 1) {
 						this.renderWaterFall(blockGroup, column, row, false);
 					}
 				}
@@ -125,7 +125,9 @@ class Level {
 
 	renderWaterFall(blockGroup: Phaser.Group, x: number, y: number, leftSide: boolean) {
 		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new MapPoint(x, y));
-		let sprite = new Phaser.Sprite(blockGroup.game, screenCoordinates.x + (leftSide ? WATERFALL_X_OFFSET_LEFT : WATERFALL_X_OFFSET_RIGHT), screenCoordinates.y + WATERFALL_Y_OFFSET, "waterfall");
+		let sprite = new Phaser.Sprite(blockGroup.game,
+			screenCoordinates.x + (leftSide ? WATERFALL_X_OFFSET_LEFT : WATERFALL_X_OFFSET_RIGHT),
+			screenCoordinates.y + WATERFALL_Y_OFFSET, "waterfall");
 		sprite.anchor.y = 0;
 		sprite.anchor.x = 0;
 		if (leftSide) {
