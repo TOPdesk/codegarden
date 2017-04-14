@@ -1,9 +1,35 @@
 {
 	"LEVEL_DEFINITION": {
 		"layout": [
-			[0, 0, 0],
-			[0, 0, 0],
-			[0, 0, 0]],
-		"objects": []
+			[0, 1, 0, 1, 0],
+			[0, 1, 0, 1, 0],
+			[0, 0, 0, 0, 0],
+			[1, 1, 0, 1, 1],
+			[1, 1, 0, 1, 1]],
+		"objects": [
+			{
+				"type": "HOUSE",
+				"positionX": 2,
+				"positionY": 0,
+				"initialCode": "LWAW",
+				"sizeLimit": 10,
+				"direction": 3
+			},
+			{
+				"type": "ROCK",
+				"positionX": 0,
+				"positionY": 0
+			},
+			{
+				"type": "BUTTON",
+				"positionX": 2,
+				"positionY": 4
+			},
+			{
+				"type": "BUTTON",
+				"positionX": 4,
+				"positionY": 0
+			}
+		]
 	}
 }
