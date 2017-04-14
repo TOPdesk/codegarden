@@ -1,0 +1,82 @@
+{
+	"LEVEL_DEFINITION": {
+		"layout": [
+			[2, 2, 2, 1, 1],
+			[2, 2, 1, 1, 2],
+			[1, 1, 1, 2, 2],
+			[2, 2, 2, 2, 2],
+			[2, 2, 2, 2, 2],
+			[2, 2, 2, 2, 2]],
+		"objects": [
+			{
+				"type": "TREE",
+				"positionX": 4,
+				"positionY": 1
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 1,
+				"positionY": 1,
+				"direction": 0,
+				"sizeLimit": 6
+			},
+            {
+				"type": "HOUSE",
+				"positionX": 2,
+				"positionY": 5,
+				"direction": 0,
+				"sizeLimit": 5
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 2,
+				"positionY": 3,
+				"direction": 3,
+				"sizeLimit": 5
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 4,
+				"positionY": 5,
+				"direction": 1,
+				"sizeLimit": 5
+			},
+			{
+				"type": "LIBRARY",
+				"positionX": 2,
+				"positionY": 0,
+				"direction": 2,
+				"readonly": false,
+                "sizeLimit": 5
+			},
+			{
+				"type": "LIBRARY",
+				"positionX": 3,
+				"positionY": 3,
+				"direction": 2,
+				"readonly": false,
+                "sizeLimit": 5
+			},
+            {
+                "type": "MUSHROOMS",
+                "positionX": 0,
+                "positionY": 0,
+				"amount": 3
+            }
+		],
+		"victoryConditions": [
+			{
+				"type": "ENTITY_EXISTS",
+				"entityType": "TREE",
+				"amount": 1,
+				"requiredProperties": [
+					{
+						"name": "treeLevel",
+						"requirementType": "GREATER_THAN",
+						"value": 1
+					}
+				]
+			}
+		]
+	}
+}
