@@ -1,6 +1,7 @@
 /// <reference path="../../libs/phaser/typescript/phaser.d.ts"/>
-const OBJECT_SPRITE_X_OFFSET = 56;
-const OBJECT_SPRITE_Y_OFFSET = -88;
+
+const OBJECT_SPRITE_X_OFFSET = 58;
+const OBJECT_SPRITE_Y_OFFSET = -83;
 
 class GameObject extends Phaser.Sprite {
 	get location(): MapPoint {
@@ -40,6 +41,7 @@ namespace ObjectType {
 			case "HOUSE": return new House(game, model);
 			case "LIBRARY": return new CodeBuilding(game, model, "library");
 			case "ROCK": return new GameObject(game, model, "rock", false);
+			case "BUTTON": return new GameObject(game, model, "button", false)
 			case "MUSHROOMS": return new Mushrooms(game, model);
 			default: throw new Error("Unknown object type " + model.type);
 		}

@@ -10,8 +10,14 @@ class GnomeCode {
 	executeNextCommand(gameWorld: GameWorld, gnomes: Gnome[]) {
 		gnomes.forEach(gnome => {
 			let command = gnome.codeStack.pop();
+
+			if (command instanceof RunnableCommand) {
+				command.fn();
+			}
+
 			if (command === undefined) {
 				gameWorld.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
+				
 				return;
 			}
 
@@ -41,6 +47,14 @@ class GnomeCode {
 
 class Command {
 	constructor(public type: CommandType, public args = []) {}
+}
+
+class RunnableCommand extends Command {
+	fn;
+	constructor(fn: Function) {
+		super(undefined);
+		this.fn = fn;
+	};
 }
 
 enum CommandType {

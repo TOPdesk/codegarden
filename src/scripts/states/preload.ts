@@ -36,6 +36,10 @@ namespace States {
 			this.load.image("control_forward", "assets/images/control_forward.png");
 			this.load.image("control_library", "assets/images/control_library.png");
 
+			this.load.image("main_menu_options", "assets/images/main-menu-options.png");
+			this.load.image("main_menu_continue", "assets/images/main-menu-continue.png");
+			this.load.image("main_menu_start", "assets/images/main-menu-start.png");
+
 			this.load.image("play_button", "assets/images/play_button.png");
 
 			this.load.image("tree-1", "assets/images/tree-1.png");
@@ -57,7 +61,11 @@ namespace States {
 
 			this.load.image("rock", "assets/images/rock.png");
 
+<<<<<<< HEAD
 			this.load.image("library", "assets/images/library.png");
+=======
+			this.load.image("button", "assets/images/action-button.png");
+>>>>>>> Fix menu
 
 			this.load.image("waterdrop_empty", "assets/images/waterdrop_empty.png");
 			this.load.image("waterdrop_filled", "assets/images/waterdrop_filled.png");
