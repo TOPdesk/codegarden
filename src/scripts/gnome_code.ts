@@ -17,7 +17,7 @@ class GnomeCode {
 
 			if (command === undefined) {
 				gameWorld.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
-				
+
 				return;
 			}
 

@@ -20,11 +20,11 @@ namespace States {
 			this.createMenuButton("Continue", 0, -250, this.continueGame);
 			this.createMenuButton("Start Game", -250, 200, this.startGame);
 			this.createMenuButton("Options", 250, -120, this.options);
-			
+
 			this.createMenuImage(250, -75, "main_menu_options");
 			this.createMenuImage(-250, 150, "main_menu_start");
 			this.createMenuImage(-90, -210, "main_menu_continue");
-			
+
 		}
 
 		private createMenuButton(text: string, x: number, y: number, onClick: Function): Phaser.Text {
