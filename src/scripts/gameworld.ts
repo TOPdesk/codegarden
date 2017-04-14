@@ -68,9 +68,16 @@ class GameWorld {
 		let actionLocation = gnome.location.getNeighbor(gnome.direction);
 		let block = this.level.getBlock(actionLocation);
 
+		let gnomesInLocation = this.gnomes.filter(g => g.location.equals(actionLocation));
+
 		if (!this.level.doObjectAction(actionLocation, gnome)) {
 			if (!gnome.floating && block === WorldConstants.BlockType.WATER) {
 				gnome.wateringCan = true;
+			}
+
+			if (!gnome.floating && gnomesInLocation.length > 0 && gnome.wateringCan) {
+				gnome.wateringCan = false;
+				gnomesInLocation[0].wateringCan = true;
 			}
 		}
 	}

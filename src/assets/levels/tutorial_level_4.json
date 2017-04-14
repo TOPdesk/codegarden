@@ -1,0 +1,62 @@
+{
+	"LEVEL_DEFINITION": {
+		"layout": [
+			[2, 2, 2, 2, 1],
+			[2, 2, 2, 2, 2],
+			[2, 2, 2, 2, 2],
+			[2, 2, 2, 2, 2]],
+		"objects": [
+			{
+				"type": "TREE",
+				"positionX": 1,
+				"positionY": 3
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 0,
+				"positionY": 0,
+				"direction": 3,
+				"sizeLimit": 6
+			},
+            {
+				"type": "HOUSE",
+				"positionX": 4,
+				"positionY": 2,
+				"direction": 1,
+				"sizeLimit": 5
+			},
+			{
+				"type": "LIBRARY",
+				"positionX": 1,
+				"positionY": 1,
+				"direction": 2,
+				"readonly": false,
+                "sizeLimit": 5
+			},
+            {
+                "type": "ROCK",
+                "positionX": 1,
+                "positionY": 0
+            },
+            {
+                "type": "ROCK",
+                "positionX": 3,
+                "positionY": 2
+            }
+		],
+		"victoryConditions": [
+			{
+				"type": "ENTITY_EXISTS",
+				"entityType": "TREE",
+				"amount": 1,
+				"requiredProperties": [
+					{
+						"name": "treeLevel",
+						"requirementType": "GREATER_THAN",
+						"value": 1
+					}
+				]
+			}
+		]
+	}
+}

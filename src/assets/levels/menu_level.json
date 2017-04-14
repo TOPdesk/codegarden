@@ -16,7 +16,7 @@
 				"direction": 3
 			},
 			{
-				"type": "ROCK",
+				"type": "BUTTON",
 				"positionX": 0,
 				"positionY": 0
 			},
