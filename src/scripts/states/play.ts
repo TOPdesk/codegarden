@@ -131,7 +131,7 @@ namespace States {
 			this.selectedCodeBuilding.gnomeCode.forEach(command => {
 				PlayState.appendCommandToGui(innerCodeEditor, command.type);
 			});
-			
+
 			for (let i = 0; i < this.selectedCodeBuilding.model.sizeLimit - this.selectedCodeBuilding.gnomeCode.length; i++) {
 				PlayState.appendCommandToGui(innerCodeEditor, undefined);
 			}
@@ -228,7 +228,7 @@ namespace States {
 			if (commandType !== undefined) {
 				button.classList.add(CommandType.imageClass(commandType));
 			}
-			else if(commandType === undefined) {
+			else if (commandType === undefined) {
 				button.classList.add("commandPlaceholder");
 			}
 

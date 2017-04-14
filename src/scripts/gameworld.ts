@@ -48,7 +48,7 @@ class GameWorld {
 		this.level.renderStage(this.blockGroup);
 		this.level.renderObjects(this.entityGroup);
 		if (levelDefinition.introMessage) {
-			Messages.show(levelDefinition.introMessage);
+			Messages.show(this.game, levelDefinition.introMessage);
 		}
 		this.gnomeCode = new GnomeCode(this.level.libraries.map(library => library.gnomeCode));
 
@@ -163,7 +163,7 @@ class GameWorld {
 
 	private winLevel() {
 		this.hasWon = true;
-		Messages.show("You won!", {
+		Messages.show(this.game, "Good work! Click here to continue", {
 			callback: () => {
 				if (this.level.nextLevel) {
 					this.loadLevel(this.level.nextLevel);

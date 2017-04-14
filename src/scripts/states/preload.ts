@@ -64,6 +64,8 @@ namespace States {
 
 			this.load.spritesheet("waterfall", "assets/images/waterfall.png", 80, 240);
 
+			this.load.spritesheet("gnome_king", "assets/images/gnome_king.png", 70, 100);
+
 			this.load.audio("falling_gnome_scream", "assets/sound/wilhelm_scream.ogg");
 			this.load.json("tutorial_level_1", "assets/levels/tutorial_level_1.json");
 			this.load.json("tutorial_level_2", "assets/levels/tutorial_level_2.json");
