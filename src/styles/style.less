@@ -1,3 +1,6 @@
+@orange: #EEA91E;
+@buttonYellow: #ffee00;
+
 body {
 	padding: 0;
 	margin: 0;
@@ -73,31 +76,37 @@ body {
 	.readonly & {
 		cursor: default;
 	}
-	width: 74px;
-	height: 74px;
-	background: none;
-	border: none;
+	width: 70px;
+	height: 70px;
+	border: 3px solid @orange;
+	border-radius: 5px;
 	margin: 5px;
 }
 
 .commandMoveForward {
-	background: url("../assets/images/control_forward.png");
+	background: url("../assets/images/control_walk.png"), @buttonYellow;
+	background-position: center;
 }
 
 .commandTurnLeft {
-	background: url("../assets/images/control_left.png");
+	background: url("../assets/images/control_turn.png"), @buttonYellow;
+	background-position: center;
 }
 
 .commandTurnRight {
-	background: url("../assets/images/control_right.png");
+	background: url("../assets/images/control_turn.png"), @buttonYellow;
+	background-position: center;
+	transform: scaleX(-1);
 }
 
 .commandPerformAction {
-	background: url("../assets/images/control_action.png");
+	background: url("../assets/images/control_interact.png"), @buttonYellow;
+	background-position: center;
 }
 
 .commandLibrary {
-	background: url("../assets/images/control_library.png");
+	background: url("../assets/images/control_subroutine.png"), @buttonYellow;
+	background-position: center;
 }
 
 .sortable-ghost {
