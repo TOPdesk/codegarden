@@ -62,6 +62,8 @@ namespace States {
 			this.load.image("waterdrop_empty", "assets/images/waterdrop_empty.png");
 			this.load.image("waterdrop_filled", "assets/images/waterdrop_filled.png");
 
+			this.load.spritesheet("waterfall", "assets/images/waterfall.png", 80, 240);
+
 			this.load.audio("falling_gnome_scream", "assets/sound/wilhelm_scream.ogg");
 			this.load.json("tutorial_level_1", "assets/levels/tutorial_level_1.json");
 			this.load.json("tutorial_level_2", "assets/levels/tutorial_level_2.json");

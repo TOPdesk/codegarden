@@ -1,3 +1,7 @@
+const WATERFALL_X_OFFSET_RIGHT = 47;
+const WATERFALL_X_OFFSET_LEFT = 67;
+const WATERFALL_Y_OFFSET = -97;
+
 class Level {
 	//Array access should be done in [y][x] order!
 	private layout: Array<Array<WorldConstants.BlockType>>;
@@ -75,7 +79,16 @@ class Level {
 
 		for (let row = 0; row < rows; row++) {
 			for (let column = 0; column < columns; column++) {
-				this.renderBlock(blockGroup, column, row, this.layout[row][column]);
+				let blockType = this.layout[row][column];
+				this.renderBlock(blockGroup, column, row, blockType);
+				if (blockType === WorldConstants.BlockType.WATER) {
+					if (row == rows - 1) {
+						this.renderWaterFall(blockGroup, column, row, true);
+					}
+					if (column == columns - 1) {
+						this.renderWaterFall(blockGroup, column, row, false);
+					}
+				}
 			}
 		}
 	}
@@ -108,6 +121,20 @@ class Level {
 		let block = blockGroup.game.add.sprite(screenCoordinates.x, screenCoordinates.y, this.getBlockSprite(blockType));
 		block.anchor.y = 1;
 		blockGroup.add(block);
+	}
+
+	renderWaterFall(blockGroup: Phaser.Group, x: number, y: number, leftSide: boolean) {
+		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new MapPoint(x, y));
+		let sprite = new Phaser.Sprite(blockGroup.game, screenCoordinates.x + (leftSide ? WATERFALL_X_OFFSET_LEFT : WATERFALL_X_OFFSET_RIGHT), screenCoordinates.y + WATERFALL_Y_OFFSET, "waterfall");
+		sprite.anchor.y = 0;
+		sprite.anchor.x = 0;
+		if (leftSide) {
+			sprite.scale.x = -1;
+		}
+		sprite.animations.add("flow");
+		sprite.alpha = 0.5;
+		sprite.animations.play("flow", 10, true);
+		blockGroup.add(sprite);
 	}
 
 	private getBlockSprite(blockType: WorldConstants.BlockType): string {
