@@ -6,6 +6,8 @@ class Level {
 	private objectMap = {};
 
 	public houses: House[] = [];
+	public codeBuildings: CodeBuilding[] = [];
+	public libraries: CodeBuilding[] = [];
 	public nextLevel?: string;
 
 	constructor(levelDefinition) {
@@ -91,6 +93,12 @@ class Level {
 		let object = ObjectType.instantiate(game, model);
 		if (object instanceof House) {
 			this.houses.push(object);
+		}
+		if (object instanceof CodeBuilding) {
+			this.codeBuildings.push(object);
+			if (object.model.type === "LIBRARY") {
+				this.libraries.push(object);
+			}
 		}
 		return object;
 	}

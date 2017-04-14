@@ -28,7 +28,7 @@ class GameWorld {
 	private entityGroup: Phaser.Group;
 	private hasWon = false;
 
-	public selectionListener: (house?: House) => void;
+	public selectionListener: (building?: CodeBuilding, libraries?: CodeBuilding[]) => void;
 
 	/**
 	 * Loads the level with the provided name. It should be a JSON file that is loaded into the cache
@@ -39,7 +39,6 @@ class GameWorld {
 		this.blockGroup.removeAll(true);
 		this.entityGroup.removeAll(true);
 		this.gnomes = [];
-		this.gnomeCode = new GnomeCode({});
 		if (this.selectionListener) {
 			this.selectionListener();
 		}
@@ -51,11 +50,12 @@ class GameWorld {
 		if (levelDefinition.introMessage) {
 			Messages.show(levelDefinition.introMessage);
 		}
+		this.gnomeCode = new GnomeCode(this.level.libraries.map(library => library.gnomeCode));
 
-		this.level.houses.forEach(house => {
-			house.events.onInputDown.add(() => {
+		this.level.codeBuildings.forEach(building => {
+			building.events.onInputDown.add(() => {
 				if (this.selectionListener) {
-					this.selectionListener(house);
+					this.selectionListener(building, this.level.libraries);
 				}
 			});
 		});

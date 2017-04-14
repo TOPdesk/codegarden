@@ -2,7 +2,7 @@
 /// <reference path="entities/gnome.ts"/>
 
 class GnomeCode {
-	constructor(public libraries: { [key: string]: Array<Command> }) {}
+	constructor(public libraries: Command[][]) {}
 
 	/**
 	 * Executes the next command.
@@ -32,7 +32,7 @@ class GnomeCode {
 			return;
 		}
 
-		for (let i = routine.length; i >= 0; i--) {
+		for (let i = routine.length - 1; i >= 0; i--) {
 			gnome.codeStack.push(routine[i]);
 		}
 	}
@@ -61,6 +61,8 @@ namespace CommandType {
 				return "commandTurnRight";
 			case CommandType.ACT:
 				return "commandPerformAction";
+			case CommandType.CALL_ROUTINE:
+				return "commandLibrary";
 			default:
 				return "unknownCommandType";
 		}
