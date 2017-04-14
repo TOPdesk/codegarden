@@ -84,8 +84,8 @@ This is where GNOMEs spawn.
 They start out in their house, with the direction of the door determining which direction the GNOME starts out facing
 
 #### Library
-Used to store subroutines.
-Each GNOME can use a subroutine.
+Used to store a single subroutine.
+Each GNOME can use a subroutine and libraries can use each others subroutines as well.
 
 ### Trees
 Trees are of vital importance to GNOME reproduction as they spawn GNOMEbabies.
@@ -257,14 +257,14 @@ F1: [LFFLA]
 #### Level 5 - Delays
 Level five introduces the following concepts:
 - Delayed starting
-- Multiple subroutines
+- Multiple libraries with their own subroutines
 
-Level layout (D = desert, R = rock, W = water, # = house, L = library, T = tree, M = mushroom)
+Level layout (D = desert, W = water, # = house, L = library, T = tree, M = mushroom)
 ```
 MDLWW
 D1WWT
 WWWDD
-DD3RD
+DD3LD
 DDDDD
 DD2D4
 ```
@@ -297,7 +297,7 @@ Level layout (D = desert, R = rock, W = water, # = house, L = library, T = tree,
 WWDDDT
 MWL2DD
 DWDDD3
-DWWDDD
+DWWDLD
 1DWDDD
 DTWMDD
 ```
