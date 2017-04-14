@@ -25,6 +25,8 @@ namespace States {
 			this.load.spritesheet("gnome_regular_back", "assets/images/gnome_regular_back.png", 70, 100);
 			this.load.spritesheet("gnome_water_front", "assets/images/gnome_water_front.png", 70, 100);
 			this.load.spritesheet("gnome_water_back", "assets/images/gnome_water_back.png", 70, 100);
+			this.load.spritesheet("gnome_float_start_front", "assets/images/gnome_float_start_front.png", 70, 150);
+			this.load.spritesheet("gnome_floating_front", "assets/images/gnome_floating_front.png", 70, 150);
 
 			this.load.image("gnome_drowning", "assets/images/gnome_drowning.png");
 

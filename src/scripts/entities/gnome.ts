@@ -12,7 +12,7 @@ class Gnome extends Phaser.Sprite {
 	private _wateringCan: boolean = false;
 	set wateringCan(wateringCan: boolean) {
 		this._wateringCan = wateringCan;
-		this.faceDirection();
+		this.determineSprite();
 	}
 	get wateringCan(): boolean {
 		return this._wateringCan;
@@ -20,8 +20,19 @@ class Gnome extends Phaser.Sprite {
 
 	private _floating = 0;
 	set floating(floating: number) {
+		if (!this._floating && floating) {
+			//Animation to start floating
+			this.loadTexture("gnome_float_start_front");
+			this.animations.add("walk");
+			this.animations.play("walk", 10);
+		}
+		if (this._floating && !floating) {
+			//Animation to stop floating
+			this.loadTexture("gnome_float_start_front");
+			this.animations.add("walk", [3, 2, 1, 0]);
+			this.animations.play("walk", 10);
+		}
 		this._floating = floating;
-		this.faceDirection();
 	}
 	get floating(): number {
 		return this._floating;
@@ -34,7 +45,7 @@ class Gnome extends Phaser.Sprite {
 		this.codeStack = code.slice();
 		this.codeStack.reverse();
 
-		this.faceDirection();
+		this.determineSprite();
 		this.anchor.set(0.5, 1);
 		this.location = new MapPoint(x, y);
 		let screenCoordinates: ScreenPoint = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
@@ -46,16 +57,17 @@ class Gnome extends Phaser.Sprite {
 
 	rotateLeft() {
 		this.direction = Direction.rotateLeft(this.direction);
-		this.faceDirection();
+		this.determineSprite();
 	}
 
 	rotateRight() {
 		this.direction = Direction.rotateRight(this.direction);
-		this.faceDirection();
+		this.determineSprite();
 	}
 
 	walkTo(newLocation: MapPoint) {
 		this.location = newLocation;
+		this.animations.play("walk", 30, true);
 		if (this.floating) {
 			this.floating--;
 		}
@@ -91,7 +103,7 @@ class Gnome extends Phaser.Sprite {
 		tween.onComplete.add(() => this.destroy(false), this);
 	}
 
-	private faceDirection() {
+	private determineSprite() {
 		if (this.direction === Direction.NE || this.direction === Direction.SW) {
 			this.scale.x = -1;
 		}
@@ -100,14 +112,23 @@ class Gnome extends Phaser.Sprite {
 		}
 
 		let facingFront = (this.direction === Direction.SE || this.direction === Direction.SW);
+
 		let gnomeTextureBase = (this.wateringCan ? "gnome_water" : "gnome_regular");
 		let gnomeTexture = gnomeTextureBase + (facingFront ? "_front" : "_back");
+		if (this.floating) {
+			gnomeTexture = "gnome_floating_front";
+		}
 		this.loadTexture(gnomeTexture);
-		this.animations.add("walk");
+		if (this.floating) {
+			this.animations.add("walk");
+			this.animations.play("walk", 10, true);
+		}
+		else {
+			this.animations.add("walk");
+		}
 	}
 
 	private tweenToLocation() {
-		this.animations.play("walk", 30, true);
 		let tween = this.game.add.tween(this);
 		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
 		return tween.to({
