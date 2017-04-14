@@ -1,9 +1,9 @@
 {
 	"LEVEL_DEFINITION": {
 		"layout": [
-			[2, 2, 2, 1, 1],
-			[2, 2, 1, 1, 2],
+			[2, 2, 1, 1, 1],
 			[1, 1, 1, 2, 2],
+			[2, 2, 1, 2, 2],
 			[2, 2, 2, 2, 2],
 			[2, 2, 2, 2, 2],
 			[2, 2, 2, 2, 2]],
@@ -16,38 +16,43 @@
 			{
 				"type": "HOUSE",
 				"positionX": 1,
-				"positionY": 1,
+				"positionY": 2,
 				"direction": 0,
-				"sizeLimit": 6
+				"sizeLimit": 1
 			},
             {
 				"type": "HOUSE",
 				"positionX": 2,
 				"positionY": 5,
 				"direction": 0,
-				"sizeLimit": 5
+				"sizeLimit": 3,
+				"delay": 2
 			},
 			{
 				"type": "HOUSE",
 				"positionX": 2,
 				"positionY": 3,
 				"direction": 3,
-				"sizeLimit": 5
+				"sizeLimit": 1,
+				"delay": 7
 			},
 			{
 				"type": "HOUSE",
 				"positionX": 4,
 				"positionY": 5,
 				"direction": 1,
-				"sizeLimit": 5
+				"readonly": true,
+				"initialCode": "LARWWA",
+				"sizeLimit": 6,
+				"delay": 10
 			},
 			{
 				"type": "LIBRARY",
-				"positionX": 2,
+				"positionX": 1,
 				"positionY": 0,
 				"direction": 2,
 				"readonly": false,
-                "sizeLimit": 5
+                "sizeLimit": 4
 			},
 			{
 				"type": "LIBRARY",
@@ -55,7 +60,7 @@
 				"positionY": 3,
 				"direction": 2,
 				"readonly": false,
-                "sizeLimit": 5
+                "sizeLimit": 3
 			},
             {
                 "type": "MUSHROOMS",

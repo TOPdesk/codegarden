@@ -3,6 +3,7 @@
 
 class CodeBuilding extends GameObject {
 	public gnomeCode: Command[];
+	public delay: number;
 
 	constructor(game: Phaser.Game, public model: CodeBuildingModel, sprite) {
 		super(game, model, sprite, false);
@@ -12,6 +13,11 @@ class CodeBuilding extends GameObject {
 
 		this.gnomeCode = [];
 		if (model.initialCode) {
+			if (model.delay) {
+				for (let i = 0; i < model.delay; i++) {
+					this.gnomeCode.push(new Command(CommandType.DELAY));
+				}
+			}
 			for (let i = 0; i < model.initialCode.length; i++) {
 				this.gnomeCode.push(CommandType.getCommandTypeForShorthand(model.initialCode.charAt(i)));
 			}
@@ -25,4 +31,5 @@ interface CodeBuildingModel extends GameObjectModel {
 	initialCode?: string;
 	sizeLimit: number;
 	readonly?: boolean;
+	delay?: number;
 }

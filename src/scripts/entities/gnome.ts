@@ -65,6 +65,10 @@ class Gnome extends Phaser.Sprite {
 		this.determineSprite();
 	}
 
+	delay() {
+		this.determineSprite();
+	}
+
 	walkTo(newLocation: MapPoint) {
 		this.location = newLocation;
 		this.animations.play("walk", 30, true);

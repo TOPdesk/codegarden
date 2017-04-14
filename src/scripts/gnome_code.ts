@@ -17,7 +17,6 @@ class GnomeCode {
 
 			if (command === undefined) {
 				gameWorld.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
-
 				return;
 			}
 
@@ -27,6 +26,7 @@ class GnomeCode {
 				case CommandType.RIGHT: gnome.rotateRight(); break;
 				case CommandType.ACT: gameWorld.doGnomeAction(gnome); break;
 				case CommandType.CALL_ROUTINE: this.queueUpRoutine(gameWorld, gnome, command); break;
+				case CommandType.DELAY: gnome.delay(); break;
 			}
 		});
 	}
@@ -62,7 +62,8 @@ enum CommandType {
 	LEFT,
 	RIGHT,
 	ACT,
-	CALL_ROUTINE
+	CALL_ROUTINE,
+	DELAY
 }
 namespace CommandType {
 	export function imageClass(type: CommandType): string {
@@ -77,6 +78,8 @@ namespace CommandType {
 				return "commandPerformAction";
 			case CommandType.CALL_ROUTINE:
 				return "commandLibrary";
+			case CommandType.DELAY:
+				return "commandDelay";
 			default:
 				return "unknownCommandType";
 		}
@@ -88,6 +91,7 @@ namespace CommandType {
 			case "L": return new Command(CommandType.LEFT);
 			case "R": return new Command(CommandType.RIGHT);
 			case "A": return new Command(CommandType.ACT);
+			case "D": return new Command(CommandType.DELAY);
 			default: throw new Error("Cannot parse command " + shorthand);
 		}
 	}
