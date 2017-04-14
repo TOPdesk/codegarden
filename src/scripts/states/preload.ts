@@ -38,12 +38,12 @@ namespace States {
 
 			this.load.image("play_button", "assets/images/play_button.png");
 
-			this.load.image("tree-1", "assets/images/element_tree-1.png");
-			this.load.image("tree-2", "assets/images/element_tree-2.png");
-			this.load.image("tree-3", "assets/images/element_tree-3.png");
-			this.load.image("tree-4", "assets/images/element_tree-4.png");
-			this.load.image("tree-5", "assets/images/element_tree-5.png");
-			this.load.image("tree-6", "assets/images/element_tree-6.png");
+			this.load.image("tree-1", "assets/images/tree-1.png");
+			this.load.image("tree-2", "assets/images/tree-2.png");
+			this.load.image("tree-3", "assets/images/tree-3.png");
+			this.load.image("tree-4", "assets/images/tree-4.png");
+			this.load.image("tree-5", "assets/images/tree-5.png");
+			this.load.image("tree-6", "assets/images/tree-6.png");
 
 			this.load.image("house_ne", "assets/images/house_back_right.png");
 			this.load.image("house_nw", "assets/images/house_back_left.png");
@@ -57,7 +57,7 @@ namespace States {
 
 			this.load.image("rock", "assets/images/rock.png");
 
-			this.load.image("library", "assets/images/library_placeholder.png");
+			this.load.image("library", "assets/images/library.png");
 
 			this.load.image("waterdrop_empty", "assets/images/waterdrop_empty.png");
 			this.load.image("waterdrop_filled", "assets/images/waterdrop_filled.png");
