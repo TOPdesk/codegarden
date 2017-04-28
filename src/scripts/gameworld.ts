@@ -69,18 +69,22 @@ class GameWorld {
 		let block = this.level.getBlock(actionLocation);
 
 		let gnomesInLocation = this.gnomes.filter(g => g.location.equals(actionLocation));
+		let adjacentGnome = gnomesInLocation[0];
 
 		if (!this.level.doObjectAction(actionLocation, gnome)) {
 			if (!gnome.floating && block === WorldConstants.BlockType.WATER) {
 				gnome.wateringCan = true;
 			}
 
-			var adjacentGnome = gnomesInLocation[0];
-			if (!gnome.floating && adjacentGnome && ((adjacentGnome.direction + 2) % 4) === gnome.direction && gnome.wateringCan) {
+			if (!gnome.floating && this.getIfAdjacent(gnome, adjacentGnome) && gnome.wateringCan) {
 				gnome.wateringCan = false;
-				gnomesInLocation[0].wateringCan = true;
+				adjacentGnome.wateringCan = true;
 			}
 		}
+	}
+
+	private getIfAdjacent(currentGnome: Gnome, otherGnome: Gnome) {
+		return !!otherGnome	&& ((otherGnome.direction + 2) % 4) === currentGnome.direction;
 	}
 
 	/**
@@ -125,8 +129,8 @@ class GameWorld {
 	}
 
 	private addDelay(gnomeCode: Command[], delay: number) {
-		var newGnomeCode = [];
-		for (var i = 0; i < delay; i++) {
+		let newGnomeCode = [];
+		for (let i = 0; i < delay; i++) {
 			newGnomeCode.push(new Command(CommandType.DELAY));
 		}
 		return newGnomeCode.concat(gnomeCode);

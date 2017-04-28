@@ -1,71 +1,72 @@
 {
 	"LEVEL_DEFINITION": {
 		"layout": [
-			[2, 2, 1, 1, 1],
-			[1, 1, 1, 2, 2],
-			[2, 2, 1, 2, 2],
-			[2, 2, 2, 2, 2],
-			[2, 2, 2, 2, 2],
-			[2, 2, 2, 2, 2]],
+			[1, 1, 2, 2, 2, 2],
+			[2, 1, 2, 2, 2, 2],
+			[2, 1, 2, 2, 2, 2],
+			[2, 1, 1, 2, 2, 2],
+			[2, 2, 1, 2, 2, 2],
+			[2, 2, 1, 2, 2, 2]],
 		"objects": [
 			{
 				"type": "TREE",
-				"positionX": 4,
-				"positionY": 1
+				"positionX": 5,
+				"positionY": 0
+			},
+			{
+				"type": "TREE",
+				"positionX": 1,
+				"positionY": 5
 			},
 			{
 				"type": "HOUSE",
-				"positionX": 1,
-				"positionY": 2,
-				"direction": 0,
-				"sizeLimit": 1
+				"positionX": 0,
+				"positionY": 4,
+				"direction": 1,
+				"sizeLimit": 3
 			},
             {
 				"type": "HOUSE",
-				"positionX": 2,
-				"positionY": 5,
-				"direction": 0,
-				"sizeLimit": 3,
-				"delay": 2
-			},
-			{
-				"type": "HOUSE",
-				"positionX": 2,
-				"positionY": 3,
+				"positionX": 3,
+				"positionY": 1,
 				"direction": 3,
-				"sizeLimit": 1,
+				"sizeLimit": 8,
 				"delay": 7
 			},
 			{
 				"type": "HOUSE",
-				"positionX": 4,
-				"positionY": 5,
-				"direction": 1,
-				"readonly": true,
-				"initialCode": "LARWWA",
-				"sizeLimit": 6,
+				"positionX": 5,
+				"positionY": 2,
+				"direction": 0,
+				"sizeLimit": 1,
 				"delay": 11
 			},
 			{
 				"type": "LIBRARY",
-				"positionX": 1,
-				"positionY": 0,
+				"positionX": 2,
+				"positionY": 1,
 				"direction": 2,
 				"readonly": false,
                 "sizeLimit": 4
 			},
 			{
 				"type": "LIBRARY",
-				"positionX": 3,
+				"positionX": 4,
 				"positionY": 3,
 				"direction": 2,
 				"readonly": false,
-                "sizeLimit": 3
+                "sizeLimit": 4
 			},
             {
                 "type": "MUSHROOMS",
                 "positionX": 0,
-                "positionY": 0,
+                "positionY": 1,
+				"amount": 3
+            },
+			{
+                "type": "MUSHROOMS",
+                "positionX": 3,
+                "positionY": 5,
 				"amount": 3
             }
 		],
@@ -73,7 +74,7 @@
 			{
 				"type": "ENTITY_EXISTS",
 				"entityType": "TREE",
-				"amount": 1,
+				"amount": 2,
 				"requiredProperties": [
 					{
 						"name": "treeLevel",
@@ -82,7 +83,6 @@
 					}
 				]
 			}
-		],
-		"nextLevel": "tutorial_level_4"
+		]
 	}
 }

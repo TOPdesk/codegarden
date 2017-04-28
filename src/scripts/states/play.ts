@@ -143,8 +143,8 @@ namespace States {
 				}
 			}
 			else {
-				var commandsUsed: number = this.selectedCodeBuilding.gnomeCode.length - (this.selectedCodeBuilding.delay || 0);
-				commandsUsed = commandsUsed > 0 ? commandsUsed : 0
+				let commandsUsed: number = this.selectedCodeBuilding.gnomeCode.length - (this.selectedCodeBuilding.delay || 0);
+				commandsUsed = commandsUsed > 0 ? commandsUsed : 0;
 				label.innerText = commandsUsed + "/" + this.selectedCodeBuilding.model.sizeLimit + " commands used";
 			}
 		}

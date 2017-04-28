@@ -8,7 +8,7 @@ class GnomeCode {
 	 * Executes the next command.
 	 */
 	executeNextCommand(gameWorld: GameWorld, gnomes: Gnome[]) {
-		gnomes.forEach(gnome => {
+		gnomes.slice().sort((a, b) => a.wateringCan ? 1 : -1).forEach(gnome => {
 			let command = gnome.codeStack.pop();
 
 			if (command instanceof RunnableCommand) {
