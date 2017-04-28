@@ -126,7 +126,9 @@ namespace States {
 			this.codeEditorSortable.options.disabled = this.selectedCodeBuilding.model.readonly;
 
 			this.selectedCodeBuilding.gnomeCode.forEach(command => {
-				PlayState.appendCommandToGui(innerCodeEditor, command.type);
+				if (command.type !== CommandType.DELAY) {
+					PlayState.appendCommandToGui(innerCodeEditor, command.type);
+				}
 			});
 		}
 
@@ -141,7 +143,9 @@ namespace States {
 				}
 			}
 			else {
-				label.innerText = this.selectedCodeBuilding.gnomeCode.length + "/" + this.selectedCodeBuilding.model.sizeLimit + " commands used";
+				var commandsUsed: number = this.selectedCodeBuilding.gnomeCode.length - (this.selectedCodeBuilding.delay || 0);
+				commandsUsed = commandsUsed > 0 ? commandsUsed : 0
+				label.innerText = commandsUsed + "/" + this.selectedCodeBuilding.model.sizeLimit + " commands used";
 			}
 		}
 
@@ -214,14 +218,16 @@ namespace States {
 		}
 
 		private static appendCommandToGui(gui: HTMLElement, commandType: CommandType, libraryIndex?: number) {
-			let button = document.createElement("DIV");
-			button.classList.add("commandButton");
-			button.classList.add(CommandType.imageClass(commandType));
-			button.dataset["commandType"] = commandType.toString();
-			if (libraryIndex !== undefined) {
-				button.dataset["libraryIndex"] = libraryIndex.toString();
+			if (commandType !== CommandType.DELAY) {
+				let button = document.createElement("DIV");
+				button.classList.add("commandButton");
+				button.classList.add(CommandType.imageClass(commandType));
+				button.dataset["commandType"] = commandType.toString();
+				if (libraryIndex !== undefined) {
+					button.dataset["libraryIndex"] = libraryIndex.toString();
+				}
+				gui.appendChild(button);
 			}
-			gui.appendChild(button);
 		}
 	}
 }

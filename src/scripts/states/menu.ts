@@ -60,7 +60,7 @@ namespace States {
 				new Command(CommandType.WALK),
 				new Command(CommandType.ACT),
 				new RunnableCommand(() => {
-					let level = prompt("Continue from which level?", "test");
+					let level = prompt("Continue from which level?", "tutorial_level_5");
 					if (level) {
 						this.game.state.start("play", true, false, level);
 					}

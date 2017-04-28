@@ -44,7 +44,7 @@
 				"readonly": true,
 				"initialCode": "LARWWA",
 				"sizeLimit": 6,
-				"delay": 10
+				"delay": 11
 			},
 			{
 				"type": "LIBRARY",

@@ -116,11 +116,19 @@ class GameWorld {
 				house.model.positionX + Direction.getXDelta(house.model.direction),
 				house.model.positionY + Direction.getYDelta(house.model.direction),
 				house.model.direction,
-				house.gnomeCode);
+				this.addDelay(house.gnomeCode, house.delay));
 			this.entityGroup.add(newGnome);
 			this.gnomes.push(newGnome);
 			this.determineEntityZIndices();
 		});
+	}
+
+	private addDelay(gnomeCode: Command[], delay: number) {
+		var newGnomeCode = [];
+		for (var i = 0; i < delay; i++) {
+			newGnomeCode.push(new Command(CommandType.DELAY));
+		}
+		return newGnomeCode.concat(gnomeCode);
 	}
 
 	private determineEntityZIndices() {
