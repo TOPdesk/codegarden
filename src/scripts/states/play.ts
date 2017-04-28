@@ -124,12 +124,17 @@ namespace States {
 			let innerCodeEditor = document.getElementById("innerCodeEditor");
 			innerCodeEditor.innerHTML = "";
 			this.codeEditorSortable.options.disabled = this.selectedCodeBuilding.model.readonly;
+			if (this.selectedCodeBuilding.delay) {
+				PlayState.appendCommandToGui(innerCodeEditor, CommandType.DELAY, 0, this.selectedCodeBuilding.delay);
+			}
 
 			this.selectedCodeBuilding.gnomeCode.forEach(command => {
-				if (command.type !== CommandType.DELAY) {
-					PlayState.appendCommandToGui(innerCodeEditor, command.type);
-				}
+				PlayState.appendCommandToGui(innerCodeEditor, command.type);
 			});
+			
+			for (let i = 0; i < this.selectedCodeBuilding.model.sizeLimit - this.selectedCodeBuilding.gnomeCode.length; i++) {
+				PlayState.appendCommandToGui(innerCodeEditor, undefined);
+			}
 		}
 
 		updateCommandsLabel() {
@@ -217,17 +222,26 @@ namespace States {
 			this.updateCommandsLabel();
 		}
 
-		private static appendCommandToGui(gui: HTMLElement, commandType: CommandType, libraryIndex?: number) {
-			if (commandType !== CommandType.DELAY) {
-				let button = document.createElement("DIV");
-				button.classList.add("commandButton");
+		private static appendCommandToGui(gui: HTMLElement, commandType: CommandType, libraryIndex?: number, delay?: number) {
+			let button = document.createElement("DIV");
+			button.classList.add("commandButton");
+			if (commandType !== undefined) {
 				button.classList.add(CommandType.imageClass(commandType));
-				button.dataset["commandType"] = commandType.toString();
-				if (libraryIndex !== undefined) {
-					button.dataset["libraryIndex"] = libraryIndex.toString();
-				}
-				gui.appendChild(button);
 			}
+			else if(commandType === undefined) {
+				button.classList.add("commandPlaceholder");
+			}
+
+			button.dataset["commandType"] = commandType.toString();
+			if (libraryIndex !== undefined) {
+				button.dataset["libraryIndex"] = libraryIndex.toString();
+			}
+			if (delay && commandType === CommandType.DELAY) {
+				let span = document.createElement("SPAN");
+				span.innerHTML = delay.toString();
+				button.appendChild(span);
+			}
+			gui.appendChild(button);
 		}
 	}
 }

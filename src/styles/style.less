@@ -81,6 +81,10 @@ body {
 	border: 3px solid @orange;
 	border-radius: 5px;
 	margin: 5px;
+
+	.commandPlaceHolder {
+		border: 3px dashed @orange !important;
+	}
 }
 
 .commandMoveForward {
@@ -107,6 +111,16 @@ body {
 .commandLibrary {
 	background: url("../assets/images/control_subroutine.png"), @buttonYellow;
 	background-position: center;
+}
+
+.delay {
+	background: url("../assets/images/control-delay_1.png"), @buttonYellow;
+	background-position: center;
+	font-size: 20px;
+	position: relative;
+	span {
+		position: absolute;
+	}
 }
 
 .sortable-ghost {

@@ -78,6 +78,8 @@ namespace CommandType {
 				return "commandPerformAction";
 			case CommandType.CALL_ROUTINE:
 				return "commandLibrary";
+			case CommandType.DELAY:
+				return "delay";
 			default:
 				return "unknownCommandType";
 		}
