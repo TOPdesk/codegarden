@@ -75,7 +75,8 @@ class GameWorld {
 				gnome.wateringCan = true;
 			}
 
-			if (!gnome.floating && gnomesInLocation.length > 0 && gnome.wateringCan) {
+			var adjacentGnome = gnomesInLocation[0];
+			if (!gnome.floating && adjacentGnome && ((adjacentGnome.direction + 2) % 4) === gnome.direction && gnome.wateringCan) {
 				gnome.wateringCan = false;
 				gnomesInLocation[0].wateringCan = true;
 			}
