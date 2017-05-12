@@ -256,38 +256,33 @@ F1: [LFFLA]
 
 #### Level 5 - Delays
 Level five introduces the following concepts:
-- Delayed starting
-- Multiple libraries with their own subroutines
+- Delayed starting    
 
 Level layout (D = desert, W = water, # = house, L = library, T = tree, M = mushroom)
 ```
-MLWWW
-WWWDT
-D1WDD
-DD3LD
+MD1WW
+WWWWT
+WDDLD
+2DDDD
 DDDDD
-DD2D4
+DDD3D
 ```
 
 House orientation:    
 1 => NW (left)    
-2 => NW (left)    
-3 => SW (down)    
-4 => NE (up)
+2 => SE (right)    
+3 => NE (up)    
 
 House delays:    
-2 => 2    
-3 => 7    
-4 => 11    
+2 => 6    
+3 => 8    
 
 Required programs to win the level:    
-1: 	[RARRFA]				= [F1]    
-2: 	[XXFRFARFA]				= [F F2 F2]    
-3: 	[XXXXXXXRARRFA]			= [F1]    
-4: 	[XXXXXXXXXXXLARFFA]		= [LARFFA]    
+1: 	[ALFFRALA] (this program is fixed and cannot be changed)    
+2: 	[XXXXXXLARFA]				= [F1 A]    
+3: 	[XXXXXXXXFLARFLA]			= [F F1 LA]    
 
-F1: [RARRFA]				= [RAR F2]    
-F2: [RFA]
+F1: [LARF]    
 
 #### Level 6 - Bit of a challenge
 Level six introduces no new concepts
