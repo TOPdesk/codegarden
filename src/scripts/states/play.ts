@@ -124,17 +124,12 @@ namespace States {
 			let innerCodeEditor = document.getElementById("innerCodeEditor");
 			innerCodeEditor.innerHTML = "";
 			this.codeEditorSortable.options.disabled = this.selectedCodeBuilding.model.readonly;
-			if (this.selectedCodeBuilding.delay) {
-				PlayState.appendCommandToGui(innerCodeEditor, CommandType.DELAY, 0, this.selectedCodeBuilding.delay);
-			}
-
+			
 			this.selectedCodeBuilding.gnomeCode.forEach(command => {
 				PlayState.appendCommandToGui(innerCodeEditor, command.type);
 			});
 
-			for (let i = 0; i < this.selectedCodeBuilding.model.sizeLimit - this.selectedCodeBuilding.gnomeCode.length; i++) {
-				PlayState.appendCommandToGui(innerCodeEditor, undefined);
-			}
+			PlayState.appendPlaceholders(innerCodeEditor, this.selectedCodeBuilding.model.sizeLimit - this.selectedCodeBuilding.gnomeCode.length);
 		}
 
 		updateCommandsLabel() {
@@ -148,9 +143,15 @@ namespace States {
 				}
 			}
 			else {
-				let commandsUsed: number = this.selectedCodeBuilding.gnomeCode.length - (this.selectedCodeBuilding.delay || 0);
+				let commandsUsed: number = this.selectedCodeBuilding.gnomeCode.length;
 				commandsUsed = commandsUsed > 0 ? commandsUsed : 0;
-				label.innerText = commandsUsed + "/" + this.selectedCodeBuilding.model.sizeLimit + " commands used";
+				if (this.selectedCodeBuilding.delay) {
+					label.innerText = "This building has a delay of " + this.selectedCodeBuilding.delay;
+				}
+				else {
+					label.innerText = "";
+				}
+				PlayState.appendPlaceholders(document.getElementById("innerCodeEditor"), this.selectedCodeBuilding.model.sizeLimit - commandsUsed);
 			}
 		}
 
@@ -206,42 +207,50 @@ namespace States {
 			let command = target.dataset["libraryIndex"] ?
 				new Command(commandType, [parseInt(target.dataset["libraryIndex"])]) : new Command(commandType);
 			this.selectedCodeBuilding.gnomeCode.push(command);
+			PlayState.removePlaceholders(document.getElementById("innerCodeEditor"));
 			PlayState.appendCommandToGui(document.getElementById("innerCodeEditor"), commandType);
 			this.updateCommandsLabel();
 		}
 
 		private handleCommandClick(evt: MouseEvent) {
 			let target = evt.target as HTMLElement;
-			if (!target.classList.contains("commandButton") || this.selectedCodeBuilding.model.readonly) {
+			if (!target.classList.contains("commandButton") || target.classList.contains("commandPlaceholder") || this.selectedCodeBuilding.model.readonly) {
 				return;
 			}
 			let editor = document.getElementById("innerCodeEditor");
 			let index = Array.prototype.indexOf.call(editor.children, target);
 			this.selectedCodeBuilding.gnomeCode.splice(index, 1);
+			PlayState.removePlaceholders(document.getElementById("innerCodeEditor"));
 			editor.removeChild(target);
 			this.updateCommandsLabel();
 		}
 
-		private static appendCommandToGui(gui: HTMLElement, commandType: CommandType, libraryIndex?: number, delay?: number) {
+		private static appendCommandToGui(gui: HTMLElement, commandType: CommandType, libraryIndex?: number) {
 			let button = document.createElement("DIV");
 			button.classList.add("commandButton");
-			if (commandType !== undefined) {
-				button.classList.add(CommandType.imageClass(commandType));
-			}
-			else if (commandType === undefined) {
-				button.classList.add("commandPlaceholder");
-			}
-
 			button.dataset["commandType"] = commandType.toString();
+			button.classList.add(CommandType.imageClass(commandType));
+
 			if (libraryIndex !== undefined) {
 				button.dataset["libraryIndex"] = libraryIndex.toString();
 			}
-			if (delay && commandType === CommandType.DELAY) {
-				let span = document.createElement("SPAN");
-				span.innerHTML = delay.toString();
-				button.appendChild(span);
-			}
 			gui.appendChild(button);
+		}
+
+		private static removePlaceholders(gui: HTMLElement) {
+			let placeholders: NodeListOf<Element> = gui.getElementsByClassName("commandPlaceholder");
+			for (let i = placeholders.length - 1; i >= 0; i--) {
+				gui.removeChild(placeholders[i]);
+			}
+		}
+
+		private static appendPlaceholders(gui: HTMLElement, amount: number) {
+			for (let i = 0; i < amount; i++) {
+				let button = document.createElement("DIV");
+				button.classList.add("commandButton");
+				button.classList.add("commandPlaceholder");
+				gui.appendChild(button);
+			}
 		}
 	}
 }
