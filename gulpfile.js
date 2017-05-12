@@ -59,7 +59,9 @@ gulp.task('tslint', () => {
         .pipe(tslint({
 			formatter: 'verbose'
 		}))
-        .pipe(tslint.report());
+        .pipe(tslint.report({
+			emitError: false
+		}));
 });
 
 gulp.task('assets', () => {
@@ -157,7 +159,7 @@ gulp.task('default', function (done) {
     runSequence('clean', 'build', 'browserSync', () => {
 		gulp.watch(srcs.html, ['html']);
 		gulp.watch(srcs.assets, ['assets']);
-		gulp.watch(srcs.scripts, ['scripts']);
+		gulp.watch(srcs.scripts, ['scripts', 'tslint']);
 		gulp.watch(srcs.styles, ['styles']);
         done();
     });

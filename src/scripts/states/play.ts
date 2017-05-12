@@ -121,7 +121,7 @@ namespace States {
 			let innerCodeEditor = document.getElementById("innerCodeEditor");
 			innerCodeEditor.innerHTML = "";
 			this.codeEditorSortable.options.disabled = this.selectedCodeBuilding.model.readonly;
-			
+
 			this.selectedCodeBuilding.gnomeCode.forEach(command => {
 				PlayState.appendCommandToGui(innerCodeEditor, command.type);
 			});
@@ -184,7 +184,8 @@ namespace States {
 
 		private handleCommandClick(evt: MouseEvent) {
 			let target = evt.target as HTMLElement;
-			if (!target.classList.contains("commandButton") || target.classList.contains("commandPlaceholder") || this.selectedCodeBuilding.model.readonly) {
+			if (!target.classList.contains("commandButton") || target.classList.contains("commandPlaceholder")
+					|| this.selectedCodeBuilding.model.readonly) {
 				return;
 			}
 			let editor = document.getElementById("innerCodeEditor");
