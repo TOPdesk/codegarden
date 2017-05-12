@@ -28,6 +28,8 @@ class GameWorld {
 	private entityGroup: Phaser.Group;
 	private hasWon = false;
 
+	private selectedBuilding: CodeBuilding;
+
 	public selectionListener: (building?: CodeBuilding, libraries?: CodeBuilding[]) => void;
 
 	/**
@@ -35,6 +37,7 @@ class GameWorld {
 	 * in the preloader.
 	 */
 	loadLevel(levelName: string) {
+		this.selectedBuilding = null;
 		this.hasWon = false;
 		this.blockGroup.removeAll(true);
 		this.entityGroup.removeAll(true);
@@ -54,11 +57,17 @@ class GameWorld {
 
 		this.level.codeBuildings.forEach(building => {
 			building.events.onInputDown.add(() => {
+				if (this.selectedBuilding) {
+					this.selectedBuilding.deselect();
+				}
+				this.selectedBuilding = building;
+				this.selectedBuilding.select();
 				if (this.selectionListener) {
 					this.selectionListener(building, this.level.libraries);
 				}
 			});
 		});
+		this.determineEntityZIndices();
 	}
 
 	/**

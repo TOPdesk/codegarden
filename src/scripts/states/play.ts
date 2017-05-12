@@ -11,7 +11,6 @@ namespace States {
 	export class PlayState extends Phaser.State {
 		private gameWorld: GameWorld;
 		private selectedCodeBuilding: CodeBuilding;
-		private selectionIndicator: Phaser.Graphics;
 
 		private codeEditorSortable;
 
@@ -24,7 +23,6 @@ namespace States {
 		create() {
 			this.game.camera.setPosition(CAMERA_OFFSET_X, CAMERA_OFFSET_Y);
 
-			this.initializeSelectionIndicator();
 			this.initializeEditor();
 			this.drawSpawnButton();
 
@@ -33,7 +31,6 @@ namespace States {
 			this.gameWorld = new GameWorld(this.game);
 			this.gameWorld.selectionListener = (building, libraries) => {
 				this.selectedCodeBuilding = building;
-				this.toggleBuildingSelectionIndicator(building);
 				States.PlayState.cleanupCommandButtonBar();
 				if (building) {
 					this.initializeButtons(libraries);
@@ -153,33 +150,6 @@ namespace States {
 				}
 				PlayState.appendPlaceholders(document.getElementById("innerCodeEditor"), this.selectedCodeBuilding.model.sizeLimit - commandsUsed);
 			}
-		}
-
-		initializeSelectionIndicator() {
-			this.selectionIndicator = this.game.add.graphics(0, 0);
-			this.selectionIndicator.beginFill(0xffff00, 0.3);
-			this.selectionIndicator.moveTo(0, -1000);
-			this.selectionIndicator.lineTo(0, -100);
-			this.selectionIndicator.lineTo(WorldConstants.BLOCK_WIDTH / 2, -100 + WorldConstants.BLOCK_HEIGHT / 2);
-			this.selectionIndicator.lineTo(WorldConstants.BLOCK_WIDTH, -100);
-			this.selectionIndicator.lineTo(WorldConstants.BLOCK_WIDTH, -1000);
-			this.selectionIndicator.endFill();
-
-			this.selectionIndicator.alpha = 0;
-		}
-
-		toggleBuildingSelectionIndicator(building?: CodeBuilding) {
-			if (building) {
-				let coordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(building.location);
-				if (this.selectionIndicator.x === coordinates.x && this.selectionIndicator.y === coordinates.y) {
-					return;
-				}
-				this.selectionIndicator.x = coordinates.x;
-				this.selectionIndicator.y = coordinates.y;
-			}
-
-			this.selectionIndicator.alpha = building ? 0 : 1;
-			this.game.add.tween(this.selectionIndicator).to({alpha: building ? 1 : 0}, 300, null, true);
 		}
 
 		drawSpawnButton() {
