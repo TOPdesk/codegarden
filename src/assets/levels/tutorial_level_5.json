@@ -1,9 +1,9 @@
 {
 	"LEVEL_DEFINITION": {
 		"layout": [
-			[2, 2, 1, 1, 1],
-			[1, 1, 1, 2, 2],
-			[2, 2, 1, 2, 2],
+			[2, 2, 2, 1, 1],
+			[1, 1, 1, 1, 2],
+			[1, 2, 2, 2, 2],
 			[2, 2, 2, 2, 2],
 			[2, 2, 2, 2, 2],
 			[2, 2, 2, 2, 2]],
@@ -15,59 +15,42 @@
 			},
 			{
 				"type": "HOUSE",
-				"positionX": 1,
-				"positionY": 2,
-				"direction": 0,
-				"sizeLimit": 1
-			},
-            {
-				"type": "HOUSE",
 				"positionX": 2,
-				"positionY": 5,
+				"positionY": 0,
 				"direction": 0,
-				"sizeLimit": 3,
-				"delay": 2
+				"readonly": true,
+				"initialCode": "ALWWRALA"
 			},
 			{
 				"type": "HOUSE",
-				"positionX": 2,
+				"positionX": 0,
 				"positionY": 3,
-				"direction": 3,
-				"sizeLimit": 1,
-				"delay": 7
+				"direction": 2,
+				"sizeLimit": 2,
+				"delay": 6
 			},
 			{
 				"type": "HOUSE",
-				"positionX": 4,
+				"positionX": 3,
 				"positionY": 5,
 				"direction": 1,
-				"readonly": true,
-				"initialCode": "LARWWA",
-				"sizeLimit": 6,
-				"delay": 11
-			},
-			{
-				"type": "LIBRARY",
-				"positionX": 1,
-				"positionY": 0,
-				"direction": 2,
-				"readonly": false,
-                "sizeLimit": 4
+				"sizeLimit": 7,
+				"delay": 8
 			},
 			{
 				"type": "LIBRARY",
 				"positionX": 3,
-				"positionY": 3,
+				"positionY": 2,
 				"direction": 2,
 				"readonly": false,
-                "sizeLimit": 3
+				"sizeLimit": 4
 			},
-            {
-                "type": "MUSHROOMS",
-                "positionX": 0,
-                "positionY": 0,
+			{
+				"type": "MUSHROOMS",
+				"positionX": 0,
+				"positionY": 0,
 				"amount": 3
-            }
+			}
 		],
 		"victoryConditions": [
 			{
@@ -83,6 +66,6 @@
 				]
 			}
 		],
-		"nextLevel": "tutorial_level_4"
+		"nextLevel": "tutorial_level_6"
 	}
 }

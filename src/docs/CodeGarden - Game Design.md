@@ -280,7 +280,7 @@ House delays:
 Required programs to win the level:    
 1: 	[ALFFRALA] (this program is fixed and cannot be changed)    
 2: 	[XXXXXXLARFA]				= [F1 A]    
-3: 	[XXXXXXXXFLARFLA]			= [F F1 LA]    
+3: 	[XXXXXXXXFLARRFLFA]			= [F F1 RFLRA]    
 
 F1: [LARF]    
 
