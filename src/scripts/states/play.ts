@@ -94,7 +94,7 @@ namespace States {
 				onSort: (evt) => {
 					let routine = this.selectedCodeBuilding.gnomeCode;
 					let command = evt.from.id === "innerCodeEditor" ?
-						routine.splice(evt.oldIndex, 1)[0] : new Command(parseInt(evt.item.dataset["commandType"]));
+						routine.splice(evt.oldIndex, 1)[0] : this.parseCommandFromMouseEvent(evt);
 					routine.splice(evt.newIndex, 0, command);
 
 					PlayState.removePlaceholders(innerCodeEditor);
@@ -109,6 +109,13 @@ namespace States {
 					PlayState.appendPlaceholders(innerCodeEditor, this.selectedCodeBuilding.model.sizeLimit - routine.length);
 				}
 			});
+		}
+
+		parseCommandFromMouseEvent(event) {
+			let commandType = parseInt(event.item.dataset["commandType"]);
+			let command = event.item.dataset["libraryIndex"] ?
+				new Command(commandType, [parseInt(event.item.dataset["libraryIndex"])]) : new Command(commandType);
+			return command;
 		}
 
 		showCodeInEditor() {
