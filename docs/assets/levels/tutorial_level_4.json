@@ -42,6 +42,11 @@
                 "type": "ROCK",
                 "positionX": 3,
                 "positionY": 2
+            },
+			{
+                "type": "ROCK",
+                "positionX": 2,
+                "positionY": 3
             }
 		],
 		"victoryConditions": [
