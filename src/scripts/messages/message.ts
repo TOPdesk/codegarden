@@ -38,6 +38,9 @@ namespace Messages {
 		if (!messageGroup) {
 			messageGroup = game.add.group(game.world, "message");
 		}
+		else {
+			messageGroup.removeAll(true);
+		}
 
 		let king = messageGroup.add(new Phaser.Sprite(game, -200, -280, "gnome_king"));
 		king.animations.add("hover");

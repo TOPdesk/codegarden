@@ -90,11 +90,14 @@ namespace States {
 					put: true
 				},
 				animation: 150,
+				filter: ".commandPlaceholder",
 				onSort: (evt) => {
 					let routine = this.selectedCodeBuilding.gnomeCode;
 					let command = evt.from.id === "innerCodeEditor" ?
 						routine.splice(evt.oldIndex, 1)[0] : new Command(parseInt(evt.item.dataset["commandType"]));
 					routine.splice(evt.newIndex, 0, command);
+
+					PlayState.removePlaceholders(innerCodeEditor);
 
 					if (routine.length > this.selectedCodeBuilding.model.sizeLimit) {
 						routine.splice(this.selectedCodeBuilding.model.sizeLimit);
@@ -103,7 +106,7 @@ namespace States {
 						}
 					}
 
-					this.updateCommandsLabel();
+					PlayState.appendPlaceholders(innerCodeEditor, this.selectedCodeBuilding.model.sizeLimit - routine.length);
 				}
 			});
 		}
