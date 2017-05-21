@@ -9,11 +9,20 @@ namespace Messages {
 
 	function drawSpeechBubble(game: Phaser.Game, text: Phaser.Text) {
 		let speechBubble = new Phaser.Graphics(game);
-		speechBubble.lineStyle(2, 0x000000);
+		speechBubble.parent = text;
+		speechBubble.lineStyle(3, 0x000000, 1.0);
 		speechBubble.beginFill(0xffffff);
-
-		speechBubble.drawRoundedRect(-110, -270, text.width + 16, text.height, 12);
+		speechBubble.drawRoundedRect(0, 0, text.width + 20, text.height + 20, 5);
 		speechBubble.endFill();
+
+		speechBubble.moveTo(2, 20);
+		speechBubble.beginFill(0xffffff);
+		speechBubble.quadraticCurveTo(-10, 20, -25, 30);
+		speechBubble.quadraticCurveTo(-10, 20, 2, 35);
+		speechBubble.endFill();
+		speechBubble.x = text.x - 10;
+		speechBubble.y = text.y - 15;
+
 		return speechBubble;
 	}
 
@@ -29,10 +38,6 @@ namespace Messages {
 		if (!messageGroup) {
 			messageGroup = game.add.group(game.world, "message");
 		}
-		else {
-			messageGroup.removeAll();
-		}
-
 
 		let king = messageGroup.add(new Phaser.Sprite(game, -200, -280, "gnome_king"));
 		king.animations.add("hover");
@@ -44,22 +49,40 @@ namespace Messages {
 		let speechBubble = drawSpeechBubble(game, text);
 		messageGroup.add(speechBubble, false, 0);
 
+		text.wordWrapWidth = text.width + 10;
+		text.text = "";
+		let counter = 0;
+		let loop = game.time.events.loop(30, () => {
+			counter++;
+			text.text = message.substr(0, counter);
+			if (counter >= message.length) {
+				game.time.events.remove(loop);
+			}
+		});
+		speechBubble.inputEnabled = true;
+
 		let clickHandler = () => {
-			text.destroy();
-			king.destroy();
-			speechBubble.destroy();
-			if (optionMap.callback) {
-				optionMap.callback();
+			if (text.text.length < message.length) {
+				text.text = message;
+				game.time.events.remove(loop);
+			}
+			else {
+				messageGroup.removeAll(true);
+				if (optionMap.callback) {
+					optionMap.callback();
+				}
 			}
 		};
 
-		king.inputEnabled = true;
-		king.input.useHandCursor = true;
-		king.events.onInputDown.add(clickHandler, this);
+		addClickHandler(king, clickHandler);
+		addClickHandler(text, clickHandler);
+		addClickHandler(speechBubble, clickHandler);
+	}
 
-		text.inputEnabled = true;
-		text.input.useHandCursor = true;
-		text.events.onInputDown.add(clickHandler, this);
+	function addClickHandler(object, clickHandler) {
+		object.inputEnabled = true;
+		object.input.useHandCursor = true;
+		object.events.onInputUp.add(clickHandler);
 	}
 
 	export interface MessageOptions {
