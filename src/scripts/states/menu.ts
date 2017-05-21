@@ -30,6 +30,7 @@ namespace States {
 		private createMenuButton(text: string, x: number, y: number, onClick: Function): Phaser.Text {
 			let button = this.game.add.text(x, y, text, MENU_BUTTON_STYLE);
 			button.inputEnabled = true;
+			button.input.useHandCursor = true;
 			button.events.onInputUp.add(onClick, this);
 			return button;
 		}
