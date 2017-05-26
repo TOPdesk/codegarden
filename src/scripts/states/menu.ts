@@ -46,7 +46,7 @@ namespace States {
 				new Command(CommandType.WALK),
 				new Command(CommandType.WALK),
 				new Command(CommandType.ACT),
-				new RunnableCommand(() => { this.game.state.start("play"); } )
+				new RunnableCommand(() => this.game.state.start("play"))
 			];
 			localStorage.setItem("lastLevel", "tutorial_level_1");
 			this.gameWorld.spawnGnomes();
@@ -86,7 +86,7 @@ namespace States {
 				new Command(CommandType.LEFT),
 				new Command(CommandType.WALK),
 				new Command(CommandType.ACT),
-				new RunnableCommand(() => { this.game.state.start("credits"); })
+				new RunnableCommand(() => this.game.state.start("credits"))
 			];
 			this.gameWorld.spawnGnomes();
 		}
