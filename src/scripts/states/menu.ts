@@ -43,7 +43,7 @@ namespace States {
 				return;
 			}
 
-			if (!(code.startsWith(this.enteredCode))) {
+			if (!(code.substr(0, this.enteredCode.length) === this.enteredCode)) {
 				this.enteredCode = "";
 			}
 			
