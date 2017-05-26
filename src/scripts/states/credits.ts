@@ -25,7 +25,7 @@ namespace States {
 		}
 
 		update(): void {
-			if (text.centerY < -text.height / 2) {
+			if (text.centerY < -text.height / 2 || this.game.input.activePointer.isDown) {
 				this.game.state.start("menu");
 			}
 		}
