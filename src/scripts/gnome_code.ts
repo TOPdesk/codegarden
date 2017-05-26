@@ -8,8 +8,9 @@ class GnomeCode {
 	 * Executes the next command.
 	 */
 	executeNextCommand(gameWorld: GameWorld, gnomes: Gnome[]) {
-		//Do moves last, so that giving a watering can will work as expected
+		//First act, then move, then die, so that interactions between gnomes will work as expected
 		let walkingGnomes = [];
+		let dyingGnomes = [];
 		gnomes.slice().sort((a, b) => a.wateringCan ? 1 : -1).forEach(gnome => {
 			let command = gnome.codeStack.pop();
 
@@ -18,33 +19,38 @@ class GnomeCode {
 			}
 
 			if (command === undefined) {
-				gameWorld.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
-				return;
+				dyingGnomes.push(gnome);
 			}
-
-			switch (command.type) {
-				case CommandType.WALK: walkingGnomes.push(gnome); break;
-				case CommandType.LEFT: gnome.rotateLeft(); break;
-				case CommandType.RIGHT: gnome.rotateRight(); break;
-				case CommandType.ACT: gameWorld.doGnomeAction(gnome); break;
-				case CommandType.CALL_ROUTINE: this.queueUpRoutine(gameWorld, gnome, command); break;
-				case CommandType.DELAY: gnome.delay(); break;
+			else {
+				switch (command.type) {
+					case CommandType.WALK: walkingGnomes.push(gnome); break;
+					case CommandType.LEFT: gnome.rotateLeft(); break;
+					case CommandType.RIGHT: gnome.rotateRight(); break;
+					case CommandType.ACT: gameWorld.doGnomeAction(gnome); break;
+					case CommandType.CALL_ROUTINE:
+						if (!this.queueUpRoutine(gameWorld, gnome, command)) {
+							dyingGnomes.push(gnome);
+						}
+						break;
+					case CommandType.DELAY: gnome.delay(); break;
+				}
 			}
 		});
 
 		walkingGnomes.forEach(gnome => gameWorld.tryMove(gnome));
+		dyingGnomes.forEach(gnome => gameWorld.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT));
 	}
 
-	private queueUpRoutine(gameWorld: GameWorld, gnome: Gnome, command: Command) {
+	private queueUpRoutine(gameWorld: GameWorld, gnome: Gnome, command: Command): boolean {
 		let routine = this.libraries[command.args[0]];
 		if (!routine || !routine.length) {
-			gameWorld.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
-			return;
+			return false;
 		}
 
 		for (let i = routine.length - 1; i >= 0; i--) {
 			gnome.codeStack.push(routine[i]);
 		}
+		return true;
 	}
 
 }
