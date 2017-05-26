@@ -16,6 +16,7 @@ namespace States {
 			this.game.camera.setPosition(-400, -300);
 			this.gameWorld = new GameWorld(this.game);
 			this.gameWorld.loadLevel("menu_level");
+			this.game.stage.backgroundColor = 0xffffff;
 
 			this.createMenuButton("Continue", 0, -250, this.continueGame);
 			this.createMenuButton("Start Game", -250, 200, this.startGame);

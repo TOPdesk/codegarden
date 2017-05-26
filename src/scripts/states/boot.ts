@@ -9,6 +9,7 @@ namespace States {
 		init() {
 			this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
 			this.game.camera.bounds = null;
+			this.game.stage.backgroundColor = 0xffffff;
 		}
 
 		preload() {

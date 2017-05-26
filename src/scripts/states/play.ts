@@ -22,6 +22,7 @@ namespace States {
 
 		create() {
 			this.game.camera.setPosition(CAMERA_OFFSET_X, CAMERA_OFFSET_Y);
+			this.game.stage.backgroundColor = 0xffffff;
 
 			this.initializeEditor();
 			this.drawSpawnButton();
