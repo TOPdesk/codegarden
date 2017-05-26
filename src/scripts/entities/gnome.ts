@@ -95,6 +95,7 @@ class Gnome extends Phaser.Sprite {
 			case (CauseOfDeath.DROWNING):
 				tween.onChildComplete.add(() => {
 					this.loadTexture("gnome_drowning");
+					this.game.add.sound("bubbles").play();
 				});
 				tween.to({alpha: 0}, 500, Phaser.Easing.Quartic.Out);
 				break;
