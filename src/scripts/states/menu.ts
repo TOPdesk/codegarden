@@ -19,7 +19,7 @@ namespace States {
 
 			this.createMenuButton("Continue", 0, -250, this.continueGame);
 			this.createMenuButton("Start Game", -250, 200, this.startGame);
-			this.createMenuButton("Options", 250, -120, this.options);
+			this.createMenuButton("Credits", 250, -120, this.credits);
 
 			this.createMenuImage(250, -75, "main_menu_options");
 			this.createMenuImage(-250, 150, "main_menu_start");
@@ -48,6 +48,7 @@ namespace States {
 				new Command(CommandType.ACT),
 				new RunnableCommand(() => { this.game.state.start("play"); } )
 			];
+			localStorage.setItem("lastLevel", "tutorial_level_1");
 			this.gameWorld.spawnGnomes();
 		}
 
@@ -61,16 +62,22 @@ namespace States {
 				new Command(CommandType.WALK),
 				new Command(CommandType.ACT),
 				new RunnableCommand(() => {
-					let level = prompt("Continue from which level?", "tutorial_level_5");
+					/*let level = prompt("Continue from which level?", "tutorial_level_5");
 					if (level) {
 						this.game.state.start("play", true, false, level);
+					}*/
+					if (localStorage.getItem("lastLevel")) {
+						this.game.state.start("play", true, false, localStorage.getItem("lastLevel"));
+					}
+					else {
+						this.game.state.start("play");
 					}
 				})
 			];
 			this.gameWorld.spawnGnomes();
 		}
 
-		private options(): void {
+		private credits(): void {
 			this.gameWorld.level.houses[0].gnomeCode = [
 				new Command(CommandType.WALK),
 				new Command(CommandType.LEFT),
@@ -79,9 +86,9 @@ namespace States {
 				new Command(CommandType.LEFT),
 				new Command(CommandType.WALK),
 				new Command(CommandType.ACT),
+				new RunnableCommand(() => { this.game.state.start("credits"); })
 			];
 			this.gameWorld.spawnGnomes();
-			console.log("options");
 		}
 
 	}

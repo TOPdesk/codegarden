@@ -187,5 +187,6 @@ class GameWorld {
 				}
 			}
 		});
+		localStorage.setItem("lastLevel", this.level.nextLevel);
 	}
 }

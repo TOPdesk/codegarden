@@ -18,6 +18,7 @@ namespace States {
 			this.game.state.add("preload", PreloadState);
 			this.game.state.add("menu", MenuState);
 			this.game.state.add("play", PlayState);
+			this.game.state.add("credits", CreditsState)
 		}
 
 		create() {
