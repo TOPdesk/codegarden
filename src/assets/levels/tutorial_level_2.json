@@ -53,6 +53,7 @@
 				]
 			}
 		],
+		"introMessage": "Not all my underlings trust you, so they will not take instructions.\nJust ignore the buggers and move out of their way",
 		"nextLevel": "tutorial_level_3"
 	}
 }
