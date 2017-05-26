@@ -124,6 +124,12 @@ class GameWorld {
 		gnome.die(causeOfDeath);
 	}
 
+	resetGame() {
+		this.gnomes.forEach((gnome) => {
+			this.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
+		});
+	}
+
 	spawnGnomes() {
 		this.level.houses.forEach(house => {
 			let newGnome = new Gnome(this.game,

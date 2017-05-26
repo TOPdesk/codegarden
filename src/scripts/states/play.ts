@@ -163,7 +163,10 @@ namespace States {
 		}
 
 		drawSpawnButton() {
-			this.drawButton(94, 10, "play_button", () => this.gameWorld.spawnGnomes());
+			this.drawButton(94, 10, "play_button", () => {
+				this.gameWorld.resetGame();
+				this.gameWorld.spawnGnomes();
+			});
 		}
 
 		private drawButton(x: number, y: number, pictureKey, trigger: Function): Phaser.Sprite {
@@ -180,7 +183,7 @@ namespace States {
 			if (!target.classList.contains("commandButton")
 				|| this.selectedCodeBuilding.model.readonly
 				|| this.selectedCodeBuilding.gnomeCode.length >= this.selectedCodeBuilding.model.sizeLimit
-				|| this.gameWorld.getIfRunning) {
+				|| this.gameWorld.getIfRunning()) {
 				return;
 			}
 
