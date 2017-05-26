@@ -29,7 +29,8 @@ namespace States {
 			this.load.spritesheet("gnome_floating_front", "assets/images/gnome_floating_front.png", 70, 150);
 
 			this.load.image("gnome_drowning", "assets/images/gnome_drowning.png");
-			this.load.image("gnome_waiting", "assets/images/gnome_waiting.png");
+			this.load.image("gnome_waiting", "assets/images/gnome-waiting.png");
+			this.load.image("gnome_reading", "assets/images/gnome-reading.png");
 
 			this.load.image("main_menu_options", "assets/images/main-menu-options.png");
 			this.load.image("main_menu_continue", "assets/images/main-menu-continue.png");

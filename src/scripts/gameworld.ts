@@ -187,6 +187,11 @@ class GameWorld {
 				}
 			}
 		});
-		localStorage.setItem("lastLevel", this.level.nextLevel);
+		if (this.level.nextLevel) {
+			localStorage.setItem("lastLevel", this.level.nextLevel);
+		}
+		else {
+			localStorage.setItem("lastLevel", "tutorial_level_1");
+		}
 	}
 }

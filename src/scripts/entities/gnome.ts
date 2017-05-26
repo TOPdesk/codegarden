@@ -67,7 +67,6 @@ class Gnome extends Phaser.Sprite {
 
 	delay() {
 		this.loadTexture("gnome_waiting");
-		this.determineSprite();
 	}
 
 	walkTo(newLocation: MapPoint) {

@@ -63,16 +63,16 @@ namespace States {
 				new Command(CommandType.WALK),
 				new Command(CommandType.ACT),
 				new RunnableCommand(() => {
-					/*let level = prompt("Continue from which level?", "tutorial_level_5");
+					let level = prompt("Continue from which level?", "tutorial_level_5");
 					if (level) {
 						this.game.state.start("play", true, false, level);
-					}*/
-					if (localStorage.getItem("lastLevel")) {
+					}
+					/*if (localStorage.getItem("lastLevel")) {
 						this.game.state.start("play", true, false, localStorage.getItem("lastLevel"));
 					}
 					else {
 						this.game.state.start("play");
-					}
+					}*/
 				})
 			];
 			this.gameWorld.spawnGnomes();
