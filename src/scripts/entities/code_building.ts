@@ -47,6 +47,15 @@ class CodeBuilding extends GameObject {
 			this.selectionIndicator.destroy();
 		}
 	}
+
+	static getLibraryColor(libraryIndex: number): string {
+		switch (libraryIndex) {
+			case 0: return "orange";
+			case 1: return "purple";
+			case 2: return "green";
+			default: return "red";
+		}
+	}
 }
 
 interface CodeBuildingModel extends GameObjectModel {

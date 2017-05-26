@@ -35,11 +35,11 @@ interface GameObjectModel {
 }
 
 namespace ObjectType {
-	export function instantiate(game: Phaser.Game, model) {
+	export function instantiate(game: Phaser.Game, model, libraryIndex: number) {
 		switch (model.type) {
 			case "TREE": return new Tree(game, model);
 			case "HOUSE": return new House(game, model);
-			case "LIBRARY": return new CodeBuilding(game, model, "library");
+			case "LIBRARY": return new CodeBuilding(game, model, "library-" + CodeBuilding.getLibraryColor(libraryIndex));
 			case "ROCK": return new GameObject(game, model, "rock", false);
 			case "BUTTON": return new GameObject(game, model, "button", false);
 			case "MUSHROOMS": return new Mushrooms(game, model);

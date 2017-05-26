@@ -1,5 +1,12 @@
 @orange: #EEA91E;
+@purple: #9944cc;
+@red: #bb0000;
+@green: #00aa00;
+@buttonLilac: #bb88ff;
 @buttonYellow: #ffee00;
+@buttonOrange: #ffcc00;
+@buttonPink: #ff9999;
+@buttonLightGreen: #99ff99;
 
 @font-face {
 	font-family: 'MessageFont';
@@ -89,8 +96,27 @@ body {
 	background-position: center;
 }
 
-.commandLibrary {
-	background: url("../assets/images/control_subroutine.png"), @buttonYellow;
+.commandButton.commandLibrary.orange {
+	border: 3px solid @orange;
+	background: url("../assets/images/control_subroutine.png"), @buttonOrange;
+	background-position: center;
+}
+
+.commandButton.commandLibrary.purple {
+	border: 3px solid @purple;
+	background: url("../assets/images/control_subroutine.png"), @buttonLilac;
+	background-position: center;
+}
+
+.commandButton.commandLibrary.green {
+	border: 3px solid @green;
+	background: url("../assets/images/control_subroutine.png"), @buttonLightGreen;
+	background-position: center;
+}
+
+.commandButton.commandLibrary.red {
+	border: 3px solid @red;
+	background: url("../assets/images/control_subroutine.png"), @buttonPink;
 	background-position: center;
 }
 

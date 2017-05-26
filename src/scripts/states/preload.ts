@@ -57,7 +57,10 @@ namespace States {
 
 			this.load.image("rock", "assets/images/rock.png");
 
-			this.load.image("library", "assets/images/library.png");
+			this.load.image("library-red", "assets/images/library-red.png");
+			this.load.image("library-orange", "assets/images/library-orange.png");
+			this.load.image("library-green", "assets/images/library-green.png");
+			this.load.image("library-purple", "assets/images/library-purple.png");
 
 			this.load.image("button", "assets/images/action-button.png");
 

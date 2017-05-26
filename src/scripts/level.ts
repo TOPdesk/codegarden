@@ -103,7 +103,7 @@ class Level {
 	}
 
 	renderObject(game: Phaser.Game, model): Phaser.Sprite {
-		let object = ObjectType.instantiate(game, model);
+		let object = ObjectType.instantiate(game, model, this.libraries.length);
 		if (object instanceof House) {
 			this.houses.push(object);
 		}

@@ -134,7 +134,7 @@ namespace States {
 			this.codeEditorSortable.options.disabled = this.selectedCodeBuilding.model.readonly;
 
 			this.selectedCodeBuilding.gnomeCode.forEach(command => {
-				PlayState.appendCommandToGui(innerCodeEditor, command.type);
+				PlayState.appendCommandToGui(innerCodeEditor, command.type, command.args[0]);
 			});
 
 			PlayState.appendPlaceholders(innerCodeEditor, this.selectedCodeBuilding.model.sizeLimit - this.selectedCodeBuilding.gnomeCode.length);
@@ -193,7 +193,8 @@ namespace States {
 				new Command(commandType, [parseInt(target.dataset["libraryIndex"])]) : new Command(commandType);
 			this.selectedCodeBuilding.gnomeCode.push(command);
 			PlayState.removePlaceholders(document.getElementById("innerCodeEditor"));
-			PlayState.appendCommandToGui(document.getElementById("innerCodeEditor"), commandType);
+
+			PlayState.appendCommandToGui(document.getElementById("innerCodeEditor"), commandType, command.args[0]);
 			this.updateCommandsLabel();
 		}
 
@@ -219,8 +220,10 @@ namespace States {
 
 			if (libraryIndex !== undefined) {
 				button.dataset["libraryIndex"] = libraryIndex.toString();
+				button.classList.add(CodeBuilding.getLibraryColor(libraryIndex));
 			}
 			gui.appendChild(button);
+			return button;
 		}
 
 		private static removePlaceholders(gui: HTMLElement) {

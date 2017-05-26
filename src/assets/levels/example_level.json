@@ -40,6 +40,34 @@
 			"initialCode": "WWWARW",
 			"sizeLimit": 25,
 			"direction": 3
+		},
+		{
+			"type": "LIBRARY",
+			"positionX": 2,
+			"positionY": 1,
+			"readonly": false,
+			"sizeLimit": 4
+		},
+		{
+			"type": "LIBRARY",
+			"positionX": 4,
+			"positionY": 3,
+			"readonly": false,
+			"sizeLimit": 4
+		},
+		{
+			"type": "LIBRARY",
+			"positionX": 5,
+			"positionY": 2,
+			"readonly": false,
+			"sizeLimit": 4
+		},
+		{
+			"type": "LIBRARY",
+			"positionX": 3,
+			"positionY": 3,
+			"readonly": false,
+			"sizeLimit": 4
 		}
     ]
 	}
