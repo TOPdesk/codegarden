@@ -137,6 +137,10 @@ class GameWorld {
 		});
 	}
 
+	getIfRunning() {
+		return this.gnomes.length > 0;
+	}
+
 	private addDelay(gnomeCode: Command[], delay: number) {
 		let newGnomeCode = [];
 		for (let i = 0; i < delay; i++) {

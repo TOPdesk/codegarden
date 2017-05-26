@@ -179,7 +179,8 @@ namespace States {
 			let target = evt.target as HTMLElement;
 			if (!target.classList.contains("commandButton")
 				|| this.selectedCodeBuilding.model.readonly
-				|| this.selectedCodeBuilding.gnomeCode.length >= this.selectedCodeBuilding.model.sizeLimit) {
+				|| this.selectedCodeBuilding.gnomeCode.length >= this.selectedCodeBuilding.model.sizeLimit
+				|| this.gameWorld.getIfRunning) {
 				return;
 			}
 
@@ -195,7 +196,7 @@ namespace States {
 		private handleCommandClick(evt: MouseEvent) {
 			let target = evt.target as HTMLElement;
 			if (!target.classList.contains("commandButton") || target.classList.contains("commandPlaceholder")
-					|| this.selectedCodeBuilding.model.readonly) {
+					|| this.selectedCodeBuilding.model.readonly || this.gameWorld.getIfRunning()) {
 				return;
 			}
 			let editor = document.getElementById("innerCodeEditor");
