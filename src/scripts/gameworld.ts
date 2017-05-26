@@ -84,16 +84,11 @@ class GameWorld {
 			if (!gnome.floating && block === WorldConstants.BlockType.WATER) {
 				gnome.wateringCan = true;
 			}
-
-			if (!gnome.floating && this.getIfAdjacent(gnome, adjacentGnome) && gnome.wateringCan) {
+			else if (!gnome.floating && adjacentGnome && gnome.wateringCan && !adjacentGnome.wateringCan) {
 				gnome.wateringCan = false;
 				adjacentGnome.wateringCan = true;
 			}
 		}
-	}
-
-	private getIfAdjacent(currentGnome: Gnome, otherGnome: Gnome) {
-		return !!otherGnome	&& ((otherGnome.direction + 2) % 4) === currentGnome.direction;
 	}
 
 	/**

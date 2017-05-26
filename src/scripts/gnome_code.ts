@@ -8,6 +8,8 @@ class GnomeCode {
 	 * Executes the next command.
 	 */
 	executeNextCommand(gameWorld: GameWorld, gnomes: Gnome[]) {
+		//Do moves last, so that giving a watering can will work as expected
+		let walkingGnomes = [];
 		gnomes.slice().sort((a, b) => a.wateringCan ? 1 : -1).forEach(gnome => {
 			let command = gnome.codeStack.pop();
 
@@ -21,7 +23,7 @@ class GnomeCode {
 			}
 
 			switch (command.type) {
-				case CommandType.WALK: gameWorld.tryMove(gnome); break;
+				case CommandType.WALK: walkingGnomes.push(gnome); break;
 				case CommandType.LEFT: gnome.rotateLeft(); break;
 				case CommandType.RIGHT: gnome.rotateRight(); break;
 				case CommandType.ACT: gameWorld.doGnomeAction(gnome); break;
@@ -29,6 +31,8 @@ class GnomeCode {
 				case CommandType.DELAY: gnome.delay(); break;
 			}
 		});
+
+		walkingGnomes.forEach(gnome => gameWorld.tryMove(gnome));
 	}
 
 	private queueUpRoutine(gameWorld: GameWorld, gnome: Gnome, command: Command) {
