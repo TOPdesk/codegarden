@@ -12,6 +12,9 @@ namespace States {
 
 		private gameWorld: GameWorld;
 
+		private enteredCode: String;
+		private codeCorrect: Boolean;
+
 		create(): void {
 			this.game.camera.setPosition(-400, -300);
 			this.gameWorld = new GameWorld(this.game);
@@ -26,6 +29,27 @@ namespace States {
 			this.createMenuImage(-250, 150, "main_menu_start");
 			this.createMenuImage(-90, -210, "main_menu_continue");
 
+			this.game.input.keyboard.onDownCallback = this.handleKeyDown;
+		}
+
+		private handleKeyDown = () => {
+			let enteredKey: String = this.game.input.keyboard.event.key;
+			let code = "ETGNOMEHOME";
+
+			if (enteredKey.length === 1) {
+				this.enteredCode += enteredKey.toUpperCase();
+			}
+			else {
+				return;
+			}
+
+			if (!(code.startsWith(this.enteredCode))) {
+				this.enteredCode = "";
+			}
+			
+			if (code === this.enteredCode) {
+				this.codeCorrect = true;
+			}
 		}
 
 		private createMenuButton(text: string, x: number, y: number, onClick: Function): Phaser.Text {
@@ -54,6 +78,7 @@ namespace States {
 		}
 
 		private continueGame(): void {
+
 			this.gameWorld.level.houses[0].gnomeCode = [
 				new Command(CommandType.WALK),
 				new Command(CommandType.RIGHT),
@@ -63,17 +88,21 @@ namespace States {
 				new Command(CommandType.WALK),
 				new Command(CommandType.ACT),
 				new RunnableCommand(() => {
-					let level = prompt("Continue from which level?", "tutorial_level_5");
-					if (level) {
-						this.game.state.start("play", true, false, level);
-					}
-					/*if (localStorage.getItem("lastLevel")) {
-						this.game.state.start("play", true, false, localStorage.getItem("lastLevel"));
+					if (this.codeCorrect) {
+						let level = prompt("Continue from which level?", "tutorial_level_5");
+						if (level) {
+							this.game.state.start("play", true, false, level);
+						}
 					}
 					else {
-						this.game.state.start("play");
-					}*/
-				})
+						if (localStorage.getItem("lastLevel")) {
+							this.game.state.start("play", true, false, localStorage.getItem("lastLevel"));
+						}
+						else {
+							this.game.state.start("play");
+						}
+					}
+			})
 			];
 			this.gameWorld.spawnGnomes();
 		}
