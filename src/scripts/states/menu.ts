@@ -46,11 +46,11 @@ namespace States {
 			if (!(code.substr(0, this.enteredCode.length) === this.enteredCode)) {
 				this.enteredCode = "";
 			}
-			
+
 			if (code === this.enteredCode) {
 				this.codeCorrect = true;
 			}
-		}
+		};
 
 		private createMenuButton(text: string, x: number, y: number, onClick: Function): Phaser.Text {
 			let button = this.game.add.text(x, y, text, MENU_BUTTON_STYLE);

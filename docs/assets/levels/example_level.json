@@ -6,7 +6,7 @@
 		[0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0],
-		[1, 0, 0, 0, 0, 0]],
+		[1, 1, 0, 0, 0, 0]],
 
 	"spawnpoint": {
 	  "positionX": 2,
@@ -21,12 +21,6 @@
 	"objects": [
 		{
 		    "type" : "TREE",
-		    "positionX": 1,
-		    "positionY": 4,
-		    "color" : "default"
-		},
-		{
-		    "type" : "TREE",
 		    "positionX": 3,
 		    "positionY": 4,
 		    "color" : "default"
@@ -35,9 +29,45 @@
 	  		"type": "HOUSE",
 	  		"positionX": 0,
 	  		"positionY": 0,
-	  		"initialCode": "WWWALLWWWWWWRWRWWWWW",
-	  		"sizeLimit": 15,
+	  		"initialCode": "WWWALW",
+	  		"sizeLimit": 25,
 	  		"direction": 3
+		},
+		{
+			"type": "HOUSE",
+			"positionX": 1,
+			"positionY": 0,
+			"initialCode": "WWWARW",
+			"sizeLimit": 25,
+			"direction": 3
+		},
+		{
+			"type": "LIBRARY",
+			"positionX": 2,
+			"positionY": 1,
+			"readonly": false,
+			"sizeLimit": 4
+		},
+		{
+			"type": "LIBRARY",
+			"positionX": 4,
+			"positionY": 3,
+			"readonly": false,
+			"sizeLimit": 4
+		},
+		{
+			"type": "LIBRARY",
+			"positionX": 5,
+			"positionY": 2,
+			"readonly": false,
+			"sizeLimit": 4
+		},
+		{
+			"type": "LIBRARY",
+			"positionX": 3,
+			"positionY": 3,
+			"readonly": false,
+			"sizeLimit": 4
 		}
     ]
 	}

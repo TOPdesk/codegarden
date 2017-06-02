@@ -4,7 +4,7 @@
 			[2, 3, 2, 2, 1],
 			[2, 2, 2, 2, 2],
 			[2, 2, 2, 3, 2],
-			[2, 2, 2, 2, 2]],
+			[2, 2, 3, 2, 2]],
 		"objects": [
 			{
 				"type": "TREE",
@@ -63,6 +63,7 @@
 				]
 			}
 		],
+		"introMessage": "If the GNOME won't come to the water...\nthen the water must go to the GNOME.",
 		"nextLevel": "tutorial_level_5"
 	}
 }

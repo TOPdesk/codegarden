@@ -66,6 +66,7 @@
 				]
 			}
 		],
+		"introMessage": "Remember what I said about books?\nSome of the lazy GNOMEs here won't do anything for a while.",
 		"nextLevel": "tutorial_level_6"
 	}
 }
