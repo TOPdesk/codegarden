@@ -3,17 +3,14 @@
 
 namespace States {
 	const MENU_BUTTON_STYLE = {
-		font: "32px Arial",
+		font: "32px MessageFont",
 		fill: "#ff0044",
 		align: "center"
 	};
 
 	export class MenuState extends Phaser.State {
-
 		private gameWorld: GameWorld;
-
-		private enteredCode: String;
-		private codeCorrect: Boolean;
+		private enteredCode = "";
 
 		create(): void {
 			this.game.camera.setPosition(-400, -300);
@@ -23,7 +20,7 @@ namespace States {
 
 			this.createMenuButton("Continue", 0, -250, this.continueGame);
 			this.createMenuButton("Start Game", -250, 200, this.startGame);
-			this.createMenuButton("Credits", 250, -120, this.credits);
+			this.createMenuButton("Credits", 340, -115, this.credits);
 
 			this.createMenuImage(250, -75, "main_menu_options");
 			this.createMenuImage(-250, 150, "main_menu_start");
@@ -48,7 +45,15 @@ namespace States {
 			}
 
 			if (code === this.enteredCode) {
-				this.codeCorrect = true;
+				Messages.show(this.game, "Are you a wizard?\nClick here to choose a level.",
+					{
+						callback: () => {
+							let level = prompt("Continue from which level?", "tutorial_level_6");
+							if (level) {
+								this.game.state.start("play", true, false, level);
+							}
+						}
+					});
 			}
 		};
 
@@ -88,19 +93,11 @@ namespace States {
 				new Command(CommandType.WALK),
 				new Command(CommandType.ACT),
 				new RunnableCommand(() => {
-					if (this.codeCorrect) {
-						let level = prompt("Continue from which level?", "tutorial_level_5");
-						if (level) {
-							this.game.state.start("play", true, false, level);
-						}
+					if (localStorage.getItem("lastLevel")) {
+						this.game.state.start("play", true, false, localStorage.getItem("lastLevel"));
 					}
 					else {
-						if (localStorage.getItem("lastLevel")) {
-							this.game.state.start("play", true, false, localStorage.getItem("lastLevel"));
-						}
-						else {
-							this.game.state.start("play");
-						}
+						this.game.state.start("play");
 					}
 			})
 			];
