@@ -35,12 +35,10 @@ namespace Messages {
 	export function show(game: Phaser.Game, message: string, options?: MessageOptions) {
 		let optionMap = options ? options : {};
 
-		if (!messageGroup) {
-			messageGroup = game.add.group(game.world, "message");
+		if (messageGroup) {
+			messageGroup.destroy();
 		}
-		else {
-			messageGroup.removeAll(true);
-		}
+		messageGroup = game.add.group(game.world, "message");
 
 		let king = messageGroup.add(new Phaser.Sprite(game, -200, -280, "gnome_king"));
 		king.animations.add("hover");
