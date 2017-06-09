@@ -51,7 +51,6 @@ class Gnome extends Phaser.Sprite {
 		let screenCoordinates: ScreenPoint = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
 		this.x = screenCoordinates.x + GNOME_X_OFFSET;
 		this.y = screenCoordinates.y + GNOME_Y_OFFSET;
-		this.game.add.tween(this).from({alpha: 0}, 500, Phaser.Easing.Quartic.Out, true);
 		game.add.existing(this);
 	}
 

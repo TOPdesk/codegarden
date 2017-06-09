@@ -29,6 +29,7 @@ class GameWorld {
 	private hasWon = false;
 
 	private selectedBuilding: CodeBuilding;
+	private selectedBuildingGnomeGhost: Gnome;
 
 	public selectionListener: (building?: CodeBuilding, libraries?: CodeBuilding[]) => void;
 
@@ -37,6 +38,10 @@ class GameWorld {
 	 * in the preloader.
 	 */
 	loadLevel(levelName: string) {
+		if (this.selectedBuildingGnomeGhost) {
+			this.selectedBuildingGnomeGhost.destroy();
+			this.selectedBuildingGnomeGhost = null;
+		}
 		this.selectedBuilding = null;
 		this.hasWon = false;
 		this.blockGroup.removeAll(true);
@@ -60,10 +65,22 @@ class GameWorld {
 				if (this.selectedBuilding) {
 					this.selectedBuilding.deselect();
 				}
+				if (this.selectedBuildingGnomeGhost) {
+					this.selectedBuildingGnomeGhost.destroy();
+					this.selectedBuildingGnomeGhost = null;
+				}
 				this.selectedBuilding = building;
 				this.selectedBuilding.select();
 				if (this.selectionListener) {
 					this.selectionListener(building, this.level.libraries);
+				}
+				if (building instanceof House) {
+					this.selectedBuildingGnomeGhost = this.spawnGnome(building);
+					this.selectedBuildingGnomeGhost.alpha = 0.3;
+					this.game.add.tween(this.selectedBuildingGnomeGhost)
+						.to({y: this.selectedBuildingGnomeGhost.y - 3}, 1000, Phaser.Easing.Sinusoidal.InOut, true)
+						.yoyo(true, 0)
+						.repeat(-1);
 				}
 			});
 		});
@@ -127,16 +144,24 @@ class GameWorld {
 	}
 
 	spawnGnomes() {
+		if (this.selectedBuildingGnomeGhost) {
+			this.selectedBuildingGnomeGhost.destroy();
+			this.selectedBuildingGnomeGhost = null;
+		}
 		this.level.houses.forEach(house => {
-			let newGnome = new Gnome(this.game,
-				house.model.positionX + Direction.getXDelta(house.model.direction),
-				house.model.positionY + Direction.getYDelta(house.model.direction),
-				house.model.direction,
-				this.addDelay(house.gnomeCode, house.delay));
+			let newGnome = this.spawnGnome(house);
 			this.entityGroup.add(newGnome);
 			this.gnomes.push(newGnome);
 			this.determineEntityZIndices();
 		});
+	}
+
+	private spawnGnome(house): Gnome {
+		return new Gnome(this.game,
+			house.model.positionX + Direction.getXDelta(house.model.direction),
+			house.model.positionY + Direction.getYDelta(house.model.direction),
+			house.model.direction,
+			this.addDelay(house.gnomeCode, house.delay));
 	}
 
 	getIfRunning() {
