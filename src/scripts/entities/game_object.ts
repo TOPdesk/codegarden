@@ -18,7 +18,40 @@ class GameObject extends Phaser.Sprite {
 		this.x = screenCoordinates.x + OBJECT_SPRITE_X_OFFSET;
 		this.y = screenCoordinates.y + OBJECT_SPRITE_Y_OFFSET;
 
+		this.allowSeeingBehindObject();
+
 		game.add.existing(this);
+	}
+
+	/**
+	 * Turns the object translucent when hovered over
+	 */
+	private allowSeeingBehindObject() {
+		this.inputEnabled = true;
+		this.input.pixelPerfectOver = true;
+		this.input.pixelPerfectClick = true;
+		let fadeoutTweenInProgress = null;
+		let fadeinTweenInProgress = null;
+		this.events.onInputOver.add(() => {
+			if (fadeoutTweenInProgress) {
+				fadeoutTweenInProgress.stop();
+				fadeoutTweenInProgress = null;
+			}
+			if (!fadeinTweenInProgress) {
+				fadeinTweenInProgress = this.game.add.tween(this)
+					.to({alpha: 0.6}, 1000, Phaser.Easing.Sinusoidal.InOut, true);
+			}
+		}, this);
+		this.events.onInputOut.add(() => {
+			if (fadeinTweenInProgress) {
+				fadeinTweenInProgress.stop();
+				fadeinTweenInProgress = null;
+			}
+			if (!fadeoutTweenInProgress) {
+				fadeoutTweenInProgress = this.game.add.tween(this)
+					.to({alpha: 1}, 300, Phaser.Easing.Sinusoidal.InOut, true);
+			}
+		}, this);
 	}
 
 	/**
