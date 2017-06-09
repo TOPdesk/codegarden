@@ -106,4 +106,15 @@ namespace CommandType {
 			default: throw new Error("Cannot parse command " + shorthand);
 		}
 	}
+
+	export function getTooltip(type: CommandType) {
+		switch (type) {
+			case CommandType.WALK: return "Move forward";
+			case CommandType.LEFT: return "Turn left";
+			case CommandType.RIGHT: return "Turn right";
+			case CommandType.ACT: return "Interact with whatever the gnome is looking at";
+			case CommandType.CALL_ROUTINE: return "Read a book from the corresponding library and do what it says";
+		}
+		return "What does this command do? It's a mystery to everyone!";
+	}
 }

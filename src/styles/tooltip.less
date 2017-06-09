@@ -1,0 +1,63 @@
+.tooltipped {
+	position: relative;
+}
+
+.tooltip {
+	pointer-events: none;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+
+	visibility: hidden;
+	width: 160px;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	padding: 5px 0;
+	border-radius: 6px;
+
+	/* Position the tooltip text */
+	position: absolute;
+	z-index: 1;
+	top: 25%;
+	left: 105%;
+
+	opacity: 0;
+	transition: opacity 0.5s;
+	transition-delay: 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltipped .tooltip::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: -10px;
+	margin-top: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color:  transparent #555 transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltipped:hover .tooltip {
+	visibility: visible;
+	opacity: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltipped:hover .tooltip {
+	visibility: visible;
+	opacity: 1;
+}
+
+.sortable-chosen.tooltipped:hover .tooltip {
+	visibility: hidden;
+}
+
+.sortable-ghost.tooltipped:hover .tooltip {
+	visibility: hidden;
+}

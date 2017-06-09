@@ -214,9 +214,14 @@ namespace States {
 
 		private static appendCommandToGui(gui: HTMLElement, commandType: CommandType, libraryIndex?: number) {
 			let button = document.createElement("DIV");
-			button.classList.add("commandButton");
+			button.classList.add("commandButton", "tooltipped");
 			button.dataset["commandType"] = commandType.toString();
 			button.classList.add(CommandType.imageClass(commandType));
+
+			let tooltip = document.createElement("SPAN");
+			tooltip.classList.add("tooltip");
+			tooltip.innerText = CommandType.getTooltip(commandType);
+			button.appendChild(tooltip);
 
 			if (libraryIndex !== undefined) {
 				button.dataset["libraryIndex"] = libraryIndex.toString();
