@@ -303,16 +303,16 @@ House orientation:
 3 => NW (left)
 
 House delays:    
-2 => 7    
-3 => 11    
+2 => 10    
+3 => 15    
 
-Required programs to win the level:    
+Possible program to win the level:    
 1: 	[FARFFRALA]				    = [F F1 A]    
-2: 	[XXXXXXXRARRARFFARFFRALLA]	= [RARR F2 F1 LA]    
+2: 	[XXXXXXXLARFFARFFRALLA]	= [LARFF F1 LA]    
 3: 	[XXXXXXXXXXXARFFRA]			= [F1]
 
-F1: [ARFFRAL]				    = [F2 RAL]    
-F2: [ARFF]
+F1: [ARFFRAL]				    = [ARF F2]    
+F2: [FRAL]
 
 ### Other
 - Death gnomes spawn clouds, 3 clouds make rain, rain waters the ground directly under where the gnome died.
