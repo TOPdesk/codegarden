@@ -4,7 +4,7 @@
 			[1, 1, 2, 2, 2, 2],
 			[2, 1, 2, 2, 2, 2],
 			[2, 1, 2, 2, 2, 2],
-			[2, 1, 1, 2, 2, 2],
+			[2, 1, 1, 2, 3, 2],
 			[2, 2, 1, 2, 2, 2],
 			[2, 2, 1, 2, 2, 2]],
 		"objects": [
@@ -31,7 +31,7 @@
 				"positionY": 1,
 				"direction": 3,
 				"sizeLimit": 8,
-				"delay": 7
+				"delay": 10
 			},
 			{
 				"type": "HOUSE",
@@ -39,7 +39,7 @@
 				"positionY": 2,
 				"direction": 0,
 				"sizeLimit": 1,
-				"delay": 11
+				"delay": 15
 			},
 			{
 				"type": "LIBRARY",
@@ -51,8 +51,8 @@
 			},
 			{
 				"type": "LIBRARY",
-				"positionX": 4,
-				"positionY": 3,
+				"positionX": 5,
+				"positionY": 5,
 				"direction": 2,
 				"readonly": false,
                 "sizeLimit": 4
@@ -68,7 +68,12 @@
                 "positionX": 3,
                 "positionY": 5,
 				"amount": 3
-            }
+            },
+			{
+				"type": "ROCK",
+				"positionX": 4,
+				"positionY": 3
+			}
 		],
 		"victoryConditions": [
 			{
