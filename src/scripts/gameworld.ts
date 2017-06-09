@@ -123,6 +123,7 @@ class GameWorld {
 		this.gnomes.forEach((gnome) => {
 			this.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
 		});
+		this.level.softReset();
 	}
 
 	spawnGnomes() {

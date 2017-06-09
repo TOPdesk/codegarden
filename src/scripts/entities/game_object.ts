@@ -4,12 +4,15 @@ const OBJECT_SPRITE_X_OFFSET = 58;
 const OBJECT_SPRITE_Y_OFFSET = -83;
 
 class GameObject extends Phaser.Sprite {
+	private initialModel: GameObjectModel;
+
 	get location(): MapPoint {
 		return new MapPoint(this.model.positionX, this.model.positionY);
 	}
 
 	constructor(game: Phaser.Game, public model: GameObjectModel, sprite, public passable) {
 		super(game, 0, 0, sprite);
+		this.initialModel = JSON.parse(JSON.stringify(model));
 		this.anchor.set(0.5, 1);
 		let screenCoordinates: ScreenPoint = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
 		this.x = screenCoordinates.x + OBJECT_SPRITE_X_OFFSET;
@@ -25,6 +28,26 @@ class GameObject extends Phaser.Sprite {
 	 */
 	doAction(gnome: Gnome): boolean {
 		return false;
+	}
+
+	/**
+	 * Resets the object to its initial state. The default implementation does this by reverting all values in the model
+	 * to their initial values. Any information outside the model (e.g. gnomecode) is not affected.
+	 */
+	softReset() {
+		for (let key in this.initialModel) {
+			if (this.initialModel.hasOwnProperty(key)) {
+				this.model[key] = this.initialModel[key];
+			}
+		}
+		this.determineTexture();
+	}
+
+	/**
+	 * Override if an object's graphic should change based on its internal state.
+	 */
+	determineTexture() {
+		//noop
 	}
 }
 

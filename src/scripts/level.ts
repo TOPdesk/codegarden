@@ -73,6 +73,17 @@ class Level {
 		return false;
 	}
 
+	/**
+	 * Resets the level to its initial state, but code buildings keep their code.
+	 */
+	softReset() {
+		for (let key in this.objectMap) {
+			if (this.objectMap.hasOwnProperty(key)) {
+				this.objectMap[key].softReset();
+			}
+		}
+	}
+
 	renderStage(blockGroup: Phaser.Group) {
 		let rows = this.layout.length;
 		let columns = this.layout[0].length;

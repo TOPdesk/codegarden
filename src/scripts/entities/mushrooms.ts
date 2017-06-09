@@ -18,8 +18,12 @@ class Mushrooms extends GameObject {
 			gnome.floating = 2;
 			this.model.amount--;
 		}
-		this.loadTexture("mushrooms_" + this.model.amount);
+		this.determineTexture();
 		return true;
+	}
+
+	determineTexture() {
+		this.loadTexture("mushrooms_" + this.model.amount);
 	}
 }
 

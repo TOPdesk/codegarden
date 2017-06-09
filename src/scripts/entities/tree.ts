@@ -16,26 +16,34 @@ class Tree extends GameObject {
 		this.displayWaterLevel();
 		if (this.model.treeLevel < MAX_TREE_LEVEL && this.waterContent >= this.model.requiredWater) {
 			this.model.treeLevel++;
-			this.loadTexture(TREE_IMAGE_PREFIX + this.model.treeLevel);
+			this.determineTexture();
 			this.waterContent = 0;
 			this.calculateRequiredWater();
 		}
 	}
 
+	determineTexture() {
+		this.loadTexture(TREE_IMAGE_PREFIX + this.model.treeLevel);
+	}
+
 	constructor(game: Phaser.Game, public model: TreeModel) {
-		super(game, model, TREE_IMAGE_PREFIX + "1", false);
+		super(game, Tree.addDefaults(model), TREE_IMAGE_PREFIX + "1", false);
+		this.calculateRequiredWater();
+
+		game.add.existing(this);
+	}
+
+	private static addDefaults(model: TreeModel) {
 		if (!model.treeLevel) {
 			model.treeLevel = 1;
-		}
-		if (!model.requiredWater) {
-			this.calculateRequiredWater();
 		}
 		if (!model.waterContent) {
 			model.waterContent = 0;
 		}
-		this.calculateRequiredWater();
-
-		game.add.existing(this);
+		if (!model.requiredWater) {
+			model.requiredWater = model.treeLevel >= MAX_TREE_LEVEL ? 0 : model.treeLevel;
+		}
+		return model;
 	}
 
 	doAction(gnome: Gnome) {
