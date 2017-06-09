@@ -45,6 +45,7 @@ namespace States {
 		shutdown() {
 			States.PlayState.cleanupCommandButtonBar();
 
+			document.getElementById("mushroomSelectionHint").style.display = "none";
 			let gnomeCodeEditor = document.getElementById("gnomeCodeEditor");
 			gnomeCodeEditor.style.display = "none";
 			let codeEditorClone = gnomeCodeEditor.cloneNode(true);
@@ -57,6 +58,7 @@ namespace States {
 			let buttonBarClone = buttonBar.cloneNode();
 			buttonBar.parentNode.replaceChild(buttonBarClone, buttonBar);
 			buttonBar.style.display = "none";
+			document.getElementById("mushroomSelectionHint").style.display = "none";
 		}
 
 		initializeButtons(libraries: CodeBuilding[]) {
@@ -122,6 +124,7 @@ namespace States {
 		showCodeInEditor() {
 			let outerEditor = document.getElementById("gnomeCodeEditor");
 			outerEditor.style.display = this.selectedCodeBuilding ? "block" : "none";
+			document.getElementById("mushroomSelectionHint").style.display = this.selectedCodeBuilding ? "none" : "block";
 			if (!this.selectedCodeBuilding) {
 				return;
 			}
