@@ -69,8 +69,16 @@ class Gnome extends Phaser.Sprite {
 		this.loadTexture("gnome_waiting");
 	}
 
+	readBook() {
+		//There is no texture for a floating gnome reading a book... yet.
+		if (!this.floating) {
+			this.loadTexture("gnome_reading");
+		}
+	}
+
 	walkTo(newLocation: MapPoint) {
 		this.location = newLocation;
+		this.determineSprite();
 		this.animations.play("walk", 30, true);
 		if (this.floating) {
 			this.floating--;
@@ -124,12 +132,9 @@ class Gnome extends Phaser.Sprite {
 			gnomeTexture = "gnome_floating_front";
 		}
 		this.loadTexture(gnomeTexture);
+		this.animations.add("walk");
 		if (this.floating) {
-			this.animations.add("walk");
 			this.animations.play("walk", 10, true);
-		}
-		else {
-			this.animations.add("walk");
 		}
 	}
 

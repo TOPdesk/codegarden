@@ -28,7 +28,8 @@ class GnomeCode {
 					case CommandType.RIGHT: gnome.rotateRight(); break;
 					case CommandType.ACT: gameWorld.doGnomeAction(gnome); break;
 					case CommandType.CALL_ROUTINE:
-						if (!this.queueUpRoutine(gameWorld, gnome, command)) {
+						gnome.readBook();
+						if (!this.queueUpRoutine(gnome, command)) {
 							dyingGnomes.push(gnome);
 						}
 						break;
@@ -41,7 +42,7 @@ class GnomeCode {
 		dyingGnomes.forEach(gnome => gameWorld.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT));
 	}
 
-	private queueUpRoutine(gameWorld: GameWorld, gnome: Gnome, command: Command): boolean {
+	private queueUpRoutine(gnome: Gnome, command: Command): boolean {
 		let routine = this.libraries[command.args[0]];
 		if (!routine || !routine.length) {
 			return false;
