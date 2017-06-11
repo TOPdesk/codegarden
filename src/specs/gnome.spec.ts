@@ -1,5 +1,5 @@
 /// <reference path="../scripts/entities/gnome.ts" />
-/// <reference path="../libs/dt-jasmine/jasmine.d.ts" />
+/// <reference path="../../node_modules/@types/jasmine/index.d.ts" />
 
 describe("Rotating left", () => {
     let gnome: Gnome;

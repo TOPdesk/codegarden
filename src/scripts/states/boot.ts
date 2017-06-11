@@ -1,4 +1,4 @@
-/// <reference path="../../libs/phaser/typescript/phaser.d.ts"/>
+/// <reference path="../../../node_modules/phaser/typescript/phaser.d.ts"/>
 /// <reference path="preload.ts"/>
 /// <reference path="play.ts"/>
 /// <reference path="menu.ts"/>

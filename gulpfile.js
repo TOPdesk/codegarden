@@ -24,7 +24,7 @@ const srcs = {
 	html: ['src/*.html', 'src/templates/*.html'],
 	styles: 'src/styles/**/*.less',
 	assets: 'src/assets/**/*',
-	libs: ['src/libs/phaser/build/phaser.min.js', 'src/libs/Sortable/Sortable.js']
+	libs: ['node_modules/phaser/build/phaser.min.js', 'node_modules/sortablejs/Sortable.min.js']
 };
 
 const dests = {
@@ -120,7 +120,7 @@ gulp.task('ts-test', () => {
 
 gulp.task('jasmine-browser', () => {
 	return gulp.src([
-		'build/libs/phaser.min.js',
+		'node_modules/phaser/build/phaser.min.js',
 		'build/scripts/**/*.js',
 		'build/specs/**/*.spec.js'
 	])
@@ -130,7 +130,7 @@ gulp.task('jasmine-browser', () => {
 
 gulp.task('jasmine-karma', () => {
 	gulp.src([
-		'build/libs/phaser.min.js',
+		'node_modules/phaser/build/phaser.min.js',
 		'build/scripts/**/*.js',
 		'build/specs/**/*.spec.js'
 	], { 'read': false })

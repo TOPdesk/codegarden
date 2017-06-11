@@ -1,4 +1,4 @@
-/// <reference path="../../libs/phaser/typescript/phaser.d.ts"/>
+/// <reference path="../../../node_modules/phaser/typescript/phaser.d.ts"/>
 
 const OBJECT_SPRITE_X_OFFSET = 58;
 const OBJECT_SPRITE_Y_OFFSET = -83;

@@ -13,8 +13,8 @@
   "author": "TOPdesk",
   "license": "ISC",
   "devDependencies": {
-	"@types/sortablejs": "^1.3.31",
-    "bower": "^1.7.9",
+    "@types/jasmine": "^2.5.51",
+    "@types/sortablejs": "^1.3.31",
     "browser-sync": "^2.17.3",
     "del": "^2.2.2",
     "es6-promise": "^4.0.5",
@@ -43,5 +43,9 @@
     "run-sequence": "^1.1.4",
     "tslint": "^3.15.1",
     "typescript": "^2.1.4"
+  },
+  "dependencies": {
+    "phaser": "^2.6.2",
+    "sortablejs": "^1.6.0"
   }
 }

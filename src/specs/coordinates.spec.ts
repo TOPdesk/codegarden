@@ -1,5 +1,5 @@
 /// <reference path="../scripts/coordinates.ts" />
-/// <reference path="../libs/dt-jasmine/jasmine.d.ts" />
+/// <reference path="../../node_modules/@types/jasmine/index.d.ts" />
 
 function comparePoints(expected: Point, actual: Point): void {
 	expect(actual).toEqual(

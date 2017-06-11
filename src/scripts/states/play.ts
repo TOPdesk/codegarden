@@ -1,4 +1,4 @@
-/// <reference path="../../libs/phaser/typescript/phaser.d.ts"/>
+/// <reference path="../../../node_modules/phaser/typescript/phaser.d.ts"/>
 /// <reference path="../entities/gnome.ts"/>
 /// <reference path="../gnome_code.ts"/>
 /// <reference path="../gameworld.ts"/>
