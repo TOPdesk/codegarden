@@ -27,13 +27,14 @@ class Level {
 		return !object || object.passable;
 	}
 
-	getPointCauseOfDeath(point: MapPoint): CauseOfDeath {
+	getPointCauseOfDeath(point: MapPoint, hasMoved: boolean): CauseOfDeath {
 		let block = this.getBlock(point);
 		if (block === null) {
 			return CauseOfDeath.FALLING;
 		}
 
-		if (block === WorldConstants.BlockType.WATER) {
+		if (block === WorldConstants.BlockType.WATER
+				|| (!hasMoved && block === WorldConstants.BlockType.SWAMP)) {
 			return CauseOfDeath.DROWNING;
 		}
 
@@ -165,6 +166,8 @@ class Level {
 				return "desert_block";
 			case WorldConstants.BlockType.STONE:
 				return "stone_block";
+			case WorldConstants.BlockType.SWAMP:
+				//return "swamp_block"; //TODO add graphic once it's created
 			default:
 				return "stage_block"; //TODO throw an error instead?
 		}

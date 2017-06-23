@@ -10,8 +10,12 @@ class GnomeCode {
 	executeNextCommand(gameWorld: GameWorld, gnomes: Gnome[]) {
 		//First act, then move, then die, so that interactions between gnomes will work as expected
 		let walkingGnomes = [];
-		let dyingGnomes = [];
+		let gnomeDeaths = [];
 		gnomes.slice().sort((a, b) => a.wateringCan ? 1 : -1).forEach(gnome => {
+			if (gnome.delayed) {
+				gnome.delayed--;
+				return;
+			}
 			let command = gnome.codeStack.pop();
 
 			if (command instanceof RunnableCommand) {
@@ -19,9 +23,22 @@ class GnomeCode {
 			}
 
 			if (command === undefined) {
-				dyingGnomes.push(gnome);
+				gnomeDeaths.push({
+					gnome: gnome,
+					reason: CauseOfDeath.CODE_RAN_OUT
+				});
 			}
 			else {
+				if (command.type !== CommandType.WALK) {
+					let deathReason = gameWorld.level.getPointCauseOfDeath(gnome.location, false);
+					if (deathReason) {
+						gnomeDeaths.push({
+							gnome: gnome,
+							reason: deathReason
+						});
+					}
+				}
+
 				switch (command.type) {
 					case CommandType.WALK: walkingGnomes.push(gnome); break;
 					case CommandType.LEFT: gnome.rotateLeft(); break;
@@ -30,7 +47,10 @@ class GnomeCode {
 					case CommandType.CALL_ROUTINE:
 						gnome.readBook();
 						if (!this.queueUpRoutine(gnome, command)) {
-							dyingGnomes.push(gnome);
+							gnomeDeaths.push({
+								gnome: gnome,
+								reason: CauseOfDeath.CODE_RAN_OUT
+							});
 						}
 						break;
 					case CommandType.DELAY: gnome.delay(); break;
@@ -38,8 +58,24 @@ class GnomeCode {
 			}
 		});
 
-		walkingGnomes.forEach(gnome => gameWorld.tryMove(gnome));
-		dyingGnomes.forEach(gnome => gameWorld.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT));
+		walkingGnomes.forEach(gnome => {
+			let hasMoved = gameWorld.tryMove(gnome);
+			let deathReason = gameWorld.level.getPointCauseOfDeath(gnome.location, hasMoved);
+			if (deathReason) {
+				gnomeDeaths.push({
+					gnome: gnome,
+					reason: deathReason
+				});
+			}
+		});
+		gnomeDeaths.forEach(death => {
+			if (death.gnome.floating &&
+				(death.reason === CauseOfDeath.FALLING || death.reason === CauseOfDeath.DROWNING)) {
+				//Floating gnomes are immune to falling/drowning
+				return;
+			}
+			gameWorld.killGnome(death.gnome, death.reason);
+		});
 	}
 
 	private queueUpRoutine(gnome: Gnome, command: Command): boolean {

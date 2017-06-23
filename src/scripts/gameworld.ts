@@ -9,6 +9,7 @@
 ///<reference path="entities/game_object.ts"/>
 ///<reference path="entities/house.ts"/>
 
+
 /**
  * This class is responsible for keeping track of the world state and handling collisions.
  */
@@ -114,24 +115,23 @@ class GameWorld {
 	}
 
 	/**
-	 * Try to move the gnome forward. Depending on what's in the way, this might succeed, fail, or kill the gnome.
+	 * Try to move the gnome forward. This will fail if there's an obstacle in the way.
 	 */
-	tryMove(gnome: Gnome) {
+	tryMove(gnome: Gnome): boolean {
 		let newLocation = gnome.location.getNeighbor(gnome.direction);
 		let gnomeExistsInLocation = this.gnomes.filter(g => g.location.equals(newLocation)).length;
 		if (!gnomeExistsInLocation && this.level.pointIsPassable(newLocation)) {
 			gnome.walkTo(newLocation);
 			this.determineEntityZIndices();
-		}
 
-		//Right now, terrain can't kill a gnome if it's floating
-		if (gnome.floating) {
-			return;
+			console.log(this.level.getBlock(newLocation));
+			if (this.level.getBlock(newLocation) === WorldConstants.BlockType.SWAMP) {
+				//Swamp slows gnomes down
+				gnome.delayed++;
+			}
+			return true;
 		}
-		let causeOfDeath = this.level.getPointCauseOfDeath(newLocation);
-		if (causeOfDeath) {
-			this.killGnome(gnome, causeOfDeath);
-		}
+		return false;
 	}
 
 	killGnome(gnome: Gnome, causeOfDeath: CauseOfDeath) {

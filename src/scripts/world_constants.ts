@@ -11,6 +11,7 @@ namespace WorldConstants {
 		GRASS,
 		WATER,
 		DESERT,
-		STONE
+		STONE,
+		SWAMP
 	}
 }

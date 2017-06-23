@@ -7,6 +7,7 @@ const GNOME_X_OFFSET = 60;
 const GNOME_Y_OFFSET = -85;
 
 class Gnome extends Phaser.Sprite {
+	public delayed = 0;
 	location: MapPoint;
 
 	private _wateringCan: boolean = false;
