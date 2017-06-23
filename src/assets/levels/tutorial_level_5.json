@@ -9,6 +9,11 @@
 			[2, 2, 2, 2, 2]],
 		"objects": [
 			{
+				"type": "CACTUS",
+				"positionX": 1,
+				"positionY": 5
+			},
+			{
 				"type": "TREE",
 				"positionX": 4,
 				"positionY": 1

@@ -55,6 +55,8 @@ namespace States {
 			this.load.image("mushrooms_2", "assets/images/mushrooms_2.png");
 			this.load.image("mushrooms_3", "assets/images/mushrooms_3.png");
 
+			this.load.image("cactus", "assets/images/cactus.png");
+			this.load.image("beard_particle", "assets/images/beard_particle.png");
 			this.load.image("rock", "assets/images/rock.png");
 
 			this.load.image("library-red", "assets/images/library-red.png");

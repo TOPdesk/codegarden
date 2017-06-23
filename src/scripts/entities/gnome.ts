@@ -106,6 +106,16 @@ class Gnome extends Phaser.Sprite {
 				});
 				tween.to({alpha: 0}, 500, Phaser.Easing.Quartic.Out);
 				break;
+			case (CauseOfDeath.CACTUS):
+				tween.onComplete.add(() => {
+					//Beard explosion
+					let emitter = this.game.add.emitter(this.x, this.y - 30, 20);
+					emitter.makeParticles("beard_particle");
+					emitter.gravity = -30;
+					emitter.setAlpha(1, 0, 1500, Phaser.Easing.Sinusoidal.Out);
+					emitter.start(true, 1500, null, 20);
+				});
+				break;
 			case (CauseOfDeath.CODE_RAN_OUT):
 				tween.to({alpha: 0}, 500, Phaser.Easing.Quartic.Out);
 				break;
@@ -150,5 +160,6 @@ enum CauseOfDeath {
 	NOTHING, //This should be the first one
 	FALLING,
 	DROWNING,
-	CODE_RAN_OUT
+	CODE_RAN_OUT,
+	CACTUS
 }

@@ -8,7 +8,7 @@ namespace SaveGame {
 		try {
 			return localStorage.getItem("lastLevel");
 		}
-		catch(e) {
+		catch (e) {
 			console.error(e);
 			return null;
 		}
@@ -23,7 +23,7 @@ namespace SaveGame {
 				localStorage.setItem("lastLevel", level);
 			}
 		}
-		catch(e) {
+		catch (e) {
 			console.error(e);
 		}
 	}

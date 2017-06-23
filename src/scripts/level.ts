@@ -37,6 +37,11 @@ class Level {
 			return CauseOfDeath.DROWNING;
 		}
 
+		let object = this.getObject(point);
+		if (object && object.causeOfDeath) {
+			return object.causeOfDeath;
+		}
+
 		return CauseOfDeath.NOTHING;
 	}
 
