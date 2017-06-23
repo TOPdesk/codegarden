@@ -24,6 +24,7 @@ const srcs = {
 	html: ['src/*.html', 'src/templates/*.html'],
 	styles: 'src/styles/**/*.less',
 	assets: 'src/assets/**/*',
+	levelEditor: 'src/levelEditor/**/*',
 	libs: ['node_modules/phaser/build/phaser.min.js', 'node_modules/sortablejs/Sortable.min.js']
 };
 
@@ -33,6 +34,7 @@ const dests = {
 	assets: 'build/assets/',
 	scripts: 'build/scripts/',
 	styles: 'build/styles/',
+	levelEditor: 'build/levelEditor',
 	githubPages: 'docs/'
 };
 
@@ -109,6 +111,10 @@ gulp.task('copyWebsite', () => {
 	gulp.src(srcs.buildArtefacts).pipe(gulp.dest(dests.githubPages));
 });
 
+gulp.task('levelEditor', () => {
+	gulp.src(srcs.levelEditor).pipe(gulp.dest(dests.levelEditor));
+});
+
 gulp.task('ts-test', () => {
 	return gulp.src('src/specs/**/*.spec.ts')
 		.pipe(typescript({
@@ -156,11 +162,12 @@ gulp.task('website', done => {
 });
 
 gulp.task('default', function (done) {
-    runSequence('clean', 'build', 'browserSync', () => {
+    runSequence('clean', 'build', 'levelEditor', 'browserSync', () => {
 		gulp.watch(srcs.html, ['html']);
 		gulp.watch(srcs.assets, ['assets']);
 		gulp.watch(srcs.scripts, ['scripts', 'tslint']);
 		gulp.watch(srcs.styles, ['styles']);
+		gulp.watch(srcs.levelEditor, ['levelEditor']);
         done();
     });
 });

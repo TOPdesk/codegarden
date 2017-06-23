@@ -38,6 +38,11 @@ class GameWorld {
 	 * in the preloader.
 	 */
 	loadLevel(levelName: string) {
+		let levelDefinition = this.game.cache.getJSON(levelName).LEVEL_DEFINITION;
+		this.loadLevelFromDefinition(levelDefinition);
+	}
+
+	loadLevelFromDefinition(levelDefinition: any) {
 		if (this.selectedBuildingGnomeGhost) {
 			this.selectedBuildingGnomeGhost.destroy();
 			this.selectedBuildingGnomeGhost = null;
@@ -51,7 +56,7 @@ class GameWorld {
 			this.selectionListener();
 		}
 
-		let levelDefinition = this.game.cache.getJSON(levelName).LEVEL_DEFINITION;
+
 		this.level = new Level(levelDefinition);
 		this.level.renderStage(this.blockGroup);
 		this.level.renderObjects(this.entityGroup);

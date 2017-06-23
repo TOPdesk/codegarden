@@ -23,7 +23,7 @@ Open a command line interface in the directory that contains this README file, a
 Then finally, run the following command in the command line interface to start a browser running Codegarden.
 - gulp
 
-Changes to the sourcecode will automatically cause the browser to refresh. 
+Changes to the sourcecode will automatically cause the browser to refresh. While running in this mode, there is a level editor available under /levelEditor.
 
 To run tests run:
 - gulp test

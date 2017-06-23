@@ -14,9 +14,9 @@ namespace States {
 
 		private codeEditorSortable;
 
-		private initialLevel: string;
+		private initialLevel: string | object;
 
-		init(initialLevel?: string) {
+		init(initialLevel?: string | object) {
 			this.initialLevel = initialLevel || "tutorial_level_1";
 		}
 
@@ -39,7 +39,12 @@ namespace States {
 				this.showCodeInEditor();
 			};
 
-			this.gameWorld.loadLevel(this.initialLevel);
+			if (this.initialLevel instanceof String) {
+				this.gameWorld.loadLevel(this.initialLevel);
+			}
+			else {
+				this.gameWorld.loadLevelFromDefinition(this.initialLevel);
+			}
 		}
 
 		shutdown() {
