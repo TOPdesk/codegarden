@@ -26,6 +26,7 @@ namespace States {
 
 			this.initializeEditor();
 			this.drawSpawnButton();
+			this.addHotKeys();
 
 			document.getElementById("innerCodeEditor").addEventListener("click", evt => this.handleCommandClick(evt));
 
@@ -45,6 +46,77 @@ namespace States {
 			else {
 				this.gameWorld.loadLevelFromDefinition(this.initialLevel);
 			}
+		}
+
+		addHotKeys() {
+			let innerCodeEditor = document.getElementById("innerCodeEditor");
+			
+			this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.add(() => {
+				if (this.gameWorld.getIfLevelIsWon()) {
+					this.gameWorld.loadNextLevel();
+				}
+				else {
+					this.gameWorld.resetGame();
+					this.gameWorld.spawnGnomes();
+				}
+			}, this);
+
+			this.game.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(() => {
+				if (!this.selectedCodeBuilding) {
+					this.gameWorld.selectCodeBuilding(this.gameWorld.level.codeBuildings[0]);
+					return;
+				}
+
+				let index = this.gameWorld.level.codeBuildings.indexOf(this.selectedCodeBuilding);
+				if (index + 1 >= this.gameWorld.level.codeBuildings.length) {
+					this.gameWorld.selectCodeBuilding(this.gameWorld.level.codeBuildings[0]);
+				}
+				else {
+					this.gameWorld.selectCodeBuilding(this.gameWorld.level.codeBuildings[index + 1]);
+				}
+				
+			}, this);
+
+			window.addEventListener("keydown", (event) => {
+				if (!this.selectedCodeBuilding) {
+					return;
+				}
+				
+				let routine = this.selectedCodeBuilding.gnomeCode;
+				let sizeLimit = this.selectedCodeBuilding.model.sizeLimit;
+				PlayState.removePlaceholders(innerCodeEditor);
+				if ((event.keyCode === 8 || event.keyCode === 46) && routine.length > 0) {
+					innerCodeEditor.removeChild(innerCodeEditor.children[routine.length - 1]);
+					routine.pop();
+				}
+				if (event.keyCode === 37 && routine.length < sizeLimit) {
+					PlayState.appendCommandToGui(innerCodeEditor, CommandType.LEFT);
+					routine.push(new Command(CommandType.LEFT));
+				}
+				if (event.keyCode === 38 && routine.length < sizeLimit) {
+					PlayState.appendCommandToGui(innerCodeEditor, CommandType.WALK);
+					routine.push(new Command(CommandType.WALK));
+				}
+				if (event.keyCode === 39 && routine.length < sizeLimit) {
+					PlayState.appendCommandToGui(innerCodeEditor, CommandType.RIGHT);
+					routine.push(new Command(CommandType.RIGHT));
+				}
+				if ((event.keyCode === 40 || event.keyCode === 32) && routine.length < sizeLimit) {
+					PlayState.appendCommandToGui(innerCodeEditor, CommandType.ACT);
+					routine.push(new Command(CommandType.ACT));
+				}
+				if ((event.keyCode >= 49 && event.keyCode < 58) && routine.length < sizeLimit
+					&& this.gameWorld.level.libraries.length > (event.keyCode - 49)) {
+					PlayState.appendCommandToGui(innerCodeEditor, CommandType.CALL_ROUTINE, event.keyCode - 49);
+					routine.push(new Command(CommandType.CALL_ROUTINE, [event.keyCode - 49]));
+				}
+				if ((event.keyCode >= 97 && event.keyCode < 106) && routine.length < sizeLimit
+					&& this.gameWorld.level.libraries.length > (event.keyCode - 97)) {
+					PlayState.appendCommandToGui(innerCodeEditor, CommandType.CALL_ROUTINE, event.keyCode - 97);
+					routine.push(new Command(CommandType.CALL_ROUTINE, [event.keyCode - 97]));
+				}
+				PlayState.appendPlaceholders(innerCodeEditor, this.selectedCodeBuilding.model.sizeLimit - routine.length);
+			});
 		}
 
 		shutdown() {

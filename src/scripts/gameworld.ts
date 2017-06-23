@@ -67,30 +67,32 @@ class GameWorld {
 		this.gnomeCode = new GnomeCode(this.level.libraries.map(library => library.gnomeCode));
 
 		this.level.codeBuildings.forEach(building => {
-			building.events.onInputDown.add(() => {
-				if (this.selectedBuilding) {
-					this.selectedBuilding.deselect();
-				}
-				if (this.selectedBuildingGnomeGhost) {
-					this.selectedBuildingGnomeGhost.destroy();
-					this.selectedBuildingGnomeGhost = null;
-				}
-				this.selectedBuilding = building;
-				this.selectedBuilding.select();
-				if (this.selectionListener) {
-					this.selectionListener(building, this.level.libraries);
-				}
-				if (building instanceof House) {
-					this.selectedBuildingGnomeGhost = this.spawnGnome(building);
-					this.selectedBuildingGnomeGhost.alpha = 0.3;
-					this.game.add.tween(this.selectedBuildingGnomeGhost)
-						.to({y: this.selectedBuildingGnomeGhost.y - 3}, 1000, Phaser.Easing.Sinusoidal.InOut, true)
-						.yoyo(true, 0)
-						.repeat(-1);
-				}
-			});
+			building.events.onInputDown.add(() => this.selectCodeBuilding(building));
 		});
 		this.determineEntityZIndices();
+	}
+
+	selectCodeBuilding(building: CodeBuilding) {
+		if (this.selectedBuilding) {
+			this.selectedBuilding.deselect();
+		}
+		if (this.selectedBuildingGnomeGhost) {
+			this.selectedBuildingGnomeGhost.destroy();
+			this.selectedBuildingGnomeGhost = null;
+		}
+		this.selectedBuilding = building;
+		this.selectedBuilding.select();
+		if (this.selectionListener) {
+			this.selectionListener(building, this.level.libraries);
+		}
+		if (building instanceof House) {
+			this.selectedBuildingGnomeGhost = this.spawnGnome(building);
+			this.selectedBuildingGnomeGhost.alpha = 0.3;
+			this.game.add.tween(this.selectedBuildingGnomeGhost)
+				.to({y: this.selectedBuildingGnomeGhost.y - 3}, 1000, Phaser.Easing.Sinusoidal.InOut, true)
+				.yoyo(true, 0)
+				.repeat(-1);
+		}
 	}
 
 	/**
@@ -210,14 +212,22 @@ class GameWorld {
 		this.hasWon = true;
 		Messages.show(this.game, "Good work! Click here to continue", {
 			callback: () => {
-				if (this.level.nextLevel) {
-					this.loadLevel(this.level.nextLevel);
-				}
-				else {
-					this.game.state.start("menu");
-				}
+				this.loadNextLevel();
 			}
 		});
 		SaveGame.setLevel(this.level.nextLevel);
+	}
+
+	getIfLevelIsWon() {
+		return this.hasWon;
+	}
+
+	loadNextLevel() {
+		if (this.level.nextLevel) {
+			this.loadLevel(this.level.nextLevel);
+		}
+		else {
+			this.game.state.start("menu");
+		}
 	}
 }
