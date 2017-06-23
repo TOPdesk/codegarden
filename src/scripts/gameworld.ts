@@ -213,11 +213,6 @@ class GameWorld {
 				}
 			}
 		});
-		if (this.level.nextLevel) {
-			localStorage.setItem("lastLevel", this.level.nextLevel);
-		}
-		else {
-			localStorage.setItem("lastLevel", "tutorial_level_1");
-		}
+		SaveGame.setLevel(this.level.nextLevel);
 	}
 }

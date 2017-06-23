@@ -78,7 +78,6 @@ namespace States {
 				new Command(CommandType.ACT),
 				new RunnableCommand(() => this.game.state.start("play"))
 			];
-			localStorage.setItem("lastLevel", "tutorial_level_1");
 			this.gameWorld.spawnGnomes();
 		}
 
@@ -93,12 +92,7 @@ namespace States {
 				new Command(CommandType.WALK),
 				new Command(CommandType.ACT),
 				new RunnableCommand(() => {
-					if (localStorage.getItem("lastLevel")) {
-						this.game.state.start("play", true, false, localStorage.getItem("lastLevel"));
-					}
-					else {
-						this.game.state.start("play");
-					}
+					this.game.state.start("play", true, false, SaveGame.getLevel());
 			})
 			];
 			this.gameWorld.spawnGnomes();
@@ -117,6 +111,5 @@ namespace States {
 			];
 			this.gameWorld.spawnGnomes();
 		}
-
 	}
 }
