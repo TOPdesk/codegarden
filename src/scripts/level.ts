@@ -135,7 +135,8 @@ class Level {
 
 	renderBlock(blockGroup: Phaser.Group, x: number, y: number, blockType: WorldConstants.BlockType) {
 		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new MapPoint(x, y));
-		let block = blockGroup.game.add.sprite(screenCoordinates.x, screenCoordinates.y, this.getBlockSprite(blockType));
+		let block = blockGroup.game.add.sprite(
+			screenCoordinates.x, screenCoordinates.y, WorldConstants.SPRITE_SHEET, this.getBlockSprite(blockType));
 		block.anchor.y = 1;
 		blockGroup.add(block);
 	}

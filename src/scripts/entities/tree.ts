@@ -16,14 +16,14 @@ class Tree extends GameObject {
 		this.displayWaterLevel();
 		if (this.model.treeLevel < MAX_TREE_LEVEL && this.waterContent >= this.model.requiredWater) {
 			this.model.treeLevel++;
-			this.determineTexture();
+			this.updateTexture();
 			this.waterContent = 0;
 			this.calculateRequiredWater();
 		}
 	}
 
 	determineTexture() {
-		this.loadTexture(TREE_IMAGE_PREFIX + this.model.treeLevel);
+		return TREE_IMAGE_PREFIX + this.model.treeLevel;
 	}
 
 	constructor(game: Phaser.Game, public model: TreeModel) {
@@ -70,7 +70,7 @@ class Tree extends GameObject {
 		let initialDropX = this.x - 10 * this.model.requiredWater;
 		for (let i = 0; i < this.model.requiredWater; i++) {
 			let spriteKey = i < this.model.waterContent ? "waterdrop_filled" : "waterdrop_empty";
-			let sprite = this.game.add.sprite(initialDropX + i * 20, dropY, spriteKey);
+			let sprite = this.game.add.sprite(initialDropX + i * 20, dropY, WorldConstants.SPRITE_SHEET, spriteKey);
 			let firstTween = this.game.add.tween(sprite).from({ alpha: 0 }, 50, null, true);
 			let secondTween = this.game.add.tween(sprite).to({ alpha: 0 }, 300, null, false, 1000);
 

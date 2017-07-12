@@ -17,13 +17,18 @@ const runSequence = require('run-sequence');
 const sourcemaps = require('gulp-sourcemaps');
 const jasmineBrowser = require('gulp-jasmine-browser');
 const karma = require("gulp-karma-runner");
+//Texture atlas dependencies
+const spritesmith = require('gulp.spritesmith');
+const imagemin = require('gulp-imagemin');
+const texturePacker = require('spritesmith-texturepacker');
 
 const srcs = {
 	buildArtefacts: 'build/**/*',
 	scripts: 'src/scripts/**/*.ts',
 	html: ['src/*.html', 'src/templates/*.html'],
 	styles: 'src/styles/**/*.less',
-	assets: 'src/assets/**/*',
+	sprites: 'src/assets/sprites/**/*',
+	assets: ['src/assets/**/*', '!src/assets/sprites/**/*'],
 	levelEditor: 'src/levelEditor/**/*',
 	libs: ['node_modules/phaser/build/phaser.min.js', 'node_modules/sortablejs/Sortable.min.js']
 };
@@ -31,6 +36,7 @@ const srcs = {
 const dests = {
 	base: 'build',
 	libs: 'build/libs/',
+	sprites: 'build/assets/sprites',
 	assets: 'build/assets/',
 	scripts: 'build/scripts/',
 	styles: 'build/styles/',
@@ -70,6 +76,17 @@ gulp.task('assets', () => {
 	return gulp.src(srcs.assets)
 		.pipe(changed(dests.assets))
 		.pipe(gulp.dest(dests.assets))
+		.pipe(browserSync.reload({ stream: true }));
+});
+
+gulp.task('sprites', () => {
+	const spriteData = gulp.src(srcs.sprites)
+		.pipe(spritesmith({
+			imgName: 'sprites.png',
+			cssName: 'sprites.json',
+			algorithm: 'binary-tree',
+			cssTemplate: texturePacker
+		})).pipe(gulp.dest(dests.sprites))
 		.pipe(browserSync.reload({ stream: true }));
 });
 
@@ -150,12 +167,12 @@ gulp.task('jasmine-karma', () => {
 });
 
 gulp.task('test', function (done) {
-	runSequence('clean', 'copy', 'assets', 'scripts', 'ts-test', 'jasmine-karma', () => {
+	runSequence('clean', 'copy', 'sprites', 'assets', 'scripts', 'ts-test', 'jasmine-karma', () => {
 		done();
 	});
 });
 
-gulp.task('build', ['tslint', 'copy', 'assets', 'html', 'scripts', 'styles']);
+gulp.task('build', ['tslint', 'copy', 'sprites', 'assets', 'html', 'scripts', 'styles']);
 
 gulp.task('website', done => {
 	runSequence('clean', 'build', 'cleanWebsite', 'copyWebsite', () => done());
@@ -164,6 +181,7 @@ gulp.task('website', done => {
 gulp.task('default', function (done) {
     runSequence('clean', 'build', 'levelEditor', 'browserSync', () => {
 		gulp.watch(srcs.html, ['html']);
+		gulp.watch(srcs.sprites, ['sprites']);
 		gulp.watch(srcs.assets, ['assets']);
 		gulp.watch(srcs.scripts, ['scripts', 'tslint']);
 		gulp.watch(srcs.styles, ['styles']);

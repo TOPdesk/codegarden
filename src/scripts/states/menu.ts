@@ -66,7 +66,7 @@ namespace States {
 		}
 
 		private createMenuImage(x: number, y: number, key: string): Phaser.Image {
-			let img = this.game.add.image(x, y, key);
+			let img = this.game.add.image(x, y, WorldConstants.SPRITE_SHEET, key);
 			img.scale.set(0.5, 0.5);
 			return img;
 		}

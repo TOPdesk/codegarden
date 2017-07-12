@@ -126,7 +126,6 @@ class GameWorld {
 			gnome.walkTo(newLocation);
 			this.determineEntityZIndices();
 
-			console.log(this.level.getBlock(newLocation));
 			if (this.level.getBlock(newLocation) === WorldConstants.BlockType.SWAMP) {
 				//Swamp slows gnomes down
 				gnome.delayed++;

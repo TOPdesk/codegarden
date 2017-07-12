@@ -40,7 +40,7 @@ namespace States {
 				this.showCodeInEditor();
 			};
 
-			if (this.initialLevel instanceof String) {
+			if (typeof(this.initialLevel) === "string") {
 				this.gameWorld.loadLevel(this.initialLevel);
 			}
 			else {
@@ -50,7 +50,7 @@ namespace States {
 
 		addHotKeys() {
 			let innerCodeEditor = document.getElementById("innerCodeEditor");
-			
+
 			this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.add(() => {
 				if (this.gameWorld.getIfLevelIsWon()) {
 					this.gameWorld.loadNextLevel();
@@ -74,14 +74,16 @@ namespace States {
 				else {
 					this.gameWorld.selectCodeBuilding(this.gameWorld.level.codeBuildings[index + 1]);
 				}
-				
+
 			}, this);
 
 			window.addEventListener("keydown", (event) => {
 				if (!this.selectedCodeBuilding) {
 					return;
 				}
-				
+
+				console.log("hi");
+
 				let routine = this.selectedCodeBuilding.gnomeCode;
 				let sizeLimit = this.selectedCodeBuilding.model.sizeLimit;
 				PlayState.removePlaceholders(innerCodeEditor);
@@ -251,7 +253,7 @@ namespace States {
 		}
 
 		private drawButton(x: number, y: number, pictureKey, trigger: Function): Phaser.Sprite {
-			let button = this.game.add.sprite(x, y, pictureKey);
+			let button = this.game.add.sprite(x, y, WorldConstants.SPRITE_SHEET, pictureKey);
 			button.inputEnabled = true;
 			button.fixedToCamera = true;
 			button.events.onInputDown.add(trigger, this);

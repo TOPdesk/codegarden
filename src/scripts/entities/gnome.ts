@@ -66,13 +66,13 @@ class Gnome extends Phaser.Sprite {
 	}
 
 	delay() {
-		this.loadTexture("gnome_waiting");
+		this.loadTexture(WorldConstants.SPRITE_SHEET, "gnome_waiting");
 	}
 
 	readBook() {
 		//There is no texture for a floating gnome reading a book... yet.
 		if (!this.floating) {
-			this.loadTexture("gnome_reading");
+			this.loadTexture(WorldConstants.SPRITE_SHEET, "gnome_reading");
 		}
 	}
 
@@ -102,7 +102,7 @@ class Gnome extends Phaser.Sprite {
 				break;
 			case (CauseOfDeath.DROWNING):
 				tween.onChildComplete.add(() => {
-					this.loadTexture("gnome_drowning");
+					this.loadTexture(WorldConstants.SPRITE_SHEET, "gnome_drowning");
 					this.game.add.sound("bubbles").play();
 				});
 				tween.to({alpha: 0}, 500, Phaser.Easing.Quartic.Out);
@@ -111,7 +111,7 @@ class Gnome extends Phaser.Sprite {
 				tween.onComplete.add(() => {
 					//Beard explosion
 					let emitter = this.game.add.emitter(this.x, this.y - 30, 20);
-					emitter.makeParticles("beard_particle");
+					emitter.makeParticles(WorldConstants.SPRITE_SHEET, "beard_particle");
 					emitter.gravity = -30;
 					emitter.setAlpha(1, 0, 1500, Phaser.Easing.Sinusoidal.Out);
 					emitter.start(true, 1500, null, 20);

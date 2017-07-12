@@ -1,6 +1,8 @@
 /// <reference path="coordinates.ts"/>
 
 namespace WorldConstants {
+	export const SPRITE_SHEET = "sprites";
+
 	export const BLOCK_WIDTH = 110;
 	export const BLOCK_HEIGHT = 68;
 	export const TURN_LENGTH_IN_MILLIS = 200;

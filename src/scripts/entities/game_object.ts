@@ -12,7 +12,7 @@ class GameObject extends Phaser.Sprite {
 
 	constructor(game: Phaser.Game, public model: GameObjectModel, sprite,
 				public passable: boolean, public causeOfDeath: CauseOfDeath = CauseOfDeath.NOTHING) {
-		super(game, 0, 0, sprite);
+		super(game, 0, 0, WorldConstants.SPRITE_SHEET, sprite);
 		this.initialModel = JSON.parse(JSON.stringify(model));
 		this.anchor.set(0.5, 1);
 		let screenCoordinates: ScreenPoint = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
@@ -74,14 +74,21 @@ class GameObject extends Phaser.Sprite {
 				this.model[key] = this.initialModel[key];
 			}
 		}
-		this.determineTexture();
+		this.updateTexture();
+	}
+
+	updateTexture() {
+		let newTexture = this.determineTexture();
+		if (newTexture) {
+			this.loadTexture(WorldConstants.SPRITE_SHEET, newTexture);
+		}
 	}
 
 	/**
 	 * Override if an object's graphic should change based on its internal state.
 	 */
-	determineTexture() {
-		//noop
+	determineTexture(): string | null {
+		return null;
 	}
 }
 
@@ -99,7 +106,7 @@ namespace ObjectType {
 			case "HOUSE": return new House(game, model);
 			case "LIBRARY": return new CodeBuilding(game, model, "library-" + CodeBuilding.getLibraryColor(libraryIndex));
 			case "ROCK": return new GameObject(game, model, "rock", false);
-			case "BUTTON": return new GameObject(game, model, "button", false);
+			case "BUTTON": return new GameObject(game, model, "action_button", false);
 			case "MUSHROOMS": return new Mushrooms(game, model);
 			default: throw new Error("Unknown object type " + model.type);
 		}
