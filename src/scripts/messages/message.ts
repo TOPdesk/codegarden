@@ -40,8 +40,8 @@ namespace Messages {
 		}
 		messageGroup = game.add.group(game.world, "message");
 
-		let king = messageGroup.add(new Phaser.Sprite(game, -200, -280, "gnome_king"));
-		king.animations.add("hover");
+		let king = messageGroup.add(new Phaser.Sprite(game, -200, -280, WorldConstants.SPRITE_SHEET));
+		king.animations.add("hover", Phaser.Animation.generateFrameNames("gnome_king_", 0, 3));
 		king.animations.play("hover", 10, true);
 		game.add.tween(king).to({ y: -275 }, 1000, Phaser.Easing.Sinusoidal.InOut, true, 0, -1).yoyo(true);
 

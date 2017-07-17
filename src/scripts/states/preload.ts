@@ -18,17 +18,6 @@ namespace States {
 
 			this.load.atlas(WorldConstants.SPRITE_SHEET, "assets/sprites/sprites.png", "assets/sprites/sprites.json");
 
-			this.load.spritesheet("gnome_regular_front", "assets/images/gnome_regular_front.png", 70, 100);
-			this.load.spritesheet("gnome_regular_back", "assets/images/gnome_regular_back.png", 70, 100);
-			this.load.spritesheet("gnome_water_front", "assets/images/gnome_water_front.png", 70, 100);
-			this.load.spritesheet("gnome_water_back", "assets/images/gnome_water_back.png", 70, 100);
-			this.load.spritesheet("gnome_float_start_front", "assets/images/gnome_float_start_front.png", 70, 150);
-			this.load.spritesheet("gnome_floating_front", "assets/images/gnome_floating_front.png", 70, 150);
-
-			this.load.spritesheet("waterfall", "assets/images/waterfall.png", 80, 240);
-
-			this.load.spritesheet("gnome_king", "assets/images/gnome_king.png", 70, 100);
-
 			this.load.audio("falling_gnome_scream", "assets/sound/wilhelm_scream.ogg");
 			this.load.audio("bubbles", "assets/sound/bubbles.wav");
 			this.load.json("tutorial_level_1", "assets/levels/tutorial_level_1.json");

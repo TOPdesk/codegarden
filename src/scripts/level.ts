@@ -145,13 +145,14 @@ class Level {
 		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new MapPoint(x, y));
 		let sprite = new Phaser.Sprite(blockGroup.game,
 			screenCoordinates.x + (leftSide ? WATERFALL_X_OFFSET_LEFT : WATERFALL_X_OFFSET_RIGHT),
-			screenCoordinates.y + WATERFALL_Y_OFFSET, "waterfall");
+			screenCoordinates.y + WATERFALL_Y_OFFSET,
+			WorldConstants.SPRITE_SHEET);
 		sprite.anchor.y = 0;
 		sprite.anchor.x = 0;
 		if (leftSide) {
 			sprite.scale.x = -1;
 		}
-		sprite.animations.add("flow");
+		sprite.animations.add("flow", Phaser.Animation.generateFrameNames("waterfall_", 0, 3));
 		sprite.alpha = 0.5;
 		sprite.animations.play("flow", 10, true);
 		blockGroup.add(sprite);

@@ -27,7 +27,7 @@ const srcs = {
 	scripts: 'src/scripts/**/*.ts',
 	html: ['src/*.html', 'src/templates/*.html'],
 	styles: 'src/styles/**/*.less',
-	sprites: 'src/assets/sprites/**/*',
+	sprites: 'src/assets/sprites/**/*.png',
 	assets: ['src/assets/**/*', '!src/assets/sprites/**/*'],
 	levelEditor: 'src/levelEditor/**/*',
 	libs: ['node_modules/phaser/build/phaser.min.js', 'node_modules/sortablejs/Sortable.min.js']
@@ -80,11 +80,12 @@ gulp.task('assets', () => {
 });
 
 gulp.task('sprites', () => {
-	const spriteData = gulp.src(srcs.sprites)
+	return gulp.src(srcs.sprites)
 		.pipe(spritesmith({
 			imgName: 'sprites.png',
 			cssName: 'sprites.json',
 			algorithm: 'binary-tree',
+			padding: 2,
 			cssTemplate: texturePacker
 		})).pipe(gulp.dest(dests.sprites))
 		.pipe(browserSync.reload({ stream: true }));

@@ -6,6 +6,9 @@
 const GNOME_X_OFFSET = 60;
 const GNOME_Y_OFFSET = -85;
 
+const FLOATING_ANIMATION_FRAMERATE = 10;
+const WALKING_ANIMATION_FRAMERATE = 30;
+
 class Gnome extends Phaser.Sprite {
 	public delayed = 0;
 	location: MapPoint;
@@ -22,16 +25,10 @@ class Gnome extends Phaser.Sprite {
 	private _floating = 0;
 	set floating(floating: number) {
 		if (!this._floating && floating) {
-			//Animation to start floating
-			this.loadTexture("gnome_float_start_front");
-			this.animations.add("walk");
-			this.animations.play("walk", 10);
+			this.animations.play("float_start");
 		}
 		if (this._floating && !floating) {
-			//Animation to stop floating
-			this.loadTexture("gnome_float_start_front");
-			this.animations.add("walk", [3, 2, 1, 0]);
-			this.animations.play("walk", 10);
+			this.animations.play("float_stop");
 		}
 		this._floating = floating;
 	}
@@ -42,9 +39,11 @@ class Gnome extends Phaser.Sprite {
 	public codeStack: Command[];
 
 	constructor(game: Phaser.Game, x: number, y: number, public direction: Direction, code: Command[]) {
-		super(game, 0, 0, "gnome_regular_front");
+		super(game, 0, 0, WorldConstants.SPRITE_SHEET);
 		this.codeStack = code.slice();
 		this.codeStack.reverse();
+
+		this.registerAnimations();
 
 		this.determineSprite();
 		this.anchor.set(0.5, 1);
@@ -53,6 +52,21 @@ class Gnome extends Phaser.Sprite {
 		this.x = screenCoordinates.x + GNOME_X_OFFSET;
 		this.y = screenCoordinates.y + GNOME_Y_OFFSET;
 		game.add.existing(this);
+	}
+
+	private registerAnimations() {
+		this.animations.add("floating", Phaser.Animation.generateFrameNames("gnome_floating_front_", 0, 3), FLOATING_ANIMATION_FRAMERATE, true);
+		this.animations.add("float_start", Phaser.Animation.generateFrameNames("gnome_float_start_front_", 0, 3), FLOATING_ANIMATION_FRAMERATE);
+		this.animations.add("float_stop", Phaser.Animation.generateFrameNames("gnome_float_start_front_", 3, 0), FLOATING_ANIMATION_FRAMERATE);
+
+		this.animations.add("gnome_regular_walk_front",
+			Phaser.Animation.generateFrameNames("gnome_regular_walk_front_", 0, 3), WALKING_ANIMATION_FRAMERATE);
+		this.animations.add("gnome_regular_walk_back",
+			Phaser.Animation.generateFrameNames("gnome_regular_walk_back_", 0, 3), WALKING_ANIMATION_FRAMERATE);
+		this.animations.add("gnome_wateringcan_walk_front",
+			Phaser.Animation.generateFrameNames("gnome_wateringcan_walk_front_", 0, 3), WALKING_ANIMATION_FRAMERATE);
+		this.animations.add("gnome_wateringcan_walk_back",
+			Phaser.Animation.generateFrameNames("gnome_wateringcan_walk_back_", 0, 3), WALKING_ANIMATION_FRAMERATE);
 	}
 
 	rotateLeft() {
@@ -66,19 +80,19 @@ class Gnome extends Phaser.Sprite {
 	}
 
 	delay() {
-		this.loadTexture(WorldConstants.SPRITE_SHEET, "gnome_waiting");
+		this.frameName = "gnome_waiting";
 	}
 
 	readBook() {
 		//There is no texture for a floating gnome reading a book... yet.
 		if (!this.floating) {
-			this.loadTexture(WorldConstants.SPRITE_SHEET, "gnome_reading");
+			this.frameName = "gnome_reading";
 		}
 	}
 
 	walkTo(newLocation: MapPoint) {
 		this.location = newLocation;
-		this.determineSprite();
+		this.determineSprite(true);
 		this.animations.play("walk", 30, true);
 		if (this.floating) {
 			this.floating--;
@@ -102,7 +116,7 @@ class Gnome extends Phaser.Sprite {
 				break;
 			case (CauseOfDeath.DROWNING):
 				tween.onChildComplete.add(() => {
-					this.loadTexture(WorldConstants.SPRITE_SHEET, "gnome_drowning");
+					this.frameName = "gnome_drowning";
 					this.game.add.sound("bubbles").play();
 				});
 				tween.to({alpha: 0}, 500, Phaser.Easing.Quartic.Out);
@@ -126,7 +140,7 @@ class Gnome extends Phaser.Sprite {
 		tween.onComplete.add(() => this.destroy(false), this);
 	}
 
-	private determineSprite() {
+	private determineSprite(isWalking: boolean = false) {
 		if (this.direction === Direction.NE || this.direction === Direction.SW) {
 			this.scale.x = -1;
 		}
@@ -134,17 +148,20 @@ class Gnome extends Phaser.Sprite {
 			this.scale.x = 1;
 		}
 
+		if (this.floating) {
+			this.animations.play("floating"); //There are no back graphics for floating yet
+			return;
+		}
+
 		let facingFront = (this.direction === Direction.SE || this.direction === Direction.SW);
 
-		let gnomeTextureBase = (this.wateringCan ? "gnome_water" : "gnome_regular");
-		let gnomeTexture = gnomeTextureBase + (facingFront ? "_front" : "_back");
-		if (this.floating) {
-			gnomeTexture = "gnome_floating_front";
+		let gnomeSpriteBase = (this.wateringCan ? "gnome_wateringcan_walk_" : "gnome_regular_walk_");
+		let gnomeSprite = gnomeSpriteBase + (facingFront ? "front" : "back");
+		if (isWalking) {
+			this.animations.play(gnomeSprite);
 		}
-		this.loadTexture(gnomeTexture);
-		this.animations.add("walk");
-		if (this.floating) {
-			this.animations.play("walk", 10, true);
+		else {
+			this.frameName = gnomeSprite + "_0";
 		}
 	}
 
