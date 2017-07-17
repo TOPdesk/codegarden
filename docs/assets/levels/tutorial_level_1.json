@@ -7,6 +7,11 @@
 			[2, 2, 2, 2, 2]],
 		"objects": [
 			{
+				"type": "CACTUS",
+				"positionX": 0,
+				"positionY": 3
+			},
+			{
 				"type": "TREE",
 				"positionX": 4,
 				"positionY": 3

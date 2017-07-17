@@ -20,10 +20,14 @@
 
 	"objects": [
 		{
-		    "type" : "TREE",
+			"type" : "CACTUS",
+			"positionX": 0,
+			"positionY": 2
+		},
+		{
+		    "type" : "CACTUS",
 		    "positionX": 3,
-		    "positionY": 4,
-		    "color" : "default"
+		    "positionY": 4
 		},
 		{
 	  		"type": "HOUSE",
