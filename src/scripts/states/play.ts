@@ -74,7 +74,6 @@ namespace States {
 				else {
 					this.gameWorld.selectCodeBuilding(this.gameWorld.level.codeBuildings[index + 1]);
 				}
-
 			}, this);
 
 			window.addEventListener("keydown", (event) => {
@@ -82,37 +81,36 @@ namespace States {
 					return;
 				}
 
-				console.log("hi");
-
 				let routine = this.selectedCodeBuilding.gnomeCode;
 				let sizeLimit = this.selectedCodeBuilding.model.sizeLimit;
+				let readonly = this.selectedCodeBuilding.model.readonly;
 				PlayState.removePlaceholders(innerCodeEditor);
-				if ((event.keyCode === 8 || event.keyCode === 46) && routine.length > 0) {
+				if ((event.keyCode === 8 || event.keyCode === 46) && routine.length > 0 && !readonly) {
 					innerCodeEditor.removeChild(innerCodeEditor.children[routine.length - 1]);
 					routine.pop();
 				}
-				if (event.keyCode === 37 && routine.length < sizeLimit) {
+				if (event.keyCode === 37 && routine.length < sizeLimit && !readonly) {
 					PlayState.appendCommandToGui(innerCodeEditor, CommandType.LEFT);
 					routine.push(new Command(CommandType.LEFT));
 				}
-				if (event.keyCode === 38 && routine.length < sizeLimit) {
+				if (event.keyCode === 38 && routine.length < sizeLimit && !readonly) {
 					PlayState.appendCommandToGui(innerCodeEditor, CommandType.WALK);
 					routine.push(new Command(CommandType.WALK));
 				}
-				if (event.keyCode === 39 && routine.length < sizeLimit) {
+				if (event.keyCode === 39 && routine.length < sizeLimit && !readonly) {
 					PlayState.appendCommandToGui(innerCodeEditor, CommandType.RIGHT);
 					routine.push(new Command(CommandType.RIGHT));
 				}
-				if ((event.keyCode === 40 || event.keyCode === 32) && routine.length < sizeLimit) {
+				if ((event.keyCode === 40 || event.keyCode === 32) && routine.length < sizeLimit && !readonly) {
 					PlayState.appendCommandToGui(innerCodeEditor, CommandType.ACT);
 					routine.push(new Command(CommandType.ACT));
 				}
-				if ((event.keyCode >= 49 && event.keyCode < 58) && routine.length < sizeLimit
+				if ((event.keyCode >= 49 && event.keyCode < 58) && routine.length < sizeLimit && !readonly
 					&& this.gameWorld.level.libraries.length > (event.keyCode - 49)) {
 					PlayState.appendCommandToGui(innerCodeEditor, CommandType.CALL_ROUTINE, event.keyCode - 49);
 					routine.push(new Command(CommandType.CALL_ROUTINE, [event.keyCode - 49]));
 				}
-				if ((event.keyCode >= 97 && event.keyCode < 106) && routine.length < sizeLimit
+				if ((event.keyCode >= 97 && event.keyCode < 106) && routine.length < sizeLimit && !readonly
 					&& this.gameWorld.level.libraries.length > (event.keyCode - 97)) {
 					PlayState.appendCommandToGui(innerCodeEditor, CommandType.CALL_ROUTINE, event.keyCode - 97);
 					routine.push(new Command(CommandType.CALL_ROUTINE, [event.keyCode - 97]));
