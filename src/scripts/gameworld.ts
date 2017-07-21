@@ -142,10 +142,15 @@ class GameWorld {
 	}
 
 	resetGame() {
+		let livingGnomes = this.gnomes.length;
 		this.gnomes.forEach((gnome) => {
 			this.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
 		});
 		this.level.softReset();
+
+		if (!livingGnomes) {
+			this.spawnGnomes();
+		}
 	}
 
 	spawnGnomes() {

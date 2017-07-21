@@ -57,7 +57,6 @@ namespace States {
 				}
 				else {
 					this.gameWorld.resetGame();
-					this.gameWorld.spawnGnomes();
 				}
 			}, this);
 
@@ -246,7 +245,6 @@ namespace States {
 		drawSpawnButton() {
 			this.drawButton(94, 10, "play_button", () => {
 				this.gameWorld.resetGame();
-				this.gameWorld.spawnGnomes();
 			});
 		}
 
