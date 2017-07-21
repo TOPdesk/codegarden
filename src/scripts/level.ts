@@ -173,7 +173,7 @@ class Level {
 			case WorldConstants.BlockType.STONE:
 				return "stone_block";
 			case WorldConstants.BlockType.SWAMP:
-				//return "swamp_block"; //TODO add graphic once it's created
+				return "swamp_ground_block";
 			default:
 				return "stage_block"; //TODO throw an error instead?
 		}

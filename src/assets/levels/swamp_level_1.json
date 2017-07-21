@@ -1,0 +1,39 @@
+{
+	"LEVEL_DEFINITION": 	{
+		"layout": [
+			[2, 2, 2, 2, 4, 4],
+			[2, 2, 2, 2, 4, 4],
+			[2, 4, 4, 1, 1, 1],
+			[2, 4, 4, 1, 4, 4],
+			[2, 4, 4, 1, 4, 4]],
+		"objects": [
+			{
+				"type": "TREE",
+				"positionX": 2,
+				"positionY": 4
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 1,
+				"positionY": 0,
+				"sizeLimit": 15,
+				"direction": 3
+			}
+		],
+		"victoryConditions": [
+			{
+				"type": "ENTITY_EXISTS",
+				"entityType": "TREE",
+				"requiredProperties": [
+					{
+						"name": "treeLevel",
+						"requirementType": "GREATER_THAN",
+						"value": 1
+					}
+				]
+			}
+		],
+		"introMessage": "Some of my underlings complain that the moist, swampy soil in this region is tugging on their boots, as if the land itself is trying to swallow them alive. I haven't had any problems with that because I have a jetpack."
+	}
+}
+

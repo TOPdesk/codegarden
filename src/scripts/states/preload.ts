@@ -26,6 +26,7 @@ namespace States {
 			this.load.json("tutorial_level_4", "assets/levels/tutorial_level_4.json");
 			this.load.json("tutorial_level_5", "assets/levels/tutorial_level_5.json");
 			this.load.json("tutorial_level_6", "assets/levels/tutorial_level_6.json");
+			this.load.json("swamp_level_1", "assets/levels/swamp_level_1.json");
 			this.load.json("menu_level", "assets/levels/menu_level.json");
 			this.load.json("test", "assets/levels/example_level.json");
 		}
