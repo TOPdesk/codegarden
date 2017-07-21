@@ -13,6 +13,7 @@ class Level {
 	public codeBuildings: CodeBuilding[] = [];
 	public libraries: CodeBuilding[] = [];
 	public nextLevel?: string;
+	public spookTrees: SpookTree[] = [];
 
 	constructor(levelDefinition) {
 		let levelDefinitionCopy = JSON.parse(JSON.stringify(levelDefinition));
@@ -129,6 +130,9 @@ class Level {
 			if (object.model.type === "LIBRARY") {
 				this.libraries.push(object);
 			}
+		}
+		if (object instanceof SpookTree) {
+			this.spookTrees.push(object);
 		}
 		return object;
 	}
