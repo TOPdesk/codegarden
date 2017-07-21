@@ -1,11 +1,11 @@
 {
 	"LEVEL_DEFINITION": 	{
 		"layout": [
-			[2, 2, 2, 2, 4, 4],
-			[2, 2, 2, 2, 4, 4],
-			[2, 4, 4, 1, 1, 1],
-			[2, 4, 4, 1, 4, 4],
-			[2, 4, 4, 1, 4, 4]],
+			[2, 2, 2, 0, 1, 4],
+			[2, 2, 0, 0, 1, 4],
+			[2, 4, 4, 1, 1, 4],
+			[2, 4, 4, 1, 0, 4],
+			[2, 4, 4, 1, 0, 0]],
 		"objects": [
 			{
 				"type": "TREE",
@@ -13,10 +13,28 @@
 				"positionY": 4
 			},
 			{
+				"type": "TREE",
+				"positionX": 5,
+				"positionY": 4
+			},
+			{
+				"type": "MUSHROOMS",
+				"amount": 3,
+				"positionX": 5,
+				"positionY": 3
+			},
+			{
 				"type": "HOUSE",
 				"positionX": 1,
 				"positionY": 0,
 				"sizeLimit": 15,
+				"direction": 3
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 5,
+				"positionY": 0,
+				"sizeLimit": 10,
 				"direction": 3
 			}
 		],
@@ -24,6 +42,7 @@
 			{
 				"type": "ENTITY_EXISTS",
 				"entityType": "TREE",
+				"amount": 2,
 				"requiredProperties": [
 					{
 						"name": "treeLevel",
