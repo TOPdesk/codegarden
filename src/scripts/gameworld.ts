@@ -212,7 +212,7 @@ class GameWorld {
 				else {
 					tree.codestack.push(this.spookTreeCommand(tree));
 				}
-		})
+		});
 	}
 
 	private startCodeTimer() {

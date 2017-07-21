@@ -5,8 +5,8 @@
 
 class SpookTree extends GameObject {
 
-    eating: number = 0;
-    codestack: Command[] = [];
+	eating: number = 0;
+	codestack: Command[] = [];
 
 	determineTexture() {
         //TODO: Change to spook tree sprite when finished.
@@ -14,7 +14,7 @@ class SpookTree extends GameObject {
 	}
 
 	constructor(game: Phaser.Game, public model: SpookTreeModel) {
-        super(game, model, "tree-1", false);
+		super(game, model, "tree-1", false);
 
 		game.add.existing(this);
 	}
@@ -25,9 +25,9 @@ class SpookTree extends GameObject {
 			return true;
 		}
 		return false;
-    }
+	}
 }
 
 interface SpookTreeModel extends GameObjectModel {
-    direction: Direction;
+	direction: Direction;
 }
