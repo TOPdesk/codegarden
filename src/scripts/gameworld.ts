@@ -200,26 +200,15 @@ class GameWorld {
 			});
 	}
 
-	spookTreeCommand(tree) {
-		return new RunnableCommand(() => {
-				let adjacentGnome = this.gnomes.filter(g => g.location === tree.location.getNeighbor(tree.model.direction))[0];
-				if (adjacentGnome && tree.eating === 0) {
-					tree.eating += 3;
-				}
-				else if (tree.eating) {
-					tree.eating--;
-				}
-				else {
-					tree.codestack.push(this.spookTreeCommand(tree));
-				}
-		});
-	}
-
 	private startCodeTimer() {
 		let timer = this.game.time.create();
 		timer.loop(WorldConstants.TURN_LENGTH_IN_MILLIS, () => {
 			this.gnomeCode.executeNextCommand(this, this.gnomes);
-			this.level.spookTrees.forEach((tree) => tree.codestack.push(this.spookTreeCommand(tree)));
+			this.level.spookTrees.forEach((tree) => {
+				tree.checkForGnomes(this.gnomes.filter(gnome => {
+					return gnome.location === tree.location.getNeighbor(tree.model.direction);
+				})[0]);
+			});
 			if (!this.hasWon && this.level.checkVictory()) {
 				this.winLevel();
 			}

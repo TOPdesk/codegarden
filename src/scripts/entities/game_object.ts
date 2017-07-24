@@ -108,6 +108,7 @@ namespace ObjectType {
 			case "ROCK": return new GameObject(game, model, "rock", false);
 			case "BUTTON": return new GameObject(game, model, "action_button", false);
 			case "MUSHROOMS": return new Mushrooms(game, model);
+			case "SPOOKTREE": return new SpookTree(game, model);
 			default: throw new Error("Unknown object type " + model.type);
 		}
 	}
