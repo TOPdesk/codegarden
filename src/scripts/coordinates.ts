@@ -95,7 +95,7 @@ class CoordinateTransformer {
 	map_to_screen(map: MapPoint): ScreenPoint {
 		let x = (map.x - map.y) * this.halfTileWidth;
 		let y = (map.x + map.y) * this.halfTileHeight;
-		return new MapPoint(x, y);
+		return new ScreenPoint(x, y);
 	}
 
 	screen_to_map(screen: ScreenPoint): MapPoint {

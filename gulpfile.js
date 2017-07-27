@@ -15,11 +15,9 @@ const browserSync = require('browser-sync');
 const del = require('del');
 const runSequence = require('run-sequence');
 const sourcemaps = require('gulp-sourcemaps');
-const jasmineBrowser = require('gulp-jasmine-browser');
 const karma = require("gulp-karma-runner");
 //Texture atlas dependencies
 const spritesmith = require('gulp.spritesmith');
-const imagemin = require('gulp-imagemin');
 const texturePacker = require('spritesmith-texturepacker');
 
 const srcs = {
@@ -133,44 +131,36 @@ gulp.task('levelEditor', () => {
 	gulp.src(srcs.levelEditor).pipe(gulp.dest(dests.levelEditor));
 });
 
-gulp.task('ts-test', () => {
-	return gulp.src('src/specs/**/*.spec.ts')
-		.pipe(typescript({
-			declarationFiles: true,
-			target: 'es5'
-		}))
-		.pipe(gulp.dest('build/specs/'));
-});
-
-gulp.task('jasmine-browser', () => {
+gulp.task('mocha-tests', function() {
 	return gulp.src([
 		'node_modules/phaser/build/phaser.min.js',
 		'build/scripts/**/*.js',
-		'build/specs/**/*.spec.js'
-	])
-		.pipe(jasmineBrowser.specRunner())
-		.pipe(jasmineBrowser.server({ port: 8888 }));
-});
-
-gulp.task('jasmine-karma', () => {
-	gulp.src([
-		'node_modules/phaser/build/phaser.min.js',
-		'build/scripts/**/*.js',
-		'build/specs/**/*.spec.js'
+		'src/tests/**/*.test.js'
 	], { 'read': false })
 		.pipe(karma.server({
-			'singleRun': true,
-			'plugins': ['karma-jasmine', 'karma-phantomjs-launcher'],
-			'frameworks': ['jasmine'],
-			'browsers': ['PhantomJS'],
-		})
-	);
+				'preprocessors': {
+					'src/tests/**/*.test.js': ['babel']
+				},
+				'singleRun': true,
+				'plugins': ['karma-mocha', 'karma-phantomjs-launcher', 'karma-sinon-chai', 'karma-babel-preprocessor'],
+				'frameworks': ['mocha', 'sinon-chai'],
+				'browsers': ['PhantomJS'],
+				client: {
+					chai: {
+						includeStack: true
+					}
+				},
+				babelPreprocessor: {
+					options: {
+						presets: ['es2015'],
+						sourceMap: 'inline'
+					}
+				}
+			}));
 });
 
-gulp.task('test', function (done) {
-	runSequence('clean', 'copy', 'sprites', 'assets', 'scripts', 'ts-test', 'jasmine-karma', () => {
-		done();
-	});
+gulp.task('test', function () {
+	runSequence('clean', 'build', 'mocha-tests');
 });
 
 gulp.task('build', ['tslint', 'copy', 'sprites', 'assets', 'html', 'scripts', 'styles']);
