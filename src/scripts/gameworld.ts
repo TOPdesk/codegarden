@@ -17,8 +17,6 @@ class GameWorld {
 	constructor(public game: Phaser.Game) {
 		this.blockGroup = game.add.group(game.world, "blocks");
 		this.entityGroup = game.add.group(game.world, "entities");
-
-		this.startCodeTimer();
 	}
 
 	public level: Level;
@@ -27,11 +25,11 @@ class GameWorld {
 	private gnomeCode: GnomeCode;
 	private blockGroup: Phaser.Group;
 	private entityGroup: Phaser.Group;
-	private hasWon = false;
 
 	private selectedBuilding: CodeBuilding;
 	private selectedBuildingGnomeGhost: Gnome;
 
+	public levelIsWon = false;
 	public selectionListener: (building?: CodeBuilding, libraries?: CodeBuilding[]) => void;
 
 	/**
@@ -49,7 +47,7 @@ class GameWorld {
 			this.selectedBuildingGnomeGhost = null;
 		}
 		this.selectedBuilding = null;
-		this.hasWon = false;
+		this.levelIsWon = false;
 		this.blockGroup.removeAll(true);
 		this.entityGroup.removeAll(true);
 		this.gnomes = [];
@@ -200,34 +198,29 @@ class GameWorld {
 			});
 	}
 
-	private startCodeTimer() {
-		let timer = this.game.time.create();
-		timer.loop(WorldConstants.TURN_LENGTH_IN_MILLIS, () => {
-			this.gnomeCode.executeNextCommand(this, this.gnomes);
-			this.level.spookTrees.forEach((tree) => {
-				tree.checkForGnomes(this.gnomes.filter(gnome => {
-					return gnome.location === tree.location.getNeighbor(tree.model.direction);
-				})[0]);
-			});
-			if (!this.hasWon && this.level.checkVictory()) {
-				this.winLevel();
-			}
+	/**
+	 * Causes 1 unit of time to pass in the world.
+	 */
+	public nextTick() {
+		this.gnomeCode.executeNextCommand(this, this.gnomes);
+		this.level.spookTrees.forEach((tree) => {
+			tree.checkForGnomes(this.gnomes.filter(gnome => {
+				return gnome.location === tree.location.getNeighbor(tree.model.direction);
+			})[0]);
 		});
-		timer.start();
+		if (!this.levelIsWon && this.level.checkVictory()) {
+			this.winLevel();
+		}
 	}
 
 	private winLevel() {
-		this.hasWon = true;
+		this.levelIsWon = true;
 		Messages.show(this.game, "Good work! Click here to continue", {
 			callback: () => {
 				this.loadNextLevel();
 			}
 		});
 		SaveGame.setLevel(this.level.nextLevel);
-	}
-
-	getIfLevelIsWon() {
-		return this.hasWon;
 	}
 
 	loadNextLevel() {

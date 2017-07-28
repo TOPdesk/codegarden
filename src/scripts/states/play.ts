@@ -39,20 +39,29 @@ namespace States {
 				}
 				this.showCodeInEditor();
 			};
-
 			if (typeof(this.initialLevel) === "string") {
 				this.gameWorld.loadLevel(this.initialLevel);
 			}
 			else {
 				this.gameWorld.loadLevelFromDefinition(this.initialLevel);
 			}
+
+			this.startWorldTimer();
+		}
+
+		private startWorldTimer() {
+			let timer = this.game.time.create();
+			timer.loop(WorldConstants.TURN_LENGTH_IN_MILLIS, () => {
+				this.gameWorld.nextTick();
+			});
+			timer.start();
 		}
 
 		addHotKeys() {
 			let innerCodeEditor = document.getElementById("innerCodeEditor");
 
 			this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.add(() => {
-				if (this.gameWorld.getIfLevelIsWon()) {
+				if (this.gameWorld.levelIsWon) {
 					this.gameWorld.loadNextLevel();
 				}
 				else {

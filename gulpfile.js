@@ -15,7 +15,7 @@ const browserSync = require('browser-sync');
 const del = require('del');
 const runSequence = require('run-sequence');
 const sourcemaps = require('gulp-sourcemaps');
-const karma = require("gulp-karma-runner");
+const karma = require('karma');
 //Texture atlas dependencies
 const spritesmith = require('gulp.spritesmith');
 const texturePacker = require('spritesmith-texturepacker');
@@ -131,32 +131,11 @@ gulp.task('levelEditor', () => {
 	gulp.src(srcs.levelEditor).pipe(gulp.dest(dests.levelEditor));
 });
 
-gulp.task('mocha-tests', function() {
-	return gulp.src([
-		'node_modules/phaser/build/phaser.min.js',
-		'build/scripts/**/*.js',
-		'src/tests/**/*.test.js'
-	], { 'read': false })
-		.pipe(karma.server({
-				'preprocessors': {
-					'src/tests/**/*.test.js': ['babel']
-				},
-				'singleRun': true,
-				'plugins': ['karma-mocha', 'karma-phantomjs-launcher', 'karma-sinon-chai', 'karma-babel-preprocessor'],
-				'frameworks': ['mocha', 'sinon-chai'],
-				'browsers': ['PhantomJS'],
-				client: {
-					chai: {
-						includeStack: true
-					}
-				},
-				babelPreprocessor: {
-					options: {
-						presets: ['es2015'],
-						sourceMap: 'inline'
-					}
-				}
-			}));
+gulp.task('mocha-tests', function(done) {
+	new karma.Server({
+		configFile: __dirname + '/karma.conf.js',
+		singleRun: true
+	}, done).start();
 });
 
 gulp.task('test', function () {

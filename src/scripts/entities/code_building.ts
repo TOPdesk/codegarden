@@ -13,14 +13,20 @@ class CodeBuilding extends GameObject {
 		this.input.pixelPerfectClick = true;
 		this.input.useHandCursor = true;
 
-		this.gnomeCode = [];
-		if (model.initialCode) {
-			for (let i = 0; i < model.initialCode.length; i++) {
-				this.gnomeCode.push(CommandType.getCommandTypeForShorthand(model.initialCode.charAt(i)));
-			}
-		}
+		this.loadCodeFromString(model.initialCode);
 
 		game.add.existing(this);
+	}
+
+	public loadCodeFromString(code?: string) {
+		this.gnomeCode = [];
+		if (!code) {
+			return;
+		}
+
+		for (let i = 0; i < code.length; i++) {
+			this.gnomeCode.push(CommandType.getCommandTypeForShorthand(code.charAt(i).toUpperCase()));
+		}
 	}
 
 	public select() {
