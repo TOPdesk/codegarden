@@ -27,6 +27,12 @@ namespace States {
 			this.createMenuImage(-90, -210, "main_menu_continue");
 
 			this.game.input.keyboard.onDownCallback = this.handleKeyDown;
+
+			let timer = this.game.time.create();
+			timer.loop(WorldConstants.TURN_LENGTH_IN_MILLIS, () => {
+				this.gameWorld.nextTick();
+			});
+			timer.start();
 		}
 
 		private handleKeyDown = () => {
@@ -72,18 +78,16 @@ namespace States {
 		}
 
 		private startGame(): void {
-			this.gameWorld.level.houses[0].gnomeCode = [
+			this.runProgram([
 				new Command(CommandType.WALK),
 				new Command(CommandType.WALK),
 				new Command(CommandType.ACT),
 				new RunnableCommand(() => this.game.state.start("play"))
-			];
-			this.gameWorld.spawnGnomes();
+			]);
 		}
 
 		private continueGame(): void {
-
-			this.gameWorld.level.houses[0].gnomeCode = [
+			this.runProgram([
 				new Command(CommandType.WALK),
 				new Command(CommandType.RIGHT),
 				new Command(CommandType.WALK),
@@ -94,12 +98,11 @@ namespace States {
 				new RunnableCommand(() => {
 					this.game.state.start("play", true, false, SaveGame.getLevel());
 			})
-			];
-			this.gameWorld.spawnGnomes();
+			]);
 		}
 
 		private credits(): void {
-			this.gameWorld.level.houses[0].gnomeCode = [
+			this.runProgram([
 				new Command(CommandType.WALK),
 				new Command(CommandType.LEFT),
 				new Command(CommandType.WALK),
@@ -108,7 +111,11 @@ namespace States {
 				new Command(CommandType.WALK),
 				new Command(CommandType.ACT),
 				new RunnableCommand(() => this.game.state.start("credits"))
-			];
+			]);
+		}
+
+		private runProgram(code: Command[]) {
+			this.gameWorld.level.houses[0].gnomeCode = code;
 			this.gameWorld.spawnGnomes();
 		}
 	}
