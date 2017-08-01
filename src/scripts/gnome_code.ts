@@ -139,7 +139,11 @@ namespace CommandType {
 			case "R": return new Command(CommandType.RIGHT);
 			case "A": return new Command(CommandType.ACT);
 			case "D": return new Command(CommandType.DELAY);
-			default: throw new Error("Cannot parse command " + shorthand);
+			default:
+				if (shorthand >= "0" && shorthand <= "9") {
+					return new Command(CommandType.CALL_ROUTINE, [parseInt(shorthand)]);
+				}
+				throw new Error("Cannot parse command " + shorthand);
 		}
 	}
 

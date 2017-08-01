@@ -2,7 +2,7 @@
 ///<reference path="game_object.ts"/>
 
 class CodeBuilding extends GameObject {
-	public gnomeCode: Command[];
+	public gnomeCode: Command[] = [];
 	public delay: number;
 
 	private selectionIndicator;
@@ -19,11 +19,11 @@ class CodeBuilding extends GameObject {
 	}
 
 	public loadCodeFromString(code?: string) {
-		this.gnomeCode = [];
 		if (!code) {
 			return;
 		}
 
+		this.gnomeCode.splice(0, this.gnomeCode.length);
 		for (let i = 0; i < code.length; i++) {
 			this.gnomeCode.push(CommandType.getCommandTypeForShorthand(code.charAt(i).toUpperCase()));
 		}
