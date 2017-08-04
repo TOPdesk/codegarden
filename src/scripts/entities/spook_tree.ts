@@ -6,14 +6,22 @@
 class SpookTree extends GameObject {
 
 	eating: number = 0;
+	objectEating: string = "";
 
 	determineTexture() {
-        //TODO: Change to spook tree sprite when finished.
-		return "tree-1";
+		if (this.eating && this.objectEating === "gnome") {
+			return "evil-tree-eating";
+		}
+		else if (this.eating && this.objectEating === "frog") {
+			return "evil-tree-eating frog";
+		}
+		else {
+			return "evil-tree";
+		}
 	}
 
 	constructor(game: Phaser.Game, public model: SpookTreeModel) {
-		super(game, model, "tree-1", false);
+		super(game, model, "evil-tree", false);
 
 		game.add.existing(this);
 	}
@@ -27,10 +35,14 @@ class SpookTree extends GameObject {
 	}
 
 	checkForGnomes(gnome: Gnome) {
+		this.determineTexture();
+		this.updateTexture();
 		if (gnome && this.eating === 0) {
 			this.eating += 3;
 			//TODO new animation for this death.
 			gnome.die(CauseOfDeath.CODE_RAN_OUT);
+			this.objectEating = "gnome";
+			gnome.codeStack = [];
 		}
 		else if (this.eating) {
 			this.eating--;

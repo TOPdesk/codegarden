@@ -203,9 +203,9 @@ class GameWorld {
 	 */
 	public nextTick() {
 		this.gnomeCode.executeNextCommand(this, this.gnomes);
-		this.level.spookTrees.forEach((tree) => {
+		this.level.spookTrees.forEach(tree => {
 			tree.checkForGnomes(this.gnomes.filter(gnome => {
-				return gnome.location === tree.location.getNeighbor(tree.model.direction);
+				return tree.location.getNeighbor(tree.model.direction).equals(gnome.location);
 			})[0]);
 		});
 		if (!this.levelIsWon && this.level.checkVictory()) {
