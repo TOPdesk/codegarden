@@ -25,10 +25,10 @@ class Gnome extends Phaser.Sprite {
 	private _floating = 0;
 	set floating(floating: number) {
 		if (!this._floating && floating) {
-			this.animations.play("float_start");
+			this.animations.play("float_start_" + this.getFrontBackPrefix());
 		}
 		if (this._floating && !floating) {
-			this.animations.play("float_stop");
+			this.animations.play("float_stop_" + this.getFrontBackPrefix());
 		}
 		this._floating = floating;
 	}
@@ -55,9 +55,19 @@ class Gnome extends Phaser.Sprite {
 	}
 
 	private registerAnimations() {
-		this.animations.add("floating", Phaser.Animation.generateFrameNames("gnome_floating_front_", 0, 3), FLOATING_ANIMATION_FRAMERATE, true);
-		this.animations.add("float_start", Phaser.Animation.generateFrameNames("gnome_float_start_front_", 0, 3), FLOATING_ANIMATION_FRAMERATE);
-		this.animations.add("float_stop", Phaser.Animation.generateFrameNames("gnome_float_start_front_", 3, 0), FLOATING_ANIMATION_FRAMERATE);
+		this.animations.add("floating_front",
+			Phaser.Animation.generateFrameNames("gnome_floating_front_", 0, 3), FLOATING_ANIMATION_FRAMERATE, true);
+		this.animations.add("float_start_front",
+			Phaser.Animation.generateFrameNames("gnome_float_start_front_", 0, 3), FLOATING_ANIMATION_FRAMERATE);
+		this.animations.add("float_stop_front",
+			Phaser.Animation.generateFrameNames("gnome_float_start_front_", 3, 0), FLOATING_ANIMATION_FRAMERATE);
+
+		this.animations.add("floating_back",
+			Phaser.Animation.generateFrameNames("gnome_floating_back_", 0, 3), FLOATING_ANIMATION_FRAMERATE, true);
+		this.animations.add("float_start_back",
+			Phaser.Animation.generateFrameNames("gnome_float_start_back_", 0, 3), FLOATING_ANIMATION_FRAMERATE);
+		this.animations.add("float_stop_back",
+			Phaser.Animation.generateFrameNames("gnome_float_start_back_", 3, 0), FLOATING_ANIMATION_FRAMERATE);
 
 		this.animations.add("gnome_regular_walk_front",
 			Phaser.Animation.generateFrameNames("gnome_regular_walk_front_", 0, 3), WALKING_ANIMATION_FRAMERATE);
@@ -149,14 +159,12 @@ class Gnome extends Phaser.Sprite {
 		}
 
 		if (this.floating) {
-			this.animations.play("floating"); //There are no back graphics for floating yet
+			this.animations.play("floating_" + this.getFrontBackPrefix());
 			return;
 		}
 
-		let facingFront = (this.direction === Direction.SE || this.direction === Direction.SW);
-
 		let gnomeSpriteBase = (this.wateringCan ? "gnome_wateringcan_walk_" : "gnome_regular_walk_");
-		let gnomeSprite = gnomeSpriteBase + (facingFront ? "front" : "back");
+		let gnomeSprite = gnomeSpriteBase + this.getFrontBackPrefix();
 		if (isWalking) {
 			this.animations.play(gnomeSprite);
 		}
@@ -171,6 +179,11 @@ class Gnome extends Phaser.Sprite {
 		return tween.to({
 			x: screenCoordinates.x + GNOME_X_OFFSET, y: screenCoordinates.y + GNOME_Y_OFFSET,
 		}, WorldConstants.TURN_LENGTH_IN_MILLIS, Phaser.Easing.Linear.None);
+	}
+
+	private getFrontBackPrefix() {
+		let isFacingFront = this.direction === Direction.SE || this.direction === Direction.SW;
+		return isFacingFront ? "front" : "back";
 	}
 }
 
