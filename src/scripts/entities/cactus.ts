@@ -25,6 +25,7 @@ class Cactus extends GameObject {
 
 	doAction(gnome: Gnome) {
 		if (gnome.wateringCan) {
+			ParticleEmitters.waterObject(this.game, this.x, this.y);
 			this.model.isWatered = true;
 			gnome.wateringCan = false;
 			this.updateTexture();

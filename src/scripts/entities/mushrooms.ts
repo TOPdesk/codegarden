@@ -9,6 +9,7 @@ class Mushrooms extends GameObject {
 		}
 
 		if (gnome.wateringCan) {
+			ParticleEmitters.waterObject(this.game, this.x, this.y);
 			gnome.wateringCan = false;
 			if (this.model.amount < 3) {
 				this.model.amount++;
