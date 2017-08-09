@@ -134,8 +134,6 @@ class GameWorld {
 
 	killGnome(gnome: Gnome, causeOfDeath: CauseOfDeath) {
 		this.gnomes.splice(this.gnomes.indexOf(gnome), 1);
-		this.entityGroup.remove(gnome);
-		this.game.world.add(gnome);
 		gnome.die(causeOfDeath);
 	}
 

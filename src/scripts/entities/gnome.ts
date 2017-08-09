@@ -118,6 +118,7 @@ class Gnome extends Phaser.Sprite {
 			case (CauseOfDeath.FALLING):
 				tween.onChildComplete.add(() => {
 					if (this.location.x < 0 || this.location.y < 0) {
+						this.game.world.add(this); //Makes it possible to fall behind blocks
 						this.sendToBack();
 					}
 					this.game.add.sound("falling_gnome_scream").play();
@@ -135,7 +136,7 @@ class Gnome extends Phaser.Sprite {
 				tween.onComplete.add(() => ParticleEmitters.beardExplosion(this.game, this.x, this.y - 30));
 				break;
 			case (CauseOfDeath.CODE_RAN_OUT):
-				tween.to({alpha: 0}, 500, Phaser.Easing.Quartic.Out);
+				tween.to({alpha: 0}, WorldConstants.TURN_LENGTH_IN_MILLIS, Phaser.Easing.Quartic.Out);
 				break;
 		}
 
