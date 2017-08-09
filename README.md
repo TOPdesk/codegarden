@@ -29,7 +29,8 @@ Changes to the sourcecode will automatically cause the browser to refresh. While
 To run the automated tests, use one the following scripts:
 - npm test
 - npm run test-watch
-The first runs the test once and then completes, the second will watch for changes and repeatedly re-run the tests.
+
+The first command runs the test once and then completes, the second will watch for changes and repeatedly re-run the tests.
 
 ## Deploying a new version to Github Pages
 First, confirm that Codegarden is working properly. Then use the following script:
