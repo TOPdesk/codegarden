@@ -10,35 +10,30 @@ You can try out a snapshot of its current state [here](https://siriah.github.io/
 
 # Developer instructions
 
+In order to develop, you'll first need to have git and npm available as command-line utilities.
+- On Windows, you can get npm by installing [NodeJS](https://nodejs.org).
+- On Debian Linux you'll also need to install the nodejs-legacy package (see this
+[stackoverflow question](http://stackoverflow.com/questions/21168141/cannot-install-packages-using-node-package-manager-in-ubuntu)
+ for the reason).
+
 ## Building from Source
-
-First make sure you have git and npm available as command-line utilities (so you should install Git and NodeJS if you don't have them already).
-You also need gulp, which you can get from npm by opening the command line interface of your operating system and typing the following command:
-
-- npm install -g gulp
 
 Open a command line interface in the directory that contains this README file, and use the following command to install Codegarden's other dependencies locally:
 - npm install
 
-Then finally, run the following command in the command line interface to start a browser running Codegarden.
-- gulp
+You can then build and run Codegarden with:
+- npm start
 
 Changes to the sourcecode will automatically cause the browser to refresh. While running in this mode, there is a level editor available under /levelEditor.
 
-To run tests run:
-- gulp test
-
-### Debian specific instructions
-
-Just as the general recipe above, but install the npm and nodejs-legacy
-package (see this [stackoverflow
-question](http://stackoverflow.com/questions/21168141/cannot-install-packages-using-node-package-manager-in-ubuntu)
-for the reason). The npm install -g commands have to be run using
-sudo, because this installs global packages.
+To run the automated tests, use one the following scripts:
+- npm test
+- npm run test-watch
+The first runs the test once and then completes, the second will watch for changes and repeatedly re-run the tests.
 
 ## Deploying a new version to Github Pages
-Before deploying, check that the game compiles and starts up without errors. Then run:
-- gulp website
+First, confirm that Codegarden is working properly. Then use the following script:
+- npm run website
 
 After this command completes, push the changed files in the 'docs' directory to Github.
 

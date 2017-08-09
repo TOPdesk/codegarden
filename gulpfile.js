@@ -131,31 +131,36 @@ gulp.task('levelEditor', () => {
 	gulp.src(srcs.levelEditor).pipe(gulp.dest(dests.levelEditor));
 });
 
-gulp.task('mocha-tests', function(done) {
-	new karma.Server({
-		configFile: __dirname + '/karma.conf.js',
-		singleRun: true
-	}, done).start();
+gulp.task('watchAll', () => {
+	gulp.watch(srcs.html, ['html']);
+	gulp.watch(srcs.sprites, ['sprites']);
+	gulp.watch(srcs.assets, ['assets']);
+	gulp.watch(srcs.scripts, ['scripts', 'tslint']);
+	gulp.watch(srcs.styles, ['styles']);
+	gulp.watch(srcs.levelEditor, ['levelEditor']);
 });
 
-gulp.task('test', function () {
-	runSequence('clean', 'build', 'mocha-tests');
+function startKarma(done, singleRun) {
+	new karma.Server({
+		configFile: __dirname + '/karma.conf.js',
+		singleRun
+	}, done).start();
+}
+
+gulp.task('test', function (done) {
+	runSequence('clean', 'build', () => startKarma(done, true));
+});
+
+gulp.task('test-watch', function (done) {
+	runSequence('clean', 'build', 'watchAll', () => startKarma(done, false));
 });
 
 gulp.task('build', ['tslint', 'copy', 'sprites', 'assets', 'html', 'scripts', 'styles']);
 
-gulp.task('website', done => {
-	runSequence('clean', 'build', 'cleanWebsite', 'copyWebsite', () => done());
+gulp.task('website', () => {
+	runSequence('clean', 'build', 'cleanWebsite', 'copyWebsite');
 });
 
-gulp.task('default', function (done) {
-    runSequence('clean', 'build', 'levelEditor', 'browserSync', () => {
-		gulp.watch(srcs.html, ['html']);
-		gulp.watch(srcs.sprites, ['sprites']);
-		gulp.watch(srcs.assets, ['assets']);
-		gulp.watch(srcs.scripts, ['scripts', 'tslint']);
-		gulp.watch(srcs.styles, ['styles']);
-		gulp.watch(srcs.levelEditor, ['levelEditor']);
-        done();
-    });
+gulp.task('default', function () {
+    runSequence('clean', 'build', 'levelEditor', 'browserSync', 'watchAll');
 });
