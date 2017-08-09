@@ -41,6 +41,7 @@ class Level {
 
 		let object = this.getObject(point);
 		if (object && object.causeOfDeath) {
+			object.hasKilledGnome = true;
 			return object.causeOfDeath;
 		}
 

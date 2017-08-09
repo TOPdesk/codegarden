@@ -11,7 +11,7 @@ class GameObject extends Phaser.Sprite {
 	}
 
 	constructor(game: Phaser.Game, public model: GameObjectModel, sprite,
-				public passable: boolean, public causeOfDeath: CauseOfDeath = CauseOfDeath.NOTHING) {
+				public passable: boolean) {
 		super(game, 0, 0, WorldConstants.SPRITE_SHEET, sprite);
 		this.initialModel = JSON.parse(JSON.stringify(model));
 		this.anchor.set(0.5, 1);
@@ -69,8 +69,8 @@ class GameObject extends Phaser.Sprite {
 	 * to their initial values. Any information outside the model (e.g. gnomecode) is not affected.
 	 */
 	softReset() {
-		for (let key in this.initialModel) {
-			if (this.initialModel.hasOwnProperty(key)) {
+		for (let key in this.model) {
+			if (this.model.hasOwnProperty(key)) {
 				this.model[key] = this.initialModel[key];
 			}
 		}
@@ -101,7 +101,7 @@ interface GameObjectModel {
 namespace ObjectType {
 	export function instantiate(game: Phaser.Game, model, libraryIndex: number) {
 		switch (model.type) {
-			case "CACTUS": return new GameObject(game, model, "cactus", true, CauseOfDeath.CACTUS);
+			case "CACTUS": return new Cactus(game, model);
 			case "TREE": return new Tree(game, model);
 			case "HOUSE": return new House(game, model);
 			case "LIBRARY": return new CodeBuilding(game, model, "library-" + CodeBuilding.getLibraryColor(libraryIndex));
