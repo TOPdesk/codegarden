@@ -207,26 +207,7 @@ class GameWorld {
 			})[0]);
 		});
 		if (!this.levelIsWon && this.level.checkVictory()) {
-			this.winLevel();
-		}
-	}
-
-	private winLevel() {
-		this.levelIsWon = true;
-		Messages.show(this.game, "Good work! Click here to continue", {
-			callback: () => {
-				this.loadNextLevel();
-			}
-		});
-		SaveGame.setLevel(this.level.nextLevel);
-	}
-
-	loadNextLevel() {
-		if (this.level.nextLevel) {
-			this.loadLevel(this.level.nextLevel);
-		}
-		else {
-			this.game.state.start("menu");
+			this.levelIsWon = true;
 		}
 	}
 }

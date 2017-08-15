@@ -12,7 +12,6 @@ class Level {
 	public houses: House[] = [];
 	public codeBuildings: CodeBuilding[] = [];
 	public libraries: CodeBuilding[] = [];
-	public nextLevel?: string;
 	public spookTrees: SpookTree[] = [];
 
 	constructor(levelDefinition) {
@@ -20,7 +19,6 @@ class Level {
 		this.layout = levelDefinitionCopy.layout;
 		this.objectModels = levelDefinitionCopy.objects;
 		this.victoryConditions = levelDefinitionCopy.victoryConditions;
-		this.nextLevel = levelDefinitionCopy.nextLevel;
 	}
 
 	pointIsPassable(point: MapPoint): boolean {

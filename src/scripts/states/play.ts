@@ -3,6 +3,7 @@
 /// <reference path="../gnome_code.ts"/>
 /// <reference path="../gameworld.ts"/>
 ///<reference path="../../../node_modules/@types/sortablejs/index.d.ts"/>
+///<reference path="../level_list.ts"/>
 
 namespace States {
 	const CAMERA_OFFSET_X = -400;
@@ -14,10 +15,10 @@ namespace States {
 
 		private codeEditorSortable;
 
-		private initialLevel: string | object;
+		private currentLevel: string | object;
 
 		init(initialLevel?: string | object) {
-			this.initialLevel = initialLevel || "tutorial_level_1";
+			this.currentLevel = initialLevel || LevelList.LEVELS[0];
 		}
 
 		create() {
@@ -39,11 +40,11 @@ namespace States {
 				}
 				this.showCodeInEditor();
 			};
-			if (typeof(this.initialLevel) === "string") {
-				this.gameWorld.loadLevel(this.initialLevel);
+			if (typeof(this.currentLevel) === "string") {
+				this.gameWorld.loadLevel(this.currentLevel);
 			}
 			else {
-				this.gameWorld.loadLevelFromDefinition(this.initialLevel);
+				this.gameWorld.loadLevelFromDefinition(this.currentLevel);
 			}
 
 			this.startWorldTimer();
@@ -52,9 +53,34 @@ namespace States {
 		private startWorldTimer() {
 			let timer = this.game.time.create();
 			timer.loop(WorldConstants.TURN_LENGTH_IN_MILLIS, () => {
+				let wasWon = this.gameWorld.levelIsWon;
 				this.gameWorld.nextTick();
+				if (!wasWon && this.gameWorld.levelIsWon) {
+					this.handleLevelVictory();
+				}
 			});
 			timer.start();
+		}
+
+		private handleLevelVictory() {
+			let nextLevel = LevelList.getNext(this.currentLevel);
+			Messages.show(this.game, "Good work! Click here to continue", {
+				callback: () => {
+					this.loadNextLevel();
+				}
+			});
+			SaveGame.setLevel(nextLevel);
+		}
+
+		loadNextLevel() {
+			let nextLevel = LevelList.getNext(this.currentLevel);
+			if (nextLevel) {
+				this.currentLevel = nextLevel;
+				this.gameWorld.loadLevel(nextLevel);
+			}
+			else {
+				this.game.state.start("menu");
+			}
 		}
 
 		addHotKeys() {
@@ -62,7 +88,7 @@ namespace States {
 
 			this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.add(() => {
 				if (this.gameWorld.levelIsWon) {
-					this.gameWorld.loadNextLevel();
+					this.loadNextLevel();
 				}
 				else {
 					this.gameWorld.resetGame();
