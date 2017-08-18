@@ -2,8 +2,8 @@
     "frames": {
         "action_button": {
             "frame": {
-                "x": 768,
-                "y": 375,
+                "x": 240,
+                "y": 842,
                 "w": 72,
                 "h": 72
             },
@@ -20,10 +20,90 @@
                 "h": 72
             }
         },
-        "gnome_float_start_front_0": {
+        "gnome_float_start_back_0": {
+            "frame": {
+                "x": 360,
+                "y": 943,
+                "w": 70,
+                "h": 150
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 70,
+                "h": 150
+            },
+            "sourceSize": {
+                "w": 70,
+                "h": 150
+            }
+        },
+        "gnome_float_start_back_1": {
+            "frame": {
+                "x": 288,
+                "y": 943,
+                "w": 70,
+                "h": 150
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 70,
+                "h": 150
+            },
+            "sourceSize": {
+                "w": 70,
+                "h": 150
+            }
+        },
+        "gnome_float_start_back_2": {
+            "frame": {
+                "x": 72,
+                "y": 943,
+                "w": 70,
+                "h": 150
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 70,
+                "h": 150
+            },
+            "sourceSize": {
+                "w": 70,
+                "h": 150
+            }
+        },
+        "gnome_float_start_back_3": {
             "frame": {
                 "x": 0,
-                "y": 828,
+                "y": 943,
+                "w": 70,
+                "h": 150
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 70,
+                "h": 150
+            },
+            "sourceSize": {
+                "w": 70,
+                "h": 150
+            }
+        },
+        "gnome_float_start_front_0": {
+            "frame": {
+                "x": 983,
+                "y": 777,
                 "w": 70,
                 "h": 150
             },
@@ -42,8 +122,8 @@
         },
         "gnome_float_start_front_1": {
             "frame": {
-                "x": 942,
-                "y": 484,
+                "x": 648,
+                "y": 943,
                 "w": 70,
                 "h": 150
             },
@@ -62,8 +142,8 @@
         },
         "gnome_float_start_front_2": {
             "frame": {
-                "x": 360,
-                "y": 828,
+                "x": 432,
+                "y": 943,
                 "w": 70,
                 "h": 150
             },
@@ -83,7 +163,87 @@
         "gnome_float_start_front_3": {
             "frame": {
                 "x": 216,
-                "y": 828,
+                "y": 943,
+                "w": 70,
+                "h": 150
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 70,
+                "h": 150
+            },
+            "sourceSize": {
+                "w": 70,
+                "h": 150
+            }
+        },
+        "gnome_floating_back_0": {
+            "frame": {
+                "x": 504,
+                "y": 943,
+                "w": 70,
+                "h": 150
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 70,
+                "h": 150
+            },
+            "sourceSize": {
+                "w": 70,
+                "h": 150
+            }
+        },
+        "gnome_floating_back_1": {
+            "frame": {
+                "x": 576,
+                "y": 943,
+                "w": 70,
+                "h": 150
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 70,
+                "h": 150
+            },
+            "sourceSize": {
+                "w": 70,
+                "h": 150
+            }
+        },
+        "gnome_floating_back_2": {
+            "frame": {
+                "x": 144,
+                "y": 943,
+                "w": 70,
+                "h": 150
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 70,
+                "h": 150
+            },
+            "sourceSize": {
+                "w": 70,
+                "h": 150
+            }
+        },
+        "gnome_floating_back_3": {
+            "frame": {
+                "x": 720,
+                "y": 943,
                 "w": 70,
                 "h": 150
             },
@@ -102,8 +262,8 @@
         },
         "gnome_floating_front_0": {
             "frame": {
-                "x": 288,
-                "y": 828,
+                "x": 792,
+                "y": 943,
                 "w": 70,
                 "h": 150
             },
@@ -122,8 +282,8 @@
         },
         "gnome_floating_front_1": {
             "frame": {
-                "x": 144,
-                "y": 828,
+                "x": 864,
+                "y": 943,
                 "w": 70,
                 "h": 150
             },
@@ -142,8 +302,8 @@
         },
         "gnome_floating_front_2": {
             "frame": {
-                "x": 72,
-                "y": 828,
+                "x": 936,
+                "y": 943,
                 "w": 70,
                 "h": 150
             },
@@ -162,8 +322,8 @@
         },
         "gnome_floating_front_3": {
             "frame": {
-                "x": 860,
-                "y": 484,
+                "x": 1008,
+                "y": 943,
                 "w": 70,
                 "h": 150
             },
@@ -182,8 +342,8 @@
         },
         "gnome_king_0": {
             "frame": {
-                "x": 900,
-                "y": 701,
+                "x": 1111,
+                "y": 204,
                 "w": 70,
                 "h": 100
             },
@@ -202,8 +362,8 @@
         },
         "gnome_king_1": {
             "frame": {
-                "x": 432,
-                "y": 828,
+                "x": 1111,
+                "y": 306,
                 "w": 70,
                 "h": 100
             },
@@ -222,8 +382,8 @@
         },
         "gnome_king_2": {
             "frame": {
-                "x": 504,
-                "y": 828,
+                "x": 1111,
+                "y": 408,
                 "w": 70,
                 "h": 100
             },
@@ -262,8 +422,8 @@
         },
         "gnome_regular_walk_back_0": {
             "frame": {
-                "x": 648,
-                "y": 828,
+                "x": 1111,
+                "y": 612,
                 "w": 70,
                 "h": 100
             },
@@ -282,8 +442,8 @@
         },
         "gnome_regular_walk_back_1": {
             "frame": {
-                "x": 720,
-                "y": 828,
+                "x": 1111,
+                "y": 714,
                 "w": 70,
                 "h": 100
             },
@@ -302,8 +462,8 @@
         },
         "gnome_regular_walk_back_2": {
             "frame": {
-                "x": 792,
-                "y": 828,
+                "x": 1111,
+                "y": 816,
                 "w": 70,
                 "h": 100
             },
@@ -322,8 +482,8 @@
         },
         "gnome_regular_walk_back_3": {
             "frame": {
-                "x": 864,
-                "y": 828,
+                "x": 1111,
+                "y": 918,
                 "w": 70,
                 "h": 100
             },
@@ -342,8 +502,8 @@
         },
         "gnome_regular_walk_front_0": {
             "frame": {
-                "x": 936,
-                "y": 828,
+                "x": 1183,
+                "y": 0,
                 "w": 70,
                 "h": 100
             },
@@ -362,8 +522,8 @@
         },
         "gnome_regular_walk_front_1": {
             "frame": {
-                "x": 1024,
-                "y": 0,
+                "x": 1183,
+                "y": 102,
                 "w": 70,
                 "h": 100
             },
@@ -382,8 +542,8 @@
         },
         "gnome_regular_walk_front_2": {
             "frame": {
-                "x": 1024,
-                "y": 102,
+                "x": 1183,
+                "y": 204,
                 "w": 70,
                 "h": 100
             },
@@ -402,8 +562,8 @@
         },
         "gnome_regular_walk_front_3": {
             "frame": {
-                "x": 1024,
-                "y": 204,
+                "x": 1183,
+                "y": 306,
                 "w": 70,
                 "h": 100
             },
@@ -422,8 +582,8 @@
         },
         "gnome_wateringcan_walk_back_0": {
             "frame": {
-                "x": 1024,
-                "y": 306,
+                "x": 1183,
+                "y": 408,
                 "w": 70,
                 "h": 100
             },
@@ -442,8 +602,8 @@
         },
         "gnome_wateringcan_walk_back_1": {
             "frame": {
-                "x": 772,
-                "y": 557,
+                "x": 655,
+                "y": 454,
                 "w": 70,
                 "h": 100
             },
@@ -462,8 +622,8 @@
         },
         "gnome_wateringcan_walk_back_2": {
             "frame": {
-                "x": 1024,
-                "y": 408,
+                "x": 1183,
+                "y": 510,
                 "w": 70,
                 "h": 100
             },
@@ -502,8 +662,8 @@
         },
         "gnome_wateringcan_walk_front_0": {
             "frame": {
-                "x": 576,
-                "y": 828,
+                "x": 1111,
+                "y": 510,
                 "w": 70,
                 "h": 100
             },
@@ -521,226 +681,6 @@
             }
         },
         "gnome_wateringcan_walk_front_1": {
-            "frame": {
-                "x": 727,
-                "y": 454,
-                "w": 70,
-                "h": 100
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 70,
-                "h": 100
-            },
-            "sourceSize": {
-                "w": 70,
-                "h": 100
-            }
-        },
-        "gnome_wateringcan_walk_front_2": {
-            "frame": {
-                "x": 756,
-                "y": 701,
-                "w": 70,
-                "h": 100
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 70,
-                "h": 100
-            },
-            "sourceSize": {
-                "w": 70,
-                "h": 100
-            }
-        },
-        "gnome_wateringcan_walk_front_3": {
-            "frame": {
-                "x": 828,
-                "y": 701,
-                "w": 70,
-                "h": 100
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 70,
-                "h": 100
-            },
-            "sourceSize": {
-                "w": 70,
-                "h": 100
-            }
-        },
-        "waterfall_0": {
-            "frame": {
-                "x": 942,
-                "y": 242,
-                "w": 80,
-                "h": 240
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 80,
-                "h": 240
-            },
-            "sourceSize": {
-                "w": 80,
-                "h": 240
-            }
-        },
-        "waterfall_1": {
-            "frame": {
-                "x": 860,
-                "y": 0,
-                "w": 80,
-                "h": 240
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 80,
-                "h": 240
-            },
-            "sourceSize": {
-                "w": 80,
-                "h": 240
-            }
-        },
-        "waterfall_2": {
-            "frame": {
-                "x": 942,
-                "y": 0,
-                "w": 80,
-                "h": 240
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 80,
-                "h": 240
-            },
-            "sourceSize": {
-                "w": 80,
-                "h": 240
-            }
-        },
-        "waterfall_3": {
-            "frame": {
-                "x": 860,
-                "y": 242,
-                "w": 80,
-                "h": 240
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 80,
-                "h": 240
-            },
-            "sourceSize": {
-                "w": 80,
-                "h": 240
-            }
-        },
-        "beard_particle": {
-            "frame": {
-                "x": 1024,
-                "y": 882,
-                "w": 24,
-                "h": 24
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 24,
-                "h": 24
-            },
-            "sourceSize": {
-                "w": 24,
-                "h": 24
-            }
-        },
-        "cactus": {
-            "frame": {
-                "x": 640,
-                "y": 701,
-                "w": 114,
-                "h": 103
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 114,
-                "h": 103
-            },
-            "sourceSize": {
-                "w": 114,
-                "h": 103
-            }
-        },
-        "desert_block": {
-            "frame": {
-                "x": 168,
-                "y": 557,
-                "w": 114,
-                "h": 139
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 114,
-                "h": 139
-            },
-            "sourceSize": {
-                "w": 114,
-                "h": 139
-            }
-        },
-        "gnome_drowning": {
-            "frame": {
-                "x": 1024,
-                "y": 510,
-                "w": 65,
-                "h": 72
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 65,
-                "h": 72
-            },
-            "sourceSize": {
-                "w": 65,
-                "h": 72
-            }
-        },
-        "gnome_reading": {
             "frame": {
                 "x": 583,
                 "y": 454,
@@ -760,10 +700,370 @@
                 "h": 100
             }
         },
+        "gnome_wateringcan_walk_front_2": {
+            "frame": {
+                "x": 727,
+                "y": 454,
+                "w": 70,
+                "h": 100
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 70,
+                "h": 100
+            },
+            "sourceSize": {
+                "w": 70,
+                "h": 100
+            }
+        },
+        "gnome_wateringcan_walk_front_3": {
+            "frame": {
+                "x": 872,
+                "y": 701,
+                "w": 70,
+                "h": 100
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 70,
+                "h": 100
+            },
+            "sourceSize": {
+                "w": 70,
+                "h": 100
+            }
+        },
+        "waterfall_0": {
+            "frame": {
+                "x": 82,
+                "y": 701,
+                "w": 80,
+                "h": 240
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 80,
+                "h": 240
+            },
+            "sourceSize": {
+                "w": 80,
+                "h": 240
+            }
+        },
+        "waterfall_1": {
+            "frame": {
+                "x": 860,
+                "y": 183,
+                "w": 80,
+                "h": 240
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 80,
+                "h": 240
+            },
+            "sourceSize": {
+                "w": 80,
+                "h": 240
+            }
+        },
+        "waterfall_2": {
+            "frame": {
+                "x": 0,
+                "y": 701,
+                "w": 80,
+                "h": 240
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 80,
+                "h": 240
+            },
+            "sourceSize": {
+                "w": 80,
+                "h": 240
+            }
+        },
+        "waterfall_3": {
+            "frame": {
+                "x": 860,
+                "y": 425,
+                "w": 80,
+                "h": 240
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 80,
+                "h": 240
+            },
+            "sourceSize": {
+                "w": 80,
+                "h": 240
+            }
+        },
+        "beard_particle": {
+            "frame": {
+                "x": 1183,
+                "y": 984,
+                "w": 24,
+                "h": 24
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 24,
+                "h": 24
+            },
+            "sourceSize": {
+                "w": 24,
+                "h": 24
+            }
+        },
+        "cactus": {
+            "frame": {
+                "x": 983,
+                "y": 254,
+                "w": 114,
+                "h": 103
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 114,
+                "h": 103
+            },
+            "sourceSize": {
+                "w": 114,
+                "h": 103
+            }
+        },
+        "cactus_flowery": {
+            "frame": {
+                "x": 983,
+                "y": 569,
+                "w": 113,
+                "h": 103
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 113,
+                "h": 103
+            },
+            "sourceSize": {
+                "w": 113,
+                "h": 103
+            }
+        },
+        "cactus_flowery_hat": {
+            "frame": {
+                "x": 983,
+                "y": 359,
+                "w": 114,
+                "h": 103
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 114,
+                "h": 103
+            },
+            "sourceSize": {
+                "w": 114,
+                "h": 103
+            }
+        },
+        "cactus_hat": {
+            "frame": {
+                "x": 983,
+                "y": 464,
+                "w": 113,
+                "h": 103
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 113,
+                "h": 103
+            },
+            "sourceSize": {
+                "w": 113,
+                "h": 103
+            }
+        },
+        "desert_block": {
+            "frame": {
+                "x": 628,
+                "y": 701,
+                "w": 114,
+                "h": 139
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 114,
+                "h": 139
+            },
+            "sourceSize": {
+                "w": 114,
+                "h": 139
+            }
+        },
+        "evil-tree-eating frog": {
+            "frame": {
+                "x": 692,
+                "y": 247,
+                "w": 121,
+                "h": 181
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 121,
+                "h": 181
+            },
+            "sourceSize": {
+                "w": 121,
+                "h": 181
+            }
+        },
+        "evil-tree-eating": {
+            "frame": {
+                "x": 860,
+                "y": 0,
+                "w": 121,
+                "h": 181
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 121,
+                "h": 181
+            },
+            "sourceSize": {
+                "w": 121,
+                "h": 181
+            }
+        },
+        "evil-tree": {
+            "frame": {
+                "x": 524,
+                "y": 248,
+                "w": 121,
+                "h": 181
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 121,
+                "h": 181
+            },
+            "sourceSize": {
+                "w": 121,
+                "h": 181
+            }
+        },
+        "frog-king": {
+            "frame": {
+                "x": 983,
+                "y": 674,
+                "w": 111,
+                "h": 101
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 111,
+                "h": 101
+            },
+            "sourceSize": {
+                "w": 111,
+                "h": 101
+            }
+        },
+        "gnome_drowning": {
+            "frame": {
+                "x": 1183,
+                "y": 612,
+                "w": 65,
+                "h": 72
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 65,
+                "h": 72
+            },
+            "sourceSize": {
+                "w": 65,
+                "h": 72
+            }
+        },
+        "gnome_reading": {
+            "frame": {
+                "x": 1111,
+                "y": 0,
+                "w": 70,
+                "h": 100
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 70,
+                "h": 100
+            },
+            "sourceSize": {
+                "w": 70,
+                "h": 100
+            }
+        },
         "gnome_waiting": {
             "frame": {
-                "x": 655,
-                "y": 454,
+                "x": 1111,
+                "y": 102,
                 "w": 70,
                 "h": 100
             },
@@ -782,8 +1082,8 @@
         },
         "house_ne": {
             "frame": {
-                "x": 128,
-                "y": 701,
+                "x": 296,
+                "y": 557,
                 "w": 126,
                 "h": 125
             },
@@ -802,8 +1102,8 @@
         },
         "house_nw": {
             "frame": {
-                "x": 0,
-                "y": 701,
+                "x": 983,
+                "y": 0,
                 "w": 126,
                 "h": 125
             },
@@ -822,8 +1122,8 @@
         },
         "house_se": {
             "frame": {
-                "x": 692,
-                "y": 247,
+                "x": 168,
+                "y": 557,
                 "w": 126,
                 "h": 126
             },
@@ -842,8 +1142,8 @@
         },
         "house_sw": {
             "frame": {
-                "x": 516,
-                "y": 557,
+                "x": 744,
+                "y": 701,
                 "w": 126,
                 "h": 125
             },
@@ -862,8 +1162,8 @@
         },
         "library-green": {
             "frame": {
-                "x": 256,
-                "y": 701,
+                "x": 983,
+                "y": 127,
                 "w": 126,
                 "h": 125
             },
@@ -882,7 +1182,7 @@
         },
         "library-orange": {
             "frame": {
-                "x": 644,
+                "x": 680,
                 "y": 557,
                 "w": 126,
                 "h": 125
@@ -902,8 +1202,8 @@
         },
         "library-purple": {
             "frame": {
-                "x": 384,
-                "y": 701,
+                "x": 424,
+                "y": 557,
                 "w": 126,
                 "h": 125
             },
@@ -922,8 +1222,8 @@
         },
         "library-red": {
             "frame": {
-                "x": 512,
-                "y": 701,
+                "x": 552,
+                "y": 557,
                 "w": 126,
                 "h": 125
             },
@@ -943,7 +1243,7 @@
         "main_menu_continue": {
             "frame": {
                 "x": 0,
-                "y": 103,
+                "y": 0,
                 "w": 522,
                 "h": 101
             },
@@ -963,7 +1263,7 @@
         "main_menu_options": {
             "frame": {
                 "x": 0,
-                "y": 0,
+                "y": 103,
                 "w": 522,
                 "h": 101
             },
@@ -1002,8 +1302,8 @@
         },
         "mushrooms_0": {
             "frame": {
-                "x": 1024,
-                "y": 824,
+                "x": 1183,
+                "y": 926,
                 "w": 48,
                 "h": 56
             },
@@ -1022,8 +1322,8 @@
         },
         "mushrooms_1": {
             "frame": {
-                "x": 1024,
-                "y": 766,
+                "x": 1183,
+                "y": 868,
                 "w": 48,
                 "h": 56
             },
@@ -1042,8 +1342,8 @@
         },
         "mushrooms_2": {
             "frame": {
-                "x": 1024,
-                "y": 708,
+                "x": 1183,
+                "y": 810,
                 "w": 48,
                 "h": 56
             },
@@ -1062,8 +1362,8 @@
         },
         "mushrooms_3": {
             "frame": {
-                "x": 1024,
-                "y": 650,
+                "x": 1183,
+                "y": 752,
                 "w": 48,
                 "h": 56
             },
@@ -1082,8 +1382,8 @@
         },
         "play_button": {
             "frame": {
-                "x": 692,
-                "y": 375,
+                "x": 164,
+                "y": 842,
                 "w": 74,
                 "h": 74
             },
@@ -1102,8 +1402,8 @@
         },
         "rock": {
             "frame": {
-                "x": 1024,
-                "y": 584,
+                "x": 1183,
+                "y": 686,
                 "w": 64,
                 "h": 64
             },
@@ -1122,8 +1422,8 @@
         },
         "stage_block": {
             "frame": {
-                "x": 284,
-                "y": 557,
+                "x": 280,
+                "y": 701,
                 "w": 114,
                 "h": 139
             },
@@ -1142,8 +1442,28 @@
         },
         "stone_block": {
             "frame": {
-                "x": 524,
-                "y": 248,
+                "x": 396,
+                "y": 701,
+                "w": 114,
+                "h": 139
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 114,
+                "h": 139
+            },
+            "sourceSize": {
+                "w": 114,
+                "h": 139
+            }
+        },
+        "swamp_ground_block": {
+            "frame": {
+                "x": 164,
+                "y": 701,
                 "w": 114,
                 "h": 139
             },
@@ -1161,86 +1481,6 @@
             }
         },
         "tree-1": {
-            "frame": {
-                "x": 524,
-                "y": 0,
-                "w": 166,
-                "h": 246
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 166,
-                "h": 246
-            },
-            "sourceSize": {
-                "w": 166,
-                "h": 246
-            }
-        },
-        "tree-2": {
-            "frame": {
-                "x": 0,
-                "y": 454,
-                "w": 166,
-                "h": 245
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 166,
-                "h": 245
-            },
-            "sourceSize": {
-                "w": 166,
-                "h": 245
-            }
-        },
-        "tree-3": {
-            "frame": {
-                "x": 692,
-                "y": 0,
-                "w": 166,
-                "h": 245
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 166,
-                "h": 245
-            },
-            "sourceSize": {
-                "w": 166,
-                "h": 245
-            }
-        },
-        "tree-4": {
-            "frame": {
-                "x": 0,
-                "y": 206,
-                "w": 166,
-                "h": 246
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 166,
-                "h": 246
-            },
-            "sourceSize": {
-                "w": 166,
-                "h": 246
-            }
-        },
-        "tree-5": {
             "frame": {
                 "x": 336,
                 "y": 206,
@@ -1260,7 +1500,47 @@
                 "h": 246
             }
         },
-        "tree-6": {
+        "tree-2": {
+            "frame": {
+                "x": 692,
+                "y": 0,
+                "w": 166,
+                "h": 245
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 166,
+                "h": 245
+            },
+            "sourceSize": {
+                "w": 166,
+                "h": 245
+            }
+        },
+        "tree-3": {
+            "frame": {
+                "x": 0,
+                "y": 454,
+                "w": 166,
+                "h": 245
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 166,
+                "h": 245
+            },
+            "sourceSize": {
+                "w": 166,
+                "h": 245
+            }
+        },
+        "tree-4": {
             "frame": {
                 "x": 168,
                 "y": 206,
@@ -1280,10 +1560,50 @@
                 "h": 246
             }
         },
+        "tree-5": {
+            "frame": {
+                "x": 0,
+                "y": 206,
+                "w": 166,
+                "h": 246
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 166,
+                "h": 246
+            },
+            "sourceSize": {
+                "w": 166,
+                "h": 246
+            }
+        },
+        "tree-6": {
+            "frame": {
+                "x": 524,
+                "y": 0,
+                "w": 166,
+                "h": 246
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 166,
+                "h": 246
+            },
+            "sourceSize": {
+                "w": 166,
+                "h": 246
+            }
+        },
         "water_block": {
             "frame": {
-                "x": 400,
-                "y": 557,
+                "x": 512,
+                "y": 701,
                 "w": 114,
                 "h": 139
             },
@@ -1302,8 +1622,8 @@
         },
         "waterdrop_empty": {
             "frame": {
-                "x": 1074,
-                "y": 650,
+                "x": 1233,
+                "y": 752,
                 "w": 18,
                 "h": 24
             },
@@ -1322,8 +1642,8 @@
         },
         "waterdrop_filled": {
             "frame": {
-                "x": 1074,
-                "y": 676,
+                "x": 1233,
+                "y": 778,
                 "w": 18,
                 "h": 24
             },
@@ -1346,8 +1666,8 @@
         "image": "sprites.png",
         "format": "RGBA8888",
         "size": {
-            "w": 1094,
-            "h": 978
+            "w": 1253,
+            "h": 1093
         },
         "scale": 1
     }
