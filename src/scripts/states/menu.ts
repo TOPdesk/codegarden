@@ -51,15 +51,12 @@ namespace States {
 			}
 
 			if (code === this.enteredCode) {
-				Messages.show(this.game, "Are you a wizard?\nClick here to choose a level.",
-					{
-						callback: () => {
-							let level = prompt("Continue from which level?");
-							if (level) {
-								this.game.state.start("play", true, false, level);
-							}
-						}
-					});
+				console.log("Released levels: " + LevelList.LEVELS.join(", "));
+				console.log("Experimental levels: " + LevelList.EXPERIMENTAL_LEVELS.join(", "));
+				let level = prompt("Continue from which level?");
+				if (level) {
+					this.game.state.start("play", true, false, level);
+				}
 			}
 		};
 

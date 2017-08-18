@@ -12,6 +12,7 @@ namespace LevelList {
 	 * Experimental levels are loaded on startup, but are not part of the level order
 	 */
 	export const EXPERIMENTAL_LEVELS = [
+		"desert_no_cactus_hugging",
 		"swamp_terrain_tutorial",
 	];
 

@@ -1,0 +1,69 @@
+{
+	"LEVEL_DEFINITION": {
+		"layout": [
+			[2, 2, 1, 2, 2],
+			[2, 2, 1, 1, 1],
+			[2, 2, 2, 2, 2],
+			[2, 1, 2, 2, 2],
+			[2, 2, 2, 2, 2]],
+		"objects": [
+			{
+				"type": "CACTUS",
+				"positionX": 1,
+				"positionY": 1
+			},
+			{
+				"type": "TREE",
+				"positionX": 4,
+				"positionY": 2
+			},
+			{
+				"type": "TREE",
+				"positionX": 4,
+				"positionY": 0
+			},
+			{
+				"type": "MUSHROOMS",
+				"positionX": 2,
+				"positionY": 4,
+				"amount": 3
+			},
+			{
+				"type": "MUSHROOMS",
+				"positionX": 2,
+				"positionY": 2,
+				"amount": 3
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 0,
+				"positionY": 4,
+				"initialCode": "ARRRWWWRWWLWLARWWLARRA",
+				"readonly": true,
+				"direction": 2
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 3,
+				"positionY": 4,
+				"sizeLimit": 10,
+				"direction": 1
+			}
+		],
+		"victoryConditions": [
+			{
+				"type": "ENTITY_EXISTS",
+				"entityType": "TREE",
+				"amount": 2,
+				"requiredProperties": [
+					{
+						"name": "treeLevel",
+						"requirementType": "GREATER_THAN",
+						"value": 1
+					}
+				]
+			}
+		],
+		"introMessage": "I expect you to set a good example for the GNOMEs. Always show up on time, and avoid hugging cactuses during working hours."
+	}
+}

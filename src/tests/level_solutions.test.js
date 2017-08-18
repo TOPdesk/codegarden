@@ -96,6 +96,10 @@ describe("Level solutions:", function() {
 		testSolution("desert_simple_readonly", [READONLY, "WRWWWRWALWLA"]);
 	});
 	
+	it("desert_no_cactus_hugging can be solved", function() {
+		testSolution("desert_no_cactus_hugging", [READONLY, "WALWWRRWWA"]);
+	});
+	
 	it("desert_mushroom_book can be solved", function() {
 		testSolution("desert_mushroom_book", ["0RWWRRAL0"], [READONLY]);
 	});
