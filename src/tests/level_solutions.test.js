@@ -88,31 +88,33 @@ describe("Level solutions:", function() {
 		sandbox.resetBehavior();
 	});
 	
-	it("desert level 1 can be solved", function() {
-		testSolution("tutorial_level_1", ["WWLWWLARA"]);
+	it("desert_basics can be solved", function() {
+		testSolution("desert_basics", ["WWLWWLARA"]);
 	});
 	
-	it("desert level 2 can be solved", function() {
-		testSolution("tutorial_level_2", [READONLY, "WRWWWRWALWLA"]);
+	it("desert_simple_readonly can be solved", function() {
+		testSolution("desert_simple_readonly", [READONLY, "WRWWWRWALWLA"]);
 	});
 	
-	it("desert level 3 can be solved", function() {
-		testSolution("tutorial_level_3", ["0RWWRRAL0"], [READONLY]);
+	it("desert_mushroom_book can be solved", function() {
+		testSolution("desert_mushroom_book", ["0RWWRRAL0"], [READONLY]);
 	});
 	
-	it("desert level 4 can be solved", function() {
-		testSolution("tutorial_level_4", ["W0LWLA", "A0"], ["LWWLA"]);
+	it("desert_sharing can be solved", function() {
+		testSolution("desert_sharing", ["W0LWLA", "A0"], ["LWWLA"]);
 	});
 	
-	it("desert level 5 can be solved", function() {
-		testSolution("tutorial_level_5", [READONLY, "0", "WRWLWA"], ["AWA"]);
+	it("desert_delay can be solved", function() {
+		testSolution("desert_delay", [READONLY, "0", "WRWLWA"], ["AWA"]);
 	});
 	
-	it("desert level 6 can be solved", function() {
-		testSolution("tutorial_level_6", ["W0A", "LARWW0LA", "0"], ["ARW1", "WRAL"]);
+	it("desert_finale can be solved", function() {
+		testSolution("desert_finale", ["W0A", "LARWW0LA", "0"], ["ARW1", "WRAL"]);
 	});
 	
-	it("swamp level 1 can be solved", function() {
-		testSolution("swamp_level_1", ["LWWARRWLWWA", "WAWRWALWLA"]);
+	it("swamp_terrain_tutorial can be solved", function() {
+		testSolution("swamp_terrain_tutorial", ["LWWARRWLWWA", "WAWRWALWLA"]);
 	});
+	
+	
 });

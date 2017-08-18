@@ -21,11 +21,9 @@ namespace States {
 			this.load.audio("falling_gnome_scream", "assets/sound/wilhelm_scream.ogg");
 			this.load.audio("bubbles", "assets/sound/bubbles.wav");
 
-			LevelList.LEVELS.forEach(level => this.load.json(level, `assets/levels/${level}.json`));
+			let levels = ["menu_level"].concat(LevelList.LEVELS, LevelList.EXPERIMENTAL_LEVELS);
 
-			//Special 'levels'
-			this.load.json("menu_level", "assets/levels/menu_level.json");
-			this.load.json("test", "assets/levels/example_level.json");
+			levels.forEach(level => this.load.json(level, `assets/levels/${level}.json`));
 		}
 
 		create() {

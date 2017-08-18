@@ -54,7 +54,7 @@ namespace States {
 				Messages.show(this.game, "Are you a wizard?\nClick here to choose a level.",
 					{
 						callback: () => {
-							let level = prompt("Continue from which level?", "tutorial_level_6");
+							let level = prompt("Continue from which level?");
 							if (level) {
 								this.game.state.start("play", true, false, level);
 							}

@@ -1,12 +1,18 @@
 namespace LevelList {
 	export const LEVELS = [
-		"tutorial_level_1",
-		"tutorial_level_2",
-		"tutorial_level_3",
-		"tutorial_level_4",
-		"tutorial_level_5",
-		"tutorial_level_6",
-		"swamp_level_1",
+		"desert_basics",
+		"desert_simple_readonly",
+		"desert_mushroom_book",
+		"desert_sharing",
+		"desert_delay",
+		"desert_finale",
+	];
+
+	/**
+	 * Experimental levels are loaded on startup, but are not part of the level order
+	 */
+	export const EXPERIMENTAL_LEVELS = [
+		"swamp_terrain_tutorial",
 	];
 
 	/**
