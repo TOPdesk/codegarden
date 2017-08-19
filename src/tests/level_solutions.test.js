@@ -111,6 +111,10 @@ describe("Level solutions:", function() {
 	it("desert_delay can be solved", function() {
 		testSolution("desert_delay", [READONLY, "0", "WRWLWA"], ["AWA"]);
 	});
+
+	it("desert_recursion can be solved", function() {
+		testSolution("desert_recursion", [READONLY], ["LWWA", READONLY]);
+	});
 	
 	it("desert_finale can be solved", function() {
 		testSolution("desert_finale", ["W0A", "LARWW0LA", "0"], ["ARW1", "WRAL"]);

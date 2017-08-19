@@ -13,15 +13,18 @@ namespace LevelList {
 	 */
 	export const EXPERIMENTAL_LEVELS = [
 		"desert_no_cactus_hugging",
+		"desert_recursion",
 		"swamp_terrain_tutorial",
 	];
 
 	/**
-	 * Get the next level. This returns undefined for the last level. If the current level does not have a known position
-	 * in the level order, the first level is returned.
+	 * Get the next level. This returns undefined for the last level and for levels which are not part of the level order.
 	 * @param {string} level the name of the current level
 	 */
 	export function getNext(level: any): string | undefined {
+		if (LEVELS.indexOf(level) === -1) {
+			return;
+		}
 		let nextLevelIndex = LEVELS.indexOf(level) + 1;
 		return LEVELS[nextLevelIndex];
 	}

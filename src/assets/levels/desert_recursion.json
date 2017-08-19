@@ -1,0 +1,62 @@
+{
+	"LEVEL_DEFINITION": 	{
+		"layout": [
+			[2, 2, 2, 2, 2],
+			[1, 1, 2, 2, 2],
+			[2, 1, 2, 2, 2],
+			[2, 1, 2, 2, 2],
+			[2, 1, 2, 2, 2]],
+		"objects": [
+			{
+				"type": "CACTUS",
+				"positionX": 0,
+				"positionY": 2
+			},
+			{
+				"type": "CACTUS",
+				"positionX": 3,
+				"positionY": 3
+			},
+			{
+				"type": "TREE",
+				"positionX": 2,
+				"positionY": 0
+			},
+			{
+				"type": "LIBRARY",
+				"positionX": 0,
+				"positionY": 0,
+				"sizeLimit": 8
+			},
+			{
+				"type": "LIBRARY",
+				"positionX": 0,
+				"positionY": 4,
+				"readonly": true,
+				"initialCode": "01"
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 2,
+				"positionY": 3,
+				"initialCode": "1",
+				"readonly": true,
+				"direction": 3
+			}
+		],
+		"victoryConditions": [
+			{
+				"type": "ENTITY_EXISTS",
+				"entityType": "TREE",
+				"requiredProperties": [
+					{
+						"name": "treeLevel",
+						"requirementType": "GREATER_THAN",
+						"value": 1
+					}
+				]
+			}
+		],
+		"introMessage": "Just keep doing what you've been doing. Some of my underlings might get hurt in the process, but I'll forgive you."
+	}
+}
