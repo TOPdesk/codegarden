@@ -8,10 +8,11 @@
     "url": "https://github.com/Siriah/codegarden.git"
   },
   "scripts": {
+    "dev": "gulp dev",
     "start": "gulp",
     "test": "gulp test",
-	"test-watch": "gulp test-watch",
-	"website": "gulp website"
+    "test-watch": "gulp test-watch",
+    "website": "gulp website"
   },
   "author": "TOPdesk",
   "license": "ISC",

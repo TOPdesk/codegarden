@@ -155,12 +155,10 @@ gulp.task('test-watch', function (done) {
 	runSequence('clean', 'build', 'watchAll', () => startKarma(done, false));
 });
 
+gulp.task('dev', ['default'], (done) => startKarma(done, false));
+
 gulp.task('build', ['tslint', 'copy', 'sprites', 'assets', 'html', 'scripts', 'styles']);
 
-gulp.task('website', () => {
-	runSequence('clean', 'build', 'cleanWebsite', 'copyWebsite');
-});
+gulp.task('website', () => runSequence('clean', 'build', 'cleanWebsite', 'copyWebsite'));
 
-gulp.task('default', function () {
-    runSequence('clean', 'build', 'levelEditor', 'browserSync', 'watchAll');
-});
+gulp.task('default', (done) => runSequence('clean', 'build', 'levelEditor', 'browserSync', 'watchAll', done));

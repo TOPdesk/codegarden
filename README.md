@@ -21,12 +21,13 @@ In order to develop, you'll first need to have git and npm available as command-
 Open a command line interface in the directory that contains this README file, and use the following command to install Codegarden's other dependencies locally:
 - npm install
 
-You can then build and run Codegarden with:
+You can build and run Codegarden with either of the following:
 - npm start
+- npm run dev
 
-Changes to the sourcecode will automatically cause the browser to refresh. While running in this mode, there is a level editor available under /levelEditor.
+Changes to the sourcecode will automatically cause the browser to refresh, and there is a level editor available under /levelEditor. The 'run dev' command also automatically runs and watches the automated tests, while 'start' just runs Codegarden.
 
-To run the automated tests, use one the following scripts:
+To run the automated tests separately, you can use one the following scripts:
 - npm test
 - npm run test-watch
 
