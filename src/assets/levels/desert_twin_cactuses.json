@@ -1,0 +1,73 @@
+{
+	"LEVEL_DEFINITION": 	{
+		"layout": [
+			[2, 1, 1, 2, 2],
+			[2, 2, 1, 2, 2],
+			[2, 2, 2, 2, 2],
+			[2, 2, 2, 2, 2],
+			[2, 2, 2, 2, 1]],
+		"objects": [
+			{
+				"type": "CACTUS",
+				"positionX": 1,
+				"positionY": 3
+			},
+			{
+				"type": "CACTUS",
+				"positionX": 4,
+				"positionY": 2
+            },
+            			{
+				"type": "HOUSE",
+				"positionX": 0,
+				"positionY": 4,
+				"initialCode": "0",
+				"readonly": true,
+				"direction": 2
+			},
+			{
+				"type": "HOUSE",
+				"positionX": 3,
+				"positionY": 0,
+				"initialCode": "0",
+				"readonly": true,
+				"direction": 3
+			},
+
+			{
+				"type": "ROCK",
+				"positionX": 2,
+				"positionY": 2
+			},
+			{
+				"type": "LIBRARY",
+				"positionX": 1,
+				"positionY": 1,
+				"initialCode": "",
+				"sizeLimit": 8
+			},
+			{
+				"type": "LIBRARY",
+				"positionX": 4,
+				"positionY": 0,
+				"initialCode": "ALAW",
+				"readonly": true
+			}
+		],
+		"victoryConditions": [
+			{
+				"type": "ENTITY_EXISTS",
+				"entityType": "CACTUS",
+				"amount": 2,
+				"requiredProperties": [
+{
+						"name": "isWatered",
+						"requirementType": "EQUALS",
+						"value": true
+					}
+				]
+			}
+		],
+		"introMessage": "There aren't any trees here. You should water those cactuses instead."
+	}
+}

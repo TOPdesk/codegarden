@@ -70,15 +70,6 @@ class Level {
 		return true;
 	}
 
-	doObjectAction(actionLocation: MapPoint, gnome: Gnome) {
-		let object = this.objectMap[actionLocation.toString()];
-		if (object) {
-			return object.doAction(gnome);
-		}
-
-		return false;
-	}
-
 	/**
 	 * Resets the level to its initial state, but code buildings keep their code.
 	 */

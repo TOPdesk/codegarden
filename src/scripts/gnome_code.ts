@@ -5,76 +5,93 @@ class GnomeCode {
 	constructor(public libraries: Command[][]) {}
 
 	/**
-	 * Executes the next command.
+	 * Simultaneously executes the next command for all gnomes. If commands conflict with each other,
+	 * they are resolved in a deterministic order:
+	 * - 'Stationary' commands are resolved first, then movement commands, then any resulting gnome deaths.
+	 * - Gnomes without water take priority over those without.
+	 * - After that, gnomes take priority in ascending order of X coordinate followed by Y coordinate.
 	 */
 	executeNextCommand(gameWorld: GameWorld, gnomes: Gnome[]) {
-		//First act, then move, then die, so that interactions between gnomes will work as expected
+		let undelayedGnomes = this.filterDelayedGnomes(gnomes);
+		let sortedGnomes = this.sortGnomesByPriority(undelayedGnomes);
+
+		let stationaryGnomes = [];
 		let walkingGnomes = [];
-		let gnomeDeaths = [];
-		gnomes.slice().sort((a, b) => a.wateringCan ? 1 : -1).forEach(gnome => {
+		sortedGnomes.forEach(gnome => {
+			let commandType = gnome.codeStack.length ? gnome.codeStack[gnome.codeStack.length - 1].type : null;
+			if (commandType === CommandType.WALK) {
+				walkingGnomes.push(gnome);
+			}
+			else {
+				stationaryGnomes.push(gnome);
+			}
+		});
+
+		this.resolveStationaryGnomeCommands(gameWorld, stationaryGnomes);
+
+		let gnomesWhichMoved = [];
+		walkingGnomes.forEach(gnome => {
+			gnome.codeStack.pop();
+			let hasMoved = gameWorld.tryMove(gnome);
+			if (hasMoved) {
+				gnomesWhichMoved.push(gnome);
+			}
+		});
+
+		this.resolveGnomeDeaths(gameWorld, sortedGnomes, gnomesWhichMoved);
+	}
+
+	private filterDelayedGnomes(gnomes: Gnome[]) {
+		let undelayedGnomes = [];
+		gnomes.forEach(gnome => {
 			if (gnome.delayed) {
 				gnome.delayed--;
+			}
+			else {
+				undelayedGnomes.push(gnome);
+			}
+		});
+		return undelayedGnomes;
+	}
+
+	private sortGnomesByPriority(gnomes: Gnome[]) {
+		return gnomes.slice().sort((a, b) => {
+			if (a.wateringCan && !b.wateringCan) {
+				return 1;
+			}
+			if (!a.wateringCan && b.wateringCan) {
+				return -1;
+			}
+			if (a.location.x !== b.location.x) {
+				return a.location.x - b.location.x;
+			}
+			return a.location.y - b.location.y;
+		});
+	}
+
+	private resolveStationaryGnomeCommands(world: GameWorld, gnomes: Gnome[]) {
+		gnomes.forEach(gnome => {
+			let command = gnome.codeStack.pop();
+			if (command === undefined) {
 				return;
 			}
-			let command = gnome.codeStack.pop();
 
 			if (command instanceof RunnableCommand) {
 				command.fn();
-			}
-
-			if (command === undefined) {
-				gnomeDeaths.push({
-					gnome: gnome,
-					reason: CauseOfDeath.CODE_RAN_OUT
-				});
-			}
-			else {
-				if (command.type !== CommandType.WALK) {
-					let deathReason = gameWorld.level.getPointCauseOfDeath(gnome.location, false);
-					if (deathReason) {
-						gnomeDeaths.push({
-							gnome: gnome,
-							reason: deathReason
-						});
-					}
-				}
-
-				switch (command.type) {
-					case CommandType.WALK: walkingGnomes.push(gnome); break;
-					case CommandType.LEFT: gnome.rotateLeft(); break;
-					case CommandType.RIGHT: gnome.rotateRight(); break;
-					case CommandType.ACT: gameWorld.doGnomeAction(gnome); break;
-					case CommandType.CALL_ROUTINE:
-						gnome.readBook();
-						if (!this.queueUpRoutine(gnome, command)) {
-							gnomeDeaths.push({
-								gnome: gnome,
-								reason: CauseOfDeath.CODE_RAN_OUT
-							});
-						}
-						break;
-					case CommandType.DELAY: gnome.delay(); break;
-				}
-			}
-		});
-
-		walkingGnomes.forEach(gnome => {
-			let hasMoved = gameWorld.tryMove(gnome);
-			let deathReason = gameWorld.level.getPointCauseOfDeath(gnome.location, hasMoved);
-			if (deathReason) {
-				gnomeDeaths.push({
-					gnome: gnome,
-					reason: deathReason
-				});
-			}
-		});
-		gnomeDeaths.forEach(death => {
-			if (death.gnome.floating &&
-				(death.reason === CauseOfDeath.FALLING || death.reason === CauseOfDeath.DROWNING)) {
-				//Floating gnomes are immune to falling/drowning
 				return;
 			}
-			gameWorld.killGnome(death.gnome, death.reason);
+
+			switch (command.type) {
+				case CommandType.LEFT: gnome.rotateLeft(); break;
+				case CommandType.RIGHT: gnome.rotateRight(); break;
+				case CommandType.ACT: world.doGnomeAction(gnome); break;
+				case CommandType.CALL_ROUTINE:
+					this.queueUpRoutine(gnome, command);
+					gnome.readBook();
+					break;
+				case CommandType.DELAY: gnome.delay(); break;
+				default: throw new Error("Unknown command type: " + command.type);
+			}
 		});
 	}
 
@@ -90,6 +107,24 @@ class GnomeCode {
 		return true;
 	}
 
+	private resolveGnomeDeaths(gameWorld: GameWorld, gnomes: Gnome[], gnomesWhichMoved: Gnome[]) {
+		gnomes.forEach(gnome => {
+			if (!gnome.codeStack.length) {
+				gameWorld.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
+			}
+
+			let hasMoved = gnomesWhichMoved.indexOf(gnome) !== -1;
+			let deathReason = gameWorld.level.getPointCauseOfDeath(gnome.location, hasMoved);
+			if (deathReason) {
+				if (gnome.floating &&
+						(deathReason === CauseOfDeath.FALLING || deathReason === CauseOfDeath.DROWNING)) {
+					//Floating gnomes are immune to falling/drowning
+					return;
+				}
+				gameWorld.killGnome(gnome, deathReason);
+			}
+		});
+	}
 }
 
 class Command {

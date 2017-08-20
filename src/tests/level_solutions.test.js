@@ -36,8 +36,10 @@ describe("Level solutions:", function() {
 	}
 	
 	/**
-	 * Test a solution for a given level. This function throws an error if the solution doesn't succeed within a reasonable
-	 * amount of time, or if the number of code buildings in the level doesn't match the expected solution.
+	 * Test a solution for a given level. This function throws an error in the following situations:
+	 * - the level is already won before any gnome moves
+	 * - the expected solution doesn't fit in the level's code buildings
+	 * - victory doesn't occur within MAX_PROGRAM_TIME moves
 	 * @param levelName the filename without extension
 	 * @param housePrograms array of the programs for the gnome buildings, in order of occurrence in the level definition.
 	 * They should be given as short-hand strings in the same syntax as in the level definition files.
@@ -46,6 +48,8 @@ describe("Level solutions:", function() {
 	function testSolution(levelName, housePrograms = [], libraryPrograms = []) {
 		const world = new GameWorld(game);
 		world.loadLevelFromDefinition(__levels__[levelName].LEVEL_DEFINITION);
+		expect(world.level.checkVictory(), "Level already won on start-up").to.be.false;
+
 		expect(world.level.houses.length, "Number of houses").to.equal(housePrograms.length);
 		expect(world.level.libraries.length, "Number of libraries").to.equal(libraryPrograms.length);
 		
@@ -106,6 +110,10 @@ describe("Level solutions:", function() {
 	
 	it("desert_sharing can be solved", function() {
 		testSolution("desert_sharing", ["W0LWLA", "A0"], ["LWWLA"]);
+	});
+
+	it("desert_twin_cactuses can be solved", function() {
+		testSolution("desert_twin_cactuses", [READONLY, READONLY], ["R1W11A", READONLY]);
 	});
 	
 	it("desert_delay can be solved", function() {

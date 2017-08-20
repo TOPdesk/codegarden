@@ -13,6 +13,7 @@ namespace LevelList {
 	 */
 	export const EXPERIMENTAL_LEVELS = [
 		"desert_no_cactus_hugging",
+		"desert_twin_cactuses",
 		"desert_recursion",
 		"swamp_terrain_tutorial",
 	];

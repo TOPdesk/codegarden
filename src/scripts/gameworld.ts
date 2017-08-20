@@ -99,14 +99,14 @@ class GameWorld {
 		let actionLocation = gnome.location.getNeighbor(gnome.direction);
 		let block = this.level.getBlock(actionLocation);
 
-		let gnomesInLocation = this.gnomes.filter(g => g.location.equals(actionLocation));
-		let adjacentGnome = gnomesInLocation[0];
+		let adjacentGnome = this.gnomes.filter(g => g.location.equals(actionLocation))[0];
+		let adjacentObject = this.level.getObject(actionLocation);
 
-		if (!this.level.doObjectAction(actionLocation, gnome)) {
+		if (!adjacentObject || !adjacentObject.doAction(gnome)) {
 			if (!gnome.floating && block === WorldConstants.BlockType.WATER) {
 				gnome.wateringCan = true;
 			}
-			else if (!gnome.floating && adjacentGnome && gnome.wateringCan && !adjacentGnome.wateringCan) {
+			else if (adjacentGnome && gnome.wateringCan && !adjacentGnome.wateringCan) {
 				gnome.wateringCan = false;
 				adjacentGnome.wateringCan = true;
 			}
