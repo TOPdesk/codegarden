@@ -18,6 +18,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/sortablejs": "^1.3.31",
+    "ace-builds": "^1.2.8",
     "babel-preset-es2015": "^6.24.1",
     "browser-sync": "^2.17.3",
     "chai": "^4.1.0",

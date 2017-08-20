@@ -27,7 +27,11 @@ const srcs = {
 	styles: 'src/styles/**/*.less',
 	sprites: 'src/assets/sprites/**/*.png',
 	assets: ['src/assets/**/*', '!src/assets/sprites/**/*'],
-	levelEditor: 'src/levelEditor/**/*',
+	levelEditor: ['src/levelEditor/**/*',
+		'node_modules/ace-builds/src-min/ace.js',
+		'node_modules/ace-builds/src-min/mode-json.js',
+		'node_modules/ace-builds/src-min/worker-json.js',
+		'node_modules/ace-builds/src-min/theme-textmate.js'],
 	libs: ['node_modules/phaser/build/phaser.min.js', 'node_modules/sortablejs/Sortable.min.js']
 };
 

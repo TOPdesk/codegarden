@@ -7,10 +7,10 @@
 </head>
 <body>
 
-<button id="loadButton">Try it</button><br/>
-<textarea title="Level definition goes here" id="textField" style="height: 800px; width: 600px">
+<button id="loadButton">Try it (F9)</button><br/>
+<pre title="Level definition goes here" id="textField" style="height: 800px; width: 650px; float: left; margin: 0px">
 {
-	"LEVEL_DEFINITION": 	{
+	"LEVEL_DEFINITION": {
 		"layout": [
 			[2, 2, 2, 1, 2],
 			[2, 2, 2, 1, 2],
@@ -54,14 +54,14 @@
 				]
 			}
 		],
-		"introMessage": "Greetings, human!\nThis desert is far too sunny for us GNOMES. Lead my underling to water that sapling and grant me some shade!",
-		"nextLevel": "tutorial_level_2"
+		"introMessage": "Congratulations! You have found the level editor."
 	}
 }
 
-</textarea>
+</pre>
 
 <iframe src="/index.html" style="width: 1200px; height: 800px"></iframe>
+<script src="ace.js"></script>
 <script src="gneditor.js" ></script>
 </body>
 </html>
