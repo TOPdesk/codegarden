@@ -2,6 +2,7 @@ namespace LevelList {
 	export const LEVELS = [
 		"desert_basics",
 		"desert_simple_readonly",
+		"desert_mushroom_tutorial",
 		"desert_mushroom_book",
 		"desert_sharing",
 		"desert_delay",
