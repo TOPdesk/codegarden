@@ -29,7 +29,7 @@ namespace States {
 			this.drawSpawnButton();
 			this.addHotKeys();
 
-			document.getElementById("innerCodeEditor").addEventListener("click", evt => this.handleCommandClick(evt));
+			document.getElementById("innerCodeEditor").addEventListener("click", evt => this.deleteClickedCommand(evt));
 
 			this.gameWorld = new GameWorld(this.game);
 			this.gameWorld.selectionListener = (building, libraries) => {
@@ -84,73 +84,75 @@ namespace States {
 		}
 
 		addHotKeys() {
-			let innerCodeEditor = document.getElementById("innerCodeEditor");
+			this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.TAB);
+			this.game.input.keyboard.onUpCallback = (event) => {
+				switch (event.keyCode) {
+					case Phaser.Keyboard.ENTER:
+						if (this.gameWorld.levelIsWon) {
+							this.loadNextLevel();
+						}
+						else {
+							this.gameWorld.resetGame();
+						}
+						break;
+					case Phaser.Keyboard.TAB:
+						this.selectNextCodeBuilding();
+						break;
+					case Phaser.Keyboard.BACKSPACE:
+						this.deleteLastCommand();
+						break;
+					default:
+						this.handlePotentialCommandHotkey(event.keyCode);
+				}
+			};
+		}
 
-			this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER).onDown.add(() => {
-				if (this.gameWorld.levelIsWon) {
-					this.loadNextLevel();
-				}
-				else {
-					this.gameWorld.resetGame();
-				}
-			}, this);
+		private selectNextCodeBuilding() {
+			if (!this.selectedCodeBuilding) {
+				this.gameWorld.selectCodeBuilding(this.gameWorld.level.codeBuildings[0]);
+				return;
+			}
 
-			this.game.input.keyboard.addKey(Phaser.Keyboard.TAB).onDown.add(() => {
-				if (!this.selectedCodeBuilding) {
-					this.gameWorld.selectCodeBuilding(this.gameWorld.level.codeBuildings[0]);
-					return;
-				}
+			let nextIndex = this.gameWorld.level.codeBuildings.indexOf(this.selectedCodeBuilding) + 1;
+			if (nextIndex >= this.gameWorld.level.codeBuildings.length) {
+				nextIndex = 0;
+			}
+			this.gameWorld.selectCodeBuilding(this.gameWorld.level.codeBuildings[nextIndex]);
+		}
 
-				let index = this.gameWorld.level.codeBuildings.indexOf(this.selectedCodeBuilding);
-				if (index + 1 >= this.gameWorld.level.codeBuildings.length) {
-					this.gameWorld.selectCodeBuilding(this.gameWorld.level.codeBuildings[0]);
-				}
-				else {
-					this.gameWorld.selectCodeBuilding(this.gameWorld.level.codeBuildings[index + 1]);
-				}
-			}, this);
+		private deleteLastCommand() {
+			if (!this.selectedCodeBuilding
+				|| this.selectedCodeBuilding.model.readonly
+				|| !this.selectedCodeBuilding.gnomeCode.length) {
+				return;
+			}
 
-			window.addEventListener("keydown", (event) => {
-				if (!this.selectedCodeBuilding) {
-					return;
-				}
+			this.selectedCodeBuilding.gnomeCode.pop();
+			this.displaySelectedBuildingCode();
+		}
 
-				let routine = this.selectedCodeBuilding.gnomeCode;
-				let sizeLimit = this.selectedCodeBuilding.model.sizeLimit;
-				let readonly = this.selectedCodeBuilding.model.readonly;
-				PlayState.removePlaceholders(innerCodeEditor);
-				if ((event.keyCode === 8 || event.keyCode === 46) && routine.length > 0 && !readonly) {
-					innerCodeEditor.removeChild(innerCodeEditor.children[routine.length - 1]);
-					routine.pop();
-				}
-				if (event.keyCode === 37 && routine.length < sizeLimit && !readonly) {
-					PlayState.appendCommandToGui(innerCodeEditor, CommandType.LEFT);
-					routine.push(new Command(CommandType.LEFT));
-				}
-				if (event.keyCode === 38 && routine.length < sizeLimit && !readonly) {
-					PlayState.appendCommandToGui(innerCodeEditor, CommandType.WALK);
-					routine.push(new Command(CommandType.WALK));
-				}
-				if (event.keyCode === 39 && routine.length < sizeLimit && !readonly) {
-					PlayState.appendCommandToGui(innerCodeEditor, CommandType.RIGHT);
-					routine.push(new Command(CommandType.RIGHT));
-				}
-				if ((event.keyCode === 40 || event.keyCode === 32) && routine.length < sizeLimit && !readonly) {
-					PlayState.appendCommandToGui(innerCodeEditor, CommandType.ACT);
-					routine.push(new Command(CommandType.ACT));
-				}
-				if ((event.keyCode >= 49 && event.keyCode < 58) && routine.length < sizeLimit && !readonly
-					&& this.gameWorld.level.libraries.length > (event.keyCode - 49)) {
-					PlayState.appendCommandToGui(innerCodeEditor, CommandType.CALL_ROUTINE, event.keyCode - 49);
-					routine.push(new Command(CommandType.CALL_ROUTINE, [event.keyCode - 49]));
-				}
-				if ((event.keyCode >= 97 && event.keyCode < 106) && routine.length < sizeLimit && !readonly
-					&& this.gameWorld.level.libraries.length > (event.keyCode - 97)) {
-					PlayState.appendCommandToGui(innerCodeEditor, CommandType.CALL_ROUTINE, event.keyCode - 97);
-					routine.push(new Command(CommandType.CALL_ROUTINE, [event.keyCode - 97]));
-				}
-				PlayState.appendPlaceholders(innerCodeEditor, this.selectedCodeBuilding.model.sizeLimit - routine.length);
-			});
+		private handlePotentialCommandHotkey(keyCode: number) {
+			if (!this.selectedCodeBuilding
+				|| this.selectedCodeBuilding.model.readonly
+				|| this.selectedCodeBuilding.gnomeCode.length >= this.selectedCodeBuilding.model.sizeLimit) {
+				return;
+			}
+
+			switch (keyCode) {
+				case Phaser.Keyboard.LEFT: this.appendCommand(CommandType.LEFT); break;
+				case Phaser.Keyboard.RIGHT: this.appendCommand(CommandType.RIGHT); break;
+				case Phaser.Keyboard.UP: this.appendCommand(CommandType.WALK); break;
+				case Phaser.Keyboard.DOWN:
+				case Phaser.Keyboard.SPACEBAR:
+					this.appendCommand(CommandType.ACT);
+					break;
+				default:
+					let libraryIndex = keyCode - Phaser.Keyboard.ONE;
+					if (libraryIndex < 0 || libraryIndex >= this.gameWorld.level.libraries.length) {
+						return;
+					}
+					this.appendCommand(CommandType.CALL_ROUTINE, libraryIndex);
+			}
 		}
 
 		shutdown() {
@@ -211,16 +213,11 @@ namespace States {
 						routine.splice(evt.oldIndex, 1)[0] : this.parseCommandFromMouseEvent(evt);
 					routine.splice(evt.newIndex, 0, command);
 
-					PlayState.removePlaceholders(innerCodeEditor);
-
 					if (routine.length > this.selectedCodeBuilding.model.sizeLimit) {
 						routine.splice(this.selectedCodeBuilding.model.sizeLimit);
-						while (innerCodeEditor.children.length > this.selectedCodeBuilding.model.sizeLimit) {
-							innerCodeEditor.removeChild(innerCodeEditor.children.item(this.selectedCodeBuilding.model.sizeLimit));
-						}
 					}
 
-					PlayState.appendPlaceholders(innerCodeEditor, this.selectedCodeBuilding.model.sizeLimit - routine.length);
+					this.displaySelectedBuildingCode();
 				}
 			});
 		}
@@ -243,15 +240,7 @@ namespace States {
 			outerEditor.classList.toggle("readonly", this.selectedCodeBuilding.model.readonly);
 			outerEditor.classList.toggle("editable", !this.selectedCodeBuilding.model.readonly);
 			this.updateCommandsLabel();
-			let innerCodeEditor = document.getElementById("innerCodeEditor");
-			innerCodeEditor.innerHTML = "";
-			this.codeEditorSortable.options.disabled = this.selectedCodeBuilding.model.readonly;
-
-			this.selectedCodeBuilding.gnomeCode.forEach(command => {
-				PlayState.appendCommandToGui(innerCodeEditor, command.type, command.args[0]);
-			});
-
-			PlayState.appendPlaceholders(innerCodeEditor, this.selectedCodeBuilding.model.sizeLimit - this.selectedCodeBuilding.gnomeCode.length);
+			this.displaySelectedBuildingCode();
 		}
 
 		updateCommandsLabel() {
@@ -265,15 +254,12 @@ namespace States {
 				}
 			}
 			else {
-				let commandsUsed: number = this.selectedCodeBuilding.gnomeCode.length;
-				commandsUsed = commandsUsed > 0 ? commandsUsed : 0;
 				if (this.selectedCodeBuilding.delay) {
 					label.innerText = "This building has a delay of " + this.selectedCodeBuilding.delay;
 				}
 				else {
 					label.innerText = "";
 				}
-				PlayState.appendPlaceholders(document.getElementById("innerCodeEditor"), this.selectedCodeBuilding.model.sizeLimit - commandsUsed);
 			}
 		}
 
@@ -305,13 +291,10 @@ namespace States {
 			let command = target.dataset["libraryIndex"] ?
 				new Command(commandType, [parseInt(target.dataset["libraryIndex"])]) : new Command(commandType);
 			this.selectedCodeBuilding.gnomeCode.push(command);
-			PlayState.removePlaceholders(document.getElementById("innerCodeEditor"));
-
-			PlayState.appendCommandToGui(document.getElementById("innerCodeEditor"), commandType, command.args[0]);
-			this.updateCommandsLabel();
+			this.displaySelectedBuildingCode();
 		}
 
-		private handleCommandClick(evt: MouseEvent) {
+		private deleteClickedCommand(evt: MouseEvent) {
 			let target = evt.target as HTMLElement;
 			if (!target.classList.contains("commandButton") || target.classList.contains("commandPlaceholder")
 					|| this.selectedCodeBuilding.model.readonly || this.gameWorld.getIfRunning()) {
@@ -320,9 +303,31 @@ namespace States {
 			let editor = document.getElementById("innerCodeEditor");
 			let index = Array.prototype.indexOf.call(editor.children, target);
 			this.selectedCodeBuilding.gnomeCode.splice(index, 1);
-			PlayState.removePlaceholders(document.getElementById("innerCodeEditor"));
-			editor.removeChild(target);
-			this.updateCommandsLabel();
+			this.displaySelectedBuildingCode();
+		}
+
+		private appendCommand(commandType: CommandType, libraryIndex?: number) {
+			let routine = this.selectedCodeBuilding.gnomeCode;
+			routine.push(new Command(commandType, libraryIndex !== undefined ? [libraryIndex] : undefined));
+			this.displaySelectedBuildingCode();
+		}
+
+		private displaySelectedBuildingCode() {
+			let innerCodeEditor = document.getElementById("innerCodeEditor");
+			innerCodeEditor.innerHTML = "";
+			this.codeEditorSortable.options.disabled = this.selectedCodeBuilding.model.readonly;
+
+			this.selectedCodeBuilding.gnomeCode.forEach(command => {
+				PlayState.appendCommandToGui(innerCodeEditor, command.type, command.args[0]);
+			});
+
+			let numberOfPlaceholders = this.selectedCodeBuilding.model.sizeLimit - this.selectedCodeBuilding.gnomeCode.length;
+			for (let i = 0; i < numberOfPlaceholders; i++) {
+				let button = document.createElement("DIV");
+				button.classList.add("commandButton");
+				button.classList.add("commandPlaceholder");
+				innerCodeEditor.appendChild(button);
+			}
 		}
 
 		private static appendCommandToGui(gui: HTMLElement, commandType: CommandType, libraryIndex?: number) {
@@ -342,22 +347,6 @@ namespace States {
 			}
 			gui.appendChild(button);
 			return button;
-		}
-
-		private static removePlaceholders(gui: HTMLElement) {
-			let placeholders: NodeListOf<Element> = gui.getElementsByClassName("commandPlaceholder");
-			for (let i = placeholders.length - 1; i >= 0; i--) {
-				gui.removeChild(placeholders[i]);
-			}
-		}
-
-		private static appendPlaceholders(gui: HTMLElement, amount: number) {
-			for (let i = 0; i < amount; i++) {
-				let button = document.createElement("DIV");
-				button.classList.add("commandButton");
-				button.classList.add("commandPlaceholder");
-				gui.appendChild(button);
-			}
 		}
 	}
 }
