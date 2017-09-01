@@ -2,6 +2,8 @@
 /// <reference path="../gameworld.ts"/>
 
 namespace States {
+	const SECRET_CODE = "ETGNOMEHOME";
+
 	const MENU_BUTTON_STYLE = {
 		font: "32px MessageFont",
 		fill: "#ff0044",
@@ -37,7 +39,6 @@ namespace States {
 
 		private handleKeyDown = () => {
 			let enteredKey: String = this.game.input.keyboard.event.key;
-			let code = "ETGNOMEHOME";
 
 			if (enteredKey.length === 1) {
 				this.enteredCode += enteredKey.toUpperCase();
@@ -46,11 +47,11 @@ namespace States {
 				return;
 			}
 
-			if (!(code.substr(0, this.enteredCode.length) === this.enteredCode)) {
-				this.enteredCode = "";
+			if (this.enteredCode.length > SECRET_CODE.length) {
+				this.enteredCode = this.enteredCode.substr(this.enteredCode.length - SECRET_CODE.length);
 			}
 
-			if (code === this.enteredCode) {
+			if (SECRET_CODE === this.enteredCode) {
 				console.log("Released levels: " + LevelList.LEVELS.join(", "));
 				console.log("Experimental levels: " + LevelList.EXPERIMENTAL_LEVELS.join(", "));
 				let level = prompt("Continue from which level?");
