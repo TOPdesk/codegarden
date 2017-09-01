@@ -111,6 +111,7 @@ class GnomeCode {
 		gnomes.forEach(gnome => {
 			if (!gnome.codeStack.length) {
 				gameWorld.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
+				return;
 			}
 
 			let hasMoved = gnomesWhichMoved.indexOf(gnome) !== -1;
