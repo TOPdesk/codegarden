@@ -109,13 +109,11 @@ class GnomeCode {
 
 	private resolveGnomeDeaths(gameWorld: GameWorld, gnomes: Gnome[], gnomesWhichMoved: Gnome[]) {
 		gnomes.forEach(gnome => {
-			if (!gnome.codeStack.length) {
-				gameWorld.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
-				return;
-			}
-
 			let hasMoved = gnomesWhichMoved.indexOf(gnome) !== -1;
 			let deathReason = gameWorld.level.getPointCauseOfDeath(gnome.location, hasMoved);
+			if (!deathReason && !gnome.codeStack.length) {
+				deathReason = CauseOfDeath.CODE_RAN_OUT;
+			}
 			if (deathReason) {
 				if (gnome.floating &&
 						(deathReason === CauseOfDeath.FALLING || deathReason === CauseOfDeath.DROWNING)) {
