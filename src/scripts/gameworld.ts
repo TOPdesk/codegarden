@@ -110,6 +110,9 @@ class GameWorld {
 				gnome.wateringCan = false;
 				adjacentGnome.wateringCan = true;
 			}
+			else {
+				gnome.lookConfused();
+			}
 		}
 	}
 
@@ -143,6 +146,7 @@ class GameWorld {
 			this.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
 		});
 		this.level.softReset();
+		ParticleEmitters.clearAll(this.game);
 
 		if (!livingGnomes) {
 			this.spawnGnomes();

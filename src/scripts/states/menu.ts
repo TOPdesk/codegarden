@@ -20,13 +20,24 @@ namespace States {
 			this.gameWorld.loadLevel("menu_level");
 			this.game.stage.backgroundColor = 0xffffff;
 
-			this.createMenuButton("Continue", 0, -250, this.continueGame);
-			this.createMenuButton("Start Game", -250, 200, this.startGame);
-			this.createMenuButton("Credits", 340, -115, this.credits);
-
-			this.createMenuImage(250, -75, "main_menu_options");
-			this.createMenuImage(-250, 150, "main_menu_start");
-			this.createMenuImage(-90, -210, "main_menu_continue");
+			this.createMenuOption(
+				this.createMenuImage(-90, -210, "main_menu_continue"),
+				this.createMenuButton("Continue", 0, -250),
+				new MapPoint(0, 0),
+				this.continueGame
+			);
+			this.createMenuOption(
+				this.createMenuImage(250, -75, "main_menu_options"),
+				this.createMenuButton("Credits", 340, -115),
+				new MapPoint(4, 0),
+				this.credits
+			);
+			this.createMenuOption(
+				this.createMenuImage(-250, 150, "main_menu_start"),
+				this.createMenuButton("Start Game", -250, 200),
+				new MapPoint(2, 4),
+				this.startGame
+			);
 
 			this.game.input.keyboard.onDownCallback = this.handleKeyDown;
 
@@ -61,18 +72,29 @@ namespace States {
 			}
 		};
 
-		private createMenuButton(text: string, x: number, y: number, onClick: Function): Phaser.Text {
-			let button = this.game.add.text(x, y, text, MENU_BUTTON_STYLE);
-			button.inputEnabled = true;
-			button.input.useHandCursor = true;
-			button.events.onInputUp.add(onClick, this);
-			return button;
+		private createMenuButton(text: string, x: number, y: number): Phaser.Text {
+			return this.game.add.text(x, y, text, MENU_BUTTON_STYLE);
 		}
 
 		private createMenuImage(x: number, y: number, key: string): Phaser.Image {
 			let img = this.game.add.image(x, y, WorldConstants.SPRITE_SHEET, key);
 			img.scale.set(0.5, 0.5);
 			return img;
+		}
+
+		private createMenuOption(image: Phaser.Image, text: Phaser.Text, location: MapPoint, onClick: Function) {
+			image.inputEnabled = true;
+			image.input.useHandCursor = true;
+			image.events.onInputUp.add(onClick, this);
+
+			text.inputEnabled = true;
+			text.input.useHandCursor = true;
+			text.events.onInputUp.add(onClick, this);
+
+			let button = this.gameWorld.level.getObject(location);
+			button.inputEnabled = true;
+			button.input.useHandCursor = true;
+			button.events.onInputUp.add(onClick, this);
 		}
 
 		private startGame(): void {

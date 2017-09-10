@@ -93,6 +93,10 @@ class Gnome extends Phaser.Sprite {
 		this.frameName = "gnome_waiting";
 	}
 
+	lookConfused() {
+		ParticleEmitters.questionMarks(this.game, this.x, this.y);
+	}
+
 	readBook() {
 		//There is no texture for a floating gnome reading a book... yet.
 		if (!this.floating) {
@@ -133,7 +137,7 @@ class Gnome extends Phaser.Sprite {
 				tween.to({alpha: 0}, 500, Phaser.Easing.Quartic.Out);
 				break;
 			case (CauseOfDeath.CACTUS):
-				tween.onComplete.add(() => ParticleEmitters.beardExplosion(this.game, this.x, this.y - 30));
+				tween.onComplete.add(() => ParticleEmitters.beardExplosion(this.game, this.x, this.y));
 				break;
 			case (CauseOfDeath.CODE_RAN_OUT):
 				tween.to({alpha: 0}, WorldConstants.TURN_LENGTH_IN_MILLIS, Phaser.Easing.Quartic.Out);

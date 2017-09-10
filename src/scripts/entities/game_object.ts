@@ -106,7 +106,7 @@ namespace ObjectType {
 			case "HOUSE": return new House(game, model);
 			case "LIBRARY": return new CodeBuilding(game, model, "library-" + CodeBuilding.getLibraryColor(libraryIndex));
 			case "ROCK": return new GameObject(game, model, "rock", false);
-			case "BUTTON": return new GameObject(game, model, "action_button", false);
+			case "BUTTON": return new Button(game, model);
 			case "MUSHROOMS": return new Mushrooms(game, model);
 			case "SPOOKTREE": return new SpookTree(game, model);
 			default: throw new Error("Unknown object type " + model.type);
