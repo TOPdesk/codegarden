@@ -111,15 +111,17 @@ class GnomeCode {
 		gnomes.forEach(gnome => {
 			let hasMoved = gnomesWhichMoved.indexOf(gnome) !== -1;
 			let deathReason = gameWorld.level.getPointCauseOfDeath(gnome.location, hasMoved);
+			if (gnome.floating &&
+				(deathReason === CauseOfDeath.FALLING || deathReason === CauseOfDeath.DROWNING)) {
+				//Floating gnomes are immune to falling/drowning
+				deathReason = CauseOfDeath.NOTHING;
+			}
+
 			if (!deathReason && !gnome.codeStack.length) {
 				deathReason = CauseOfDeath.CODE_RAN_OUT;
 			}
+
 			if (deathReason) {
-				if (gnome.floating &&
-						(deathReason === CauseOfDeath.FALLING || deathReason === CauseOfDeath.DROWNING)) {
-					//Floating gnomes are immune to falling/drowning
-					return;
-				}
 				gameWorld.killGnome(gnome, deathReason);
 			}
 		});
