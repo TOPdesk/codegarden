@@ -132,6 +132,8 @@ class GameWorld {
 			}
 			return true;
 		}
+
+		gnome.walkInPlace();
 		return false;
 	}
 

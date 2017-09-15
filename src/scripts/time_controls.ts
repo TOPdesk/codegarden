@@ -6,6 +6,9 @@ enum TimerState {
 	PAUSED, SLOW, FAST
 }
 
+/**
+ * Allows the player to control the flow of time in the world by clicking buttons.
+ */
 class TimeControls {
 	private xButtonOffset = TIME_X_BUTTON_OFFSET;
 	private timerState = TimerState.PAUSED;

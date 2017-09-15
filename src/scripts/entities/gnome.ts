@@ -7,9 +7,11 @@ const GNOME_X_OFFSET = 60;
 const GNOME_Y_OFFSET = -85;
 
 const FLOATING_ANIMATION_FRAMERATE = 10;
-const WALKING_ANIMATION_FRAMERATE = 30;
+const WALKING_ANIMATION_FRAMERATE = 25;
 
 class Gnome extends Phaser.Sprite {
+	private walkingAnimationName;
+
 	public delayed = 0;
 	location: MapPoint;
 
@@ -70,13 +72,13 @@ class Gnome extends Phaser.Sprite {
 			Phaser.Animation.generateFrameNames("gnome_float_start_back_", 3, 0), FLOATING_ANIMATION_FRAMERATE);
 
 		this.animations.add("gnome_regular_walk_front",
-			Phaser.Animation.generateFrameNames("gnome_regular_walk_front_", 0, 3), WALKING_ANIMATION_FRAMERATE);
+			Gnome.createWalkingAnimationFrames("gnome_regular_walk_front_"), WALKING_ANIMATION_FRAMERATE);
 		this.animations.add("gnome_regular_walk_back",
-			Phaser.Animation.generateFrameNames("gnome_regular_walk_back_", 0, 3), WALKING_ANIMATION_FRAMERATE);
+			Gnome.createWalkingAnimationFrames("gnome_regular_walk_back_"), WALKING_ANIMATION_FRAMERATE);
 		this.animations.add("gnome_wateringcan_walk_front",
-			Phaser.Animation.generateFrameNames("gnome_wateringcan_walk_front_", 0, 3), WALKING_ANIMATION_FRAMERATE);
+			Gnome.createWalkingAnimationFrames("gnome_wateringcan_walk_front_"), WALKING_ANIMATION_FRAMERATE);
 		this.animations.add("gnome_wateringcan_walk_back",
-			Phaser.Animation.generateFrameNames("gnome_wateringcan_walk_back_", 0, 3), WALKING_ANIMATION_FRAMERATE);
+			Gnome.createWalkingAnimationFrames("gnome_wateringcan_walk_back_"), WALKING_ANIMATION_FRAMERATE);
 	}
 
 	rotateLeft() {
@@ -106,16 +108,22 @@ class Gnome extends Phaser.Sprite {
 
 	walkTo(newLocation: MapPoint) {
 		this.location = newLocation;
-		this.determineSprite(true);
-		this.animations.play("walk", 30, true);
+		this.determineSprite();
+		this.animations.play(this.walkingAnimationName);
 		if (this.floating) {
 			this.floating--;
 		}
 		this.tweenToLocation().start();
 	}
 
+	walkInPlace() {
+		this.determineSprite();
+		this.animations.play(this.walkingAnimationName);
+	}
+
 	die(cause: CauseOfDeath) {
 		this.game.tweens.removeFrom(this);
+		this.animations.stop();
 		let tween = this.tweenToLocation();
 
 		switch (cause) {
@@ -148,7 +156,8 @@ class Gnome extends Phaser.Sprite {
 		tween.onComplete.add(() => this.destroy(false), this);
 	}
 
-	private determineSprite(isWalking: boolean = false) {
+	private determineSprite() {
+		this.animations.stop();
 		if (this.direction === Direction.NE || this.direction === Direction.SW) {
 			this.scale.x = -1;
 		}
@@ -157,18 +166,16 @@ class Gnome extends Phaser.Sprite {
 		}
 
 		if (this.floating) {
-			this.animations.play("floating_" + this.getFrontBackPrefix());
+			let animationName = "floating_" + this.getFrontBackPrefix();
+			this.animations.play(animationName);
+			this.walkingAnimationName = animationName;
 			return;
 		}
 
 		let gnomeSpriteBase = (this.wateringCan ? "gnome_wateringcan_walk_" : "gnome_regular_walk_");
 		let gnomeSprite = gnomeSpriteBase + this.getFrontBackPrefix();
-		if (isWalking) {
-			this.animations.play(gnomeSprite);
-		}
-		else {
-			this.frameName = gnomeSprite + "_0";
-		}
+		this.frameName = gnomeSprite + "_0";
+		this.walkingAnimationName = gnomeSprite;
 	}
 
 	private tweenToLocation() {
@@ -182,6 +189,10 @@ class Gnome extends Phaser.Sprite {
 	private getFrontBackPrefix() {
 		let isFacingFront = this.direction === Direction.SE || this.direction === Direction.SW;
 		return isFacingFront ? "front" : "back";
+	}
+
+	private static createWalkingAnimationFrames(prefix: string) {
+		return [1, 2, 3, 0, 1, 2, 3, 0].map(frameIndex => prefix + frameIndex);
 	}
 }
 
