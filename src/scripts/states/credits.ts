@@ -15,7 +15,8 @@ namespace States {
 			this.game.stage.backgroundColor = 0x000000;
 
 			let credits = "Level Design\n\nElmer Jacobs\n\n\nDevelopment\n\nBogdán Bikics\nIris Hupkens\nWytze Roël\nJoris Slob\n\n\n" +
-				"Character Art\n\nMarco Tonino\n\n\nTesting\n\nMats Perk";
+				"Character Art\n\nMarco Tonino\n\n\nTesting\n\nTOPdesk\n\nMats Perk\n\n...and YOU!" +
+				"Some additional GUI art from game-icons.net:\nhttp://game-icons.net/about.html#authors";
 			text = this.game.add.text(this.game.world.centerX, this.game.world.centerY * 3, credits, style);
 			text.anchor.set(0.5);
 

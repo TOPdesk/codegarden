@@ -141,16 +141,11 @@ class GameWorld {
 	}
 
 	resetGame() {
-		let livingGnomes = this.gnomes.length;
 		this.gnomes.forEach((gnome) => {
 			this.killGnome(gnome, CauseOfDeath.CODE_RAN_OUT);
 		});
 		this.level.softReset();
 		ParticleEmitters.clearAll(this.game);
-
-		if (!livingGnomes) {
-			this.spawnGnomes();
-		}
 	}
 
 	spawnGnomes() {
@@ -174,7 +169,7 @@ class GameWorld {
 			this.addDelay(house.gnomeCode, house.delay));
 	}
 
-	getIfRunning() {
+	hasLivingGnomes() {
 		return this.gnomes.length > 0;
 	}
 

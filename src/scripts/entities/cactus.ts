@@ -3,7 +3,7 @@ class Cactus extends GameObject {
 
 	set hasKilledGnome(value) {
 		this.model.hasKilledGnome = value;
-		this.game.time.events.add(WorldConstants.TURN_LENGTH_IN_MILLIS, () => {
+		this.game.time.events.add(WorldConstants.FAST_TURN_LENGTH, () => {
 			this.updateTexture();
 		});
 	}

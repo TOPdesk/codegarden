@@ -140,7 +140,7 @@ class Gnome extends Phaser.Sprite {
 				tween.onComplete.add(() => ParticleEmitters.beardExplosion(this.game, this.x, this.y));
 				break;
 			case (CauseOfDeath.CODE_RAN_OUT):
-				tween.to({alpha: 0}, WorldConstants.TURN_LENGTH_IN_MILLIS, Phaser.Easing.Quartic.Out);
+				tween.to({alpha: 0}, WorldConstants.FAST_TURN_LENGTH, Phaser.Easing.Quartic.Out);
 				break;
 		}
 
@@ -176,7 +176,7 @@ class Gnome extends Phaser.Sprite {
 		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(this.location);
 		return tween.to({
 			x: screenCoordinates.x + GNOME_X_OFFSET, y: screenCoordinates.y + GNOME_Y_OFFSET,
-		}, WorldConstants.TURN_LENGTH_IN_MILLIS, Phaser.Easing.Linear.None);
+		}, WorldConstants.FAST_TURN_LENGTH, Phaser.Easing.Linear.None);
 	}
 
 	private getFrontBackPrefix() {

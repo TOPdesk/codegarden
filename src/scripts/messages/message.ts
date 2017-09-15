@@ -39,13 +39,15 @@ namespace Messages {
 			messageGroup.destroy();
 		}
 		messageGroup = game.add.group(game.world, "message");
+		messageGroup.x = -100;
+		messageGroup.y = -300;
 
-		let king = messageGroup.add(new Phaser.Sprite(game, -200, -280, WorldConstants.SPRITE_SHEET));
+		let king = messageGroup.add(new Phaser.Sprite(game, 0, 0, WorldConstants.SPRITE_SHEET));
 		king.animations.add("hover", Phaser.Animation.generateFrameNames("gnome_king_", 0, 3));
 		king.animations.play("hover", 10, true);
-		game.add.tween(king).to({ y: -275 }, 1000, Phaser.Easing.Sinusoidal.InOut, true, 0, -1).yoyo(true);
+		game.add.tween(king).to({ y: 20 }, 1000, Phaser.Easing.Sinusoidal.InOut, true, 0, -1).yoyo(true);
 
-		let text = messageGroup.add(new Phaser.Text(game, -100, -270, message, TEXT_STYLE));
+		let text = messageGroup.add(new Phaser.Text(game, 100, 30, message, TEXT_STYLE));
 
 		let speechBubble = drawSpeechBubble(game, text);
 		messageGroup.add(speechBubble, false, 0);

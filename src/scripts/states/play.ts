@@ -16,6 +16,7 @@ namespace States {
 		private codeEditorSortable;
 
 		private currentLevel: string | object;
+		private timeControls;
 
 		init(initialLevel?: string | object) {
 			this.currentLevel = initialLevel || LevelList.LEVELS[0];
@@ -26,7 +27,6 @@ namespace States {
 			this.game.stage.backgroundColor = 0xffffff;
 
 			this.initializeEditor();
-			this.drawSpawnButton();
 			this.addHotKeys();
 
 			document.getElementById("innerCodeEditor").addEventListener("click", evt => this.deleteClickedCommand(evt));
@@ -47,19 +47,7 @@ namespace States {
 				this.gameWorld.loadLevelFromDefinition(this.currentLevel);
 			}
 
-			this.startWorldTimer();
-		}
-
-		private startWorldTimer() {
-			let timer = this.game.time.create();
-			timer.loop(WorldConstants.TURN_LENGTH_IN_MILLIS, () => {
-				let wasWon = this.gameWorld.levelIsWon;
-				this.gameWorld.nextTick();
-				if (!wasWon && this.gameWorld.levelIsWon) {
-					this.handleLevelVictory();
-				}
-			});
-			timer.start();
+			this.timeControls = new TimeControls(this.game, this.gameWorld, () => this.handleLevelVictory());
 		}
 
 		private handleLevelVictory() {
@@ -92,7 +80,7 @@ namespace States {
 							this.loadNextLevel();
 						}
 						else {
-							this.gameWorld.resetGame();
+							this.timeControls.playFastOrPause();
 						}
 						break;
 					case Phaser.Keyboard.TAB:
@@ -263,27 +251,12 @@ namespace States {
 			}
 		}
 
-		drawSpawnButton() {
-			this.drawButton(94, 10, "play_button", () => {
-				this.gameWorld.resetGame();
-			});
-		}
-
-		private drawButton(x: number, y: number, pictureKey, trigger: Function): Phaser.Sprite {
-			let button = this.game.add.sprite(x, y, WorldConstants.SPRITE_SHEET, pictureKey);
-			button.inputEnabled = true;
-			button.fixedToCamera = true;
-			button.events.onInputDown.add(trigger, this);
-			button.input.useHandCursor = true;
-			return button;
-		}
-
 		private handleCommandButtonClick(evt: MouseEvent) {
 			let target = evt.target as HTMLElement;
 			if (!target.classList.contains("commandButton")
 				|| this.selectedCodeBuilding.model.readonly
 				|| this.selectedCodeBuilding.gnomeCode.length >= this.selectedCodeBuilding.model.sizeLimit
-				|| this.gameWorld.getIfRunning()) {
+				|| this.gameWorld.hasLivingGnomes()) {
 				return;
 			}
 
@@ -297,7 +270,7 @@ namespace States {
 		private deleteClickedCommand(evt: MouseEvent) {
 			let target = evt.target as HTMLElement;
 			if (!target.classList.contains("commandButton") || target.classList.contains("commandPlaceholder")
-					|| this.selectedCodeBuilding.model.readonly || this.gameWorld.getIfRunning()) {
+					|| this.selectedCodeBuilding.model.readonly || this.gameWorld.hasLivingGnomes()) {
 				return;
 			}
 			let editor = document.getElementById("innerCodeEditor");

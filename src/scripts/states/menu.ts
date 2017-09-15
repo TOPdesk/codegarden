@@ -42,7 +42,7 @@ namespace States {
 			this.game.input.keyboard.onDownCallback = this.handleKeyDown;
 
 			let timer = this.game.time.create();
-			timer.loop(WorldConstants.TURN_LENGTH_IN_MILLIS, () => {
+			timer.loop(WorldConstants.FAST_TURN_LENGTH, () => {
 				this.gameWorld.nextTick();
 			});
 			timer.start();

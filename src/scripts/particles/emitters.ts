@@ -9,7 +9,7 @@ namespace ParticleEmitters {
 		emitter.minRotation = 0;
 		emitter.maxRotation = 0;
 		emitter.setAlpha(1, 0, 1000, Phaser.Easing.Sinusoidal.Out);
-		emitter.start(false, WorldConstants.TURN_LENGTH_IN_MILLIS, 50, 5);
+		emitter.start(false, WorldConstants.FAST_TURN_LENGTH, 50, 5);
 	}
 
 	export function beardExplosion(game: Phaser.Game, x: number, y: number) {
