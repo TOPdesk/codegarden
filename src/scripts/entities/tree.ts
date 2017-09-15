@@ -12,7 +12,7 @@ class Tree extends GameObject {
 	}
 
 	constructor(game: Phaser.Game, public model: TreeModel) {
-		super(game, Tree.addDefaults(model), TREE_IMAGE_PREFIX + "1", false);
+		super(game, Tree.addDefaults(model), TREE_IMAGE_PREFIX + model.treeLevel, false);
 	}
 
 	private static addDefaults(model: TreeModel) {
