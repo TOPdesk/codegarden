@@ -43,6 +43,13 @@ class Level {
 			return object.causeOfDeath;
 		}
 
+		for (let tree of this.spookTrees) {
+			if (!tree.model.eating && tree.location.getNeighbor(tree.model.direction).equals(point)) {
+				tree.eatGnome();
+				return CauseOfDeath.EATEN_BY_TREE;
+			}
+		}
+
 		return CauseOfDeath.NOTHING;
 	}
 

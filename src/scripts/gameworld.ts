@@ -201,12 +201,8 @@ class GameWorld {
 	 * Causes 1 unit of time to pass in the world.
 	 */
 	public nextTick() {
+		this.level.spookTrees.forEach(tree => tree.digestFood());
 		this.gnomeCode.executeNextCommand(this, this.gnomes);
-		this.level.spookTrees.forEach(tree => {
-			tree.checkForGnomes(this.gnomes.filter(gnome => {
-				return tree.location.getNeighbor(tree.model.direction).equals(gnome.location);
-			})[0]);
-		});
 		if (!this.levelIsWon && this.level.checkVictory()) {
 			this.levelIsWon = true;
 		}

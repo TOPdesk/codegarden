@@ -34,6 +34,19 @@ namespace ParticleEmitters {
 		emitter.start(true, 1000, null, 6);
 	}
 
+	export function chewing(game: Phaser.Game, x: number, y: number) {
+		let emitter = game.add.emitter(x, y  - 70, 1);
+		emitter.makeParticles(WorldConstants.SPRITE_SHEET, "eating-particle");
+		emitter.setYSpeed(-80, -120);
+		emitter.setXSpeed(-55, 55);
+		emitter.minRotation = 0;
+		emitter.maxRotation = 0;
+
+		emitter.gravity = -30;
+		emitter.setAlpha(1, 0, 1000, Phaser.Easing.Sinusoidal.Out);
+		emitter.start(true, 1000, null, 1);
+	}
+
 	export function clearAll(game: Phaser.Game) {
 		let emitters = game.particles.emitters;
 		for (let key in emitters) {
