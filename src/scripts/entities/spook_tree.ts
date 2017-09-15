@@ -4,25 +4,28 @@
 ///<reference path="game_object.ts"/>
 
 class SpookTree extends GameObject {
-
-	eating: number = 0;
-	objectEating: string = "";
-
 	determineTexture() {
-		if (this.eating && this.objectEating === "gnome") {
-			return "evil-tree-eating";
+		let textureName = "evil-tree-";
+		if (this.model.eating) {
+			textureName += `eating-${this.model.objectEating}-`;
 		}
-		else if (this.eating && this.objectEating === "frog") {
-			return "evil-tree-eating frog";
+		textureName += this.getFrontBackPrefix();
+		return textureName;
+	}
+
+	updateTexture() {
+		super.updateTexture();
+		if (this.model.direction === Direction.NE || this.model.direction === Direction.SE) {
+			this.scale.x = -1;
 		}
 		else {
-			return "evil-tree";
+			this.scale.x = 1;
 		}
 	}
 
 	constructor(game: Phaser.Game, public model: SpookTreeModel) {
-		super(game, model, "evil-tree", false);
-
+		super(game, model, "evil-tree-front", false);
+		this.updateTexture();
 		game.add.existing(this);
 	}
 
@@ -35,21 +38,25 @@ class SpookTree extends GameObject {
 	}
 
 	checkForGnomes(gnome: Gnome) {
-		this.determineTexture();
+		if (gnome && !this.model.eating) {
+			this.model.eating = 3;
+			//TODO the evil trees aren't working properly right now
+			this.model.objectEating = "gnome";
+		}
+		else if (this.model.eating) {
+			this.model.eating--;
+		}
 		this.updateTexture();
-		if (gnome && this.eating === 0) {
-			this.eating += 3;
-			//TODO new animation for this death.
-			gnome.die(CauseOfDeath.CODE_RAN_OUT);
-			this.objectEating = "gnome";
-			gnome.codeStack = [];
-		}
-		else if (this.eating) {
-			this.eating--;
-		}
+	}
+
+	getFrontBackPrefix() {
+		let isFacingFront = this.model.direction === Direction.SE || this.model.direction === Direction.SW;
+		return isFacingFront ? "front" : "back";
 	}
 }
 
 interface SpookTreeModel extends GameObjectModel {
 	direction: Direction;
+	eating?: number; //Represents the amount of turns left before the tree is done eating
+	objectEating?: "frog" | "gnome";
 }

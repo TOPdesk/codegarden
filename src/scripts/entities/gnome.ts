@@ -102,7 +102,7 @@ class Gnome extends Phaser.Sprite {
 	readBook() {
 		//There is no texture for a floating gnome reading a book... yet.
 		if (!this.floating) {
-			this.frameName = "gnome_reading";
+			this.frameName = "gnome_reading_" + this.getFrontBackPrefix();
 		}
 	}
 
