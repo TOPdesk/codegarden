@@ -21,20 +21,20 @@ namespace States {
 			this.game.stage.backgroundColor = 0xffffff;
 
 			this.createMenuOption(
-				this.createMenuImage(-90, -210, "main_menu_continue"),
-				this.createMenuButton("Continue", 0, -250),
+				this.createMenuImage(-90, -71, "main_menu_continue"),
+				this.createMenuButton("Continue", 0, -111),
 				new MapPoint(0, 0),
 				this.continueGame
 			);
 			this.createMenuOption(
-				this.createMenuImage(250, -75, "main_menu_options"),
-				this.createMenuButton("Credits", 340, -115),
+				this.createMenuImage(250, 64, "main_menu_options"),
+				this.createMenuButton("Credits", 340, 24),
 				new MapPoint(4, 0),
 				this.credits
 			);
 			this.createMenuOption(
-				this.createMenuImage(-250, 150, "main_menu_start"),
-				this.createMenuButton("Start Game", -250, 200),
+				this.createMenuImage(-250, 289, "main_menu_start"),
+				this.createMenuButton("Start Game", -250, 339),
 				new MapPoint(2, 4),
 				this.startGame
 			);

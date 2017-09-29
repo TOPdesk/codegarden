@@ -4,7 +4,7 @@
 /// <reference path="../world_constants.ts"/>
 
 const GNOME_X_OFFSET = 60;
-const GNOME_Y_OFFSET = -85;
+const GNOME_Y_OFFSET = 54;
 
 const FLOATING_ANIMATION_FRAMERATE = 10;
 const WALKING_ANIMATION_FRAMERATE = 25;

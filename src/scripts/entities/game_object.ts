@@ -1,7 +1,7 @@
 /// <reference path="../../../node_modules/phaser/typescript/phaser.d.ts"/>
 
 const OBJECT_SPRITE_X_OFFSET = 58;
-const OBJECT_SPRITE_Y_OFFSET = -83;
+const OBJECT_SPRITE_Y_OFFSET = 56;
 
 class GameObject extends Phaser.Sprite {
 	private initialModel: GameObjectModel;

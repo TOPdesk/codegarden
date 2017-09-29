@@ -1,6 +1,6 @@
 const WATERFALL_X_OFFSET_RIGHT = 47;
 const WATERFALL_X_OFFSET_LEFT = 67;
-const WATERFALL_Y_OFFSET = -97;
+const WATERFALL_Y_OFFSET = 42;
 
 class Level {
 	//Array access should be done in [y][x] order!
@@ -138,7 +138,7 @@ class Level {
 		let screenCoordinates = WorldConstants.COORDINATE_TRANSFORMER.map_to_screen(new MapPoint(x, y));
 		let block = blockGroup.game.add.sprite(
 			screenCoordinates.x, screenCoordinates.y, WorldConstants.SPRITE_SHEET, this.getBlockSprite(blockType));
-		block.anchor.y = 1;
+		// block.anchor.y = 1;
 		blockGroup.add(block);
 	}
 
@@ -162,17 +162,17 @@ class Level {
 	private getBlockSprite(blockType: WorldConstants.BlockType): string {
 		switch (blockType) {
 			case WorldConstants.BlockType.GRASS:
-				return "stage_block";
+				return "stage_block_shade";
 			case WorldConstants.BlockType.WATER:
-				return "water_block";
+				return "water_block_shade";
 			case WorldConstants.BlockType.DESERT:
-				return "desert_block";
+				return "desert_block_shade";
 			case WorldConstants.BlockType.STONE:
-				return "stone_block";
+				return "stone_block_shade";
 			case WorldConstants.BlockType.SWAMP:
-				return "swamp_ground_block";
+				return "swamp_ground_block_shade";
 			default:
-				return "stage_block"; //TODO throw an error instead?
+				return "stage_block_shade"; //TODO throw an error instead?
 		}
 	}
 }
