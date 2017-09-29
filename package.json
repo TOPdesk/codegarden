@@ -34,7 +34,7 @@
     "gulp-minify-css": "^1.2.1",
     "gulp-minify-html": "^1.0.4",
     "gulp-size": "^2.0.0",
-    "gulp-sourcemaps": "^2.1.1",
+    "gulp-sourcemaps": "2.4.1",
     "gulp-strip-debug": "^1.0.2",
     "gulp-tslint": "^6.1.2",
     "gulp-typescript": "^3.0.2",
