@@ -1,6 +1,6 @@
 const TIME_X_BUTTON_OFFSET = 90;
 const TIME_Y_BUTTON_OFFSET = 10;
-const TIME_X_BUTTON_DISTANCE = 50;
+const TIME_X_BUTTON_DISTANCE = 72;
 
 enum TimerState {
 	PAUSED, SLOW, FAST
@@ -33,6 +33,7 @@ class TimeControls {
 		button.fixedToCamera = true;
 		button.events.onInputDown.add(trigger, this);
 		button.input.useHandCursor = true;
+		button.tint = 0x00dd00;
 		return button;
 	}
 

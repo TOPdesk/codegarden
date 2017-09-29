@@ -1,5 +1,5 @@
 namespace Messages {
-	const MESSAGE_X_OFFSET = 300;
+	const MESSAGE_X_OFFSET = 370;
 	const MESSAGE_Y_OFFSET = 10;
 
 	const TEXT_STYLE = {
