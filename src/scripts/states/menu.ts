@@ -10,15 +10,14 @@ namespace States {
 		align: "center"
 	};
 
-	export class MenuState extends Phaser.State {
+	export class MenuState extends States.AbstractLevelState {
 		private gameWorld: GameWorld;
 		private enteredCode = "";
 
 		create(): void {
-			this.game.camera.setPosition(-400, -300);
+			super.create();
 			this.gameWorld = new GameWorld(this.game);
 			this.gameWorld.loadLevel("menu_level");
-			this.game.stage.backgroundColor = 0xffffff;
 
 			this.createMenuOption(
 				this.createMenuImage(-90, -71, "main_menu_continue"),

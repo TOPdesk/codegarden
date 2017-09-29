@@ -4,12 +4,10 @@
 /// <reference path="../gameworld.ts"/>
 ///<reference path="../../../node_modules/@types/sortablejs/index.d.ts"/>
 ///<reference path="../level_list.ts"/>
+///<reference path="./abstract_level_state.ts"/>
 
 namespace States {
-	const CAMERA_OFFSET_X = -400;
-	const CAMERA_OFFSET_Y = -300;
-
-	export class PlayState extends Phaser.State {
+	export class PlayState extends States.AbstractLevelState {
 		private gameWorld: GameWorld;
 		private selectedCodeBuilding: CodeBuilding;
 
@@ -23,9 +21,7 @@ namespace States {
 		}
 
 		create() {
-			this.game.camera.setPosition(CAMERA_OFFSET_X, CAMERA_OFFSET_Y);
-			this.game.stage.backgroundColor = 0xffffff;
-
+			super.create();
 			this.initializeEditor();
 			this.addHotKeys();
 

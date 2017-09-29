@@ -8,6 +8,8 @@ namespace WorldConstants {
 	export const FAST_TURN_LENGTH = 200;
 	export const SLOW_TURN_LENGTH = 500;
 
+	export const MINIMUM_GAME_WIDTH = 1024; //Minimum supported width.
+
 	export const COORDINATE_TRANSFORMER: CoordinateTransformer = new CoordinateTransformer(BLOCK_WIDTH, BLOCK_HEIGHT);
 
 	export enum BlockType {

@@ -1,9 +1,14 @@
 namespace Messages {
-	const TEXT_STYLE = { font: "24px MessageFont", fill: "#000",
+	const MESSAGE_X_OFFSET = 300;
+	const MESSAGE_Y_OFFSET = 10;
+
+	const TEXT_STYLE = {
+		font: "24px MessageFont", fill: "#000",
 		align: "left",
 		boundsAlignH: "left",
 		boundsAlignV: "top",
-		wordWrap: true, wordWrapWidth: 800 };
+		wordWrap: true
+	};
 
 	let messageGroup: Phaser.Group;
 
@@ -39,16 +44,15 @@ namespace Messages {
 			messageGroup.destroy();
 		}
 		messageGroup = game.add.group(game.world, "message");
-		messageGroup.x = -100;
-		messageGroup.y = -300;
+		messageGroup.fixedToCamera = true;
 
-		let king = messageGroup.add(new Phaser.Sprite(game, 0, 0, WorldConstants.SPRITE_SHEET));
+		let king = messageGroup.add(new Phaser.Sprite(game, MESSAGE_X_OFFSET, MESSAGE_Y_OFFSET, WorldConstants.SPRITE_SHEET));
 		king.animations.add("hover", Phaser.Animation.generateFrameNames("gnome_king_", 0, 3));
 		king.animations.play("hover", 10, true);
-		game.add.tween(king).to({ y: 20 }, 1000, Phaser.Easing.Sinusoidal.InOut, true, 0, -1).yoyo(true);
+		game.add.tween(king).to({ y: MESSAGE_Y_OFFSET + 5 }, 1000, Phaser.Easing.Sinusoidal.InOut, true, 0, -1).yoyo(true);
 
-		let text = messageGroup.add(new Phaser.Text(game, 100, 30, message, TEXT_STYLE));
-
+		let text = messageGroup.add(new Phaser.Text(game, MESSAGE_X_OFFSET + 100, MESSAGE_Y_OFFSET + 30, message, TEXT_STYLE));
+		text.wordWrapWidth = WorldConstants.MINIMUM_GAME_WIDTH - MESSAGE_X_OFFSET - 120;
 		let speechBubble = drawSpeechBubble(game, text);
 		messageGroup.add(speechBubble, false, 0);
 
