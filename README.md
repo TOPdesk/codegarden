@@ -6,7 +6,7 @@ Expect glorious MS paint placeholder graphics intermixed with the actual good gr
 document and reality, and a general inability to mute the Wilhelm Scream sound effect that is played whenever your gnome
 falls off the edge of the level.
 
-You can try out a snapshot of its current state [here](https://siriah.github.io/codegarden).
+You can try out a snapshot of its current state [here](https://topdesk.github.io/codegarden).
 
 # Developer instructions
 
