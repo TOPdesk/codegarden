@@ -26,9 +26,9 @@ class GameWorld {
 	private blockGroup: Phaser.Group;
 	private entityGroup: Phaser.Group;
 
-	private selectedBuilding: CodeBuilding;
 	private selectedBuildingGnomeGhost: Gnome;
 
+	public selectedBuilding: CodeBuilding;
 	public levelIsWon = false;
 	public selectionListener: (building?: CodeBuilding, libraries?: CodeBuilding[]) => void;
 
