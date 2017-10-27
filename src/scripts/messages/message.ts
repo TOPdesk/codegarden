@@ -1,9 +1,9 @@
 namespace Messages {
-	const MESSAGE_X_OFFSET = 370;
-	const MESSAGE_Y_OFFSET = 10;
+	const MESSAGE_X_OFFSET = 20;
+	const MESSAGE_Y_OFFSET = 580;
 
 	export const TEXT_STYLE = {
-		font: "24px MessageFont", fill: "#000",
+		font: "40px MessageFont", fill: "#000",
 		align: "left",
 		boundsAlignH: "left",
 		boundsAlignV: "top",
