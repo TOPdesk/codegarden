@@ -45,10 +45,10 @@ class GnomeCodeEditor {
 
 	drawCommands() {
 		this.commandsGroup.removeAll(true);
-		this.drawButton(100, 100, "button-straight", new Command(CommandType.WALK));
-		this.drawButton(15, 175, "button-turn-left", new Command(CommandType.LEFT));
-		this.drawButton(100, 175, "button-interact", new Command(CommandType.ACT));
-		this.drawButton(185, 175, "button-turn-right", new Command(CommandType.RIGHT));
+		this.drawButton(800, 25, "button-straight", new Command(CommandType.WALK));
+		this.drawButton(715, 100, "button-turn-left", new Command(CommandType.LEFT));
+		this.drawButton(800, 100, "button-interact", new Command(CommandType.ACT));
+		this.drawButton(885, 100, "button-turn-right", new Command(CommandType.RIGHT));
 
 		//TODO add library buttons (dependent on libraries in current level)
 	}
@@ -87,8 +87,14 @@ class GnomeCodeEditor {
 
 
 		let gnomeCode = this.world.selectedBuilding.gnomeCode;
-		let x = 10;
-		let y = 300;
+		
+		const startX = 10;
+		const startY = 500;
+		const blockwidth = 80;
+		
+		let x = startX;
+		let y = startY;
+		
 		gnomeCode.forEach((command, index) => {
 			let sprite = new Phaser.Sprite(this.game, x, y, GnomeCodeEditor.getCommandRenderTexture(this.game, command));
 			sprite.inputEnabled = true;
@@ -98,10 +104,10 @@ class GnomeCodeEditor {
 				this.drawGnomeCode();
 			}, this);
 			this.gnomeCodeGroup.add(sprite);
-			x += 80;
-			if (x > 375) {
-				x = 10;
-				y += 80;
+			x += blockwidth;
+			if (x >= (startX + (12 * blockwidth))) {
+				x = startX;
+				y += blockwidth;
 			}
 		});
 	}
