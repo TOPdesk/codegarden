@@ -5,7 +5,7 @@ namespace States {
 	const SECRET_CODE = "ETGNOMEHOME";
 
 	const MENU_BUTTON_STYLE = {
-		font: "32px MessageFont",
+		font: "40px MessageFont",
 		fill: "#ff0044",
 		align: "center"
 	};
@@ -20,20 +20,20 @@ namespace States {
 			this.gameWorld.loadLevel("menu_level");
 
 			this.createMenuOption(
-				this.createMenuImage(-90, -71, "main_menu_continue"),
-				this.createMenuButton("Continue", 0, -111),
+				this.createMenuImage(0, 600, "main_menu_continue"),
+				this.createMenuButton("Continue", -200, 600),
 				new MapPoint(0, 0),
 				this.continueGame
 			);
 			this.createMenuOption(
-				this.createMenuImage(250, 64, "main_menu_options"),
-				this.createMenuButton("Credits", 340, 24),
+				this.createMenuImage(0, 720, "main_menu_options"),
+				this.createMenuButton("Credits", -200, 720),
 				new MapPoint(4, 0),
 				this.credits
 			);
 			this.createMenuOption(
-				this.createMenuImage(-250, 289, "main_menu_start"),
-				this.createMenuButton("Start Game", -250, 339),
+				this.createMenuImage(0, 660, "main_menu_start"),
+				this.createMenuButton("Start Game", -200, 660),
 				new MapPoint(2, 4),
 				this.startGame
 			);
