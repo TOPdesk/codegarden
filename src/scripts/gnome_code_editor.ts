@@ -10,7 +10,6 @@ class GnomeCodeEditor {
 	constructor (private game: Phaser.Game, private world: GameWorld) {
 		this.commandsGroup = game.add.group();
 		this.commandsGroup.fixedToCamera = true;
-		this.drawCommands();
 
 		this.gnomeCodeGroup = game.add.group();
 		this.gnomeCodeGroup.fixedToCamera = true;
@@ -18,6 +17,7 @@ class GnomeCodeEditor {
 
 		this.world.selectionListener = () => {
 			this.drawGnomeCode();
+			this.drawCommands();
 		};
 	}
 
@@ -45,12 +45,40 @@ class GnomeCodeEditor {
 
 	drawCommands() {
 		this.commandsGroup.removeAll(true);
-		this.drawButton(800, 25, "button-straight", new Command(CommandType.WALK));
-		this.drawButton(715, 100, "button-turn-left", new Command(CommandType.LEFT));
-		this.drawButton(800, 100, "button-interact", new Command(CommandType.ACT));
-		this.drawButton(885, 100, "button-turn-right", new Command(CommandType.RIGHT));
+		if (!this.world.selectedBuilding) {
+			return;
+		}
 
-		//TODO add library buttons (dependent on libraries in current level)
+		let frame = new Phaser.Graphics(this.game);
+		this.commandsGroup.add(frame);
+
+		function x(index) {
+			return 720 + (index * 85);
+		}
+		function y(index) {
+			return 35 + (index * 85);
+		}
+
+		let libraryCount;
+		for (libraryCount = 0; libraryCount < this.world.level.libraries.length; libraryCount++) {
+			this.drawButton(x(libraryCount % 3), y(Math.floor(libraryCount / 3)),
+				"library-" + (libraryCount + 1) + "-button", new Command(CommandType.CALL_ROUTINE, [libraryCount]));
+		}
+
+		let arrowYStart = 1 + Math.floor((libraryCount - 2) / 3);
+
+		this.drawButton(x(1), y(arrowYStart), "button-straight", new Command(CommandType.WALK));
+		this.drawButton(x(0), y(arrowYStart + 1), "button-turn-left", new Command(CommandType.LEFT));
+		this.drawButton(x(1), y(arrowYStart + 1), "button-interact", new Command(CommandType.ACT));
+		this.drawButton(x(2), y(arrowYStart + 1), "button-turn-right", new Command(CommandType.RIGHT));
+
+		let text = new Phaser.Text(this.game, x(0) + 5, y(arrowYStart + 2), "Commands", Messages.TEXT_STYLE);
+		this.commandsGroup.add(text);
+
+		frame.lineStyle(3, 0x000000, 1.0);
+		frame.beginFill(0xffffff);
+		frame.drawRoundedRect(x(0) - 20, 20, 295, text.y + text.height - 10, 5);
+		frame.endFill();
 	}
 
 	drawButton(x: number, y: number, spriteKey: string, command: Command) {
@@ -67,34 +95,51 @@ class GnomeCodeEditor {
 		this.commandsGroup.add(button);
 	}
 
-	//TODO: tooltips, hint to select a building, show delay, placeholders, better readonly styling, frame around code
+	//TODO: tooltips, hint to select a building, placeholders, better readonly styling
 	drawGnomeCode() {
 		this.gnomeCodeGroup.removeAll(true);
 		if (!this.world.selectedBuilding) {
 			this.commandsGroup.visible = false;
 			return;
 		}
-
 		let readonly = this.world.selectedBuilding.model.readonly;
-		this.commandsGroup.visible = !readonly;
-		if (readonly) {
-			let message = (this.world.selectedBuilding.model.type === "LIBRARY") ?
-				"This library routine can't be changed" : "This gnome's routine can't be changed";
-			let textObject = new Phaser.Text(this.game, 10, 270, message, Messages.TEXT_STYLE);
-			this.gnomeCodeGroup.add(textObject);
-			textObject.wordWrapWidth = WorldConstants.MINIMUM_GAME_WIDTH;
-		}
 
-
-		let gnomeCode = this.world.selectedBuilding.gnomeCode;
-		
-		const startX = 10;
+		const startX = 5;
 		const startY = 500;
 		const blockwidth = 80;
-		
+
+		let gnomeCodeFrame = new Phaser.Graphics(this.game);
+		this.gnomeCodeGroup.add(gnomeCodeFrame);
+		gnomeCodeFrame.lineStyle(3, 0x000000, 1.0);
+		gnomeCodeFrame.beginFill(0xeeeeee);
+		gnomeCodeFrame.drawRect(-5, startY - 5, this.game.width + 10, this.game.height);
+		gnomeCodeFrame.endFill();
+
+		this.commandsGroup.visible = !readonly;
+		let message = (this.world.selectedBuilding.model.type === "LIBRARY") ?
+			"Library routine" : "Gnome routine";
+		if (readonly) {
+			message += " (can't be changed)";
+		}
+
+		let textObject = new Phaser.Text(this.game, startX, startY, message, Messages.TEXT_STYLE);
+		this.gnomeCodeGroup.add(textObject);
+		textObject.wordWrapWidth = WorldConstants.MINIMUM_GAME_WIDTH;
+
+		if (this.world.selectedBuilding.delay) {
+			let sprite = new Phaser.Sprite(this.game, 900, startY - 10, WorldConstants.SPRITE_SHEET, "pause-button");
+			this.gnomeCodeGroup.add(sprite);
+			let delayCount = new Phaser.Text(this.game, 960, startY, this.world.selectedBuilding.delay.toString(), Messages.TEXT_STYLE);
+			delayCount.x = sprite.x + (sprite.width / 2) - (delayCount.width / 2);
+			delayCount.y = sprite.y + (sprite.height / 2) - (delayCount.height / 2);
+			this.gnomeCodeGroup.add(delayCount);
+		}
+
+		let gnomeCode = this.world.selectedBuilding.gnomeCode;
+
 		let x = startX;
-		let y = startY;
-		
+		let y = startY + textObject.height;
+
 		gnomeCode.forEach((command, index) => {
 			let sprite = new Phaser.Sprite(this.game, x, y, GnomeCodeEditor.getCommandRenderTexture(this.game, command));
 			sprite.inputEnabled = true;
@@ -110,6 +155,18 @@ class GnomeCodeEditor {
 				y += blockwidth;
 			}
 		});
+
+		if (this.world.selectedBuilding.model.sizeLimit && gnomeCode.length < this.world.selectedBuilding.model.sizeLimit) {
+			for (let i = gnomeCode.length; i < this.world.selectedBuilding.model.sizeLimit; i++) {
+				let sprite = new Phaser.Sprite(this.game, x, y, WorldConstants.SPRITE_SHEET, "mushrooms_3"); //TODO placeholder
+				this.gnomeCodeGroup.add(sprite);
+				x += blockwidth;
+				if (x >= (startX + (12 * blockwidth))) {
+					x = startX;
+					y += blockwidth;
+				}
+			}
+		}
 	}
 
 	static getCommandRenderTexture(game: Phaser.Game, command: Command): RenderTexture {
@@ -135,7 +192,7 @@ class GnomeCodeEditor {
 			case CommandType.ACT:
 				return "control-interact";
 			case CommandType.CALL_ROUTINE:
-				return "library-" + command.args[0];
+				return "library-" + (command.args[0] + 1);
 			default:
 				return "king-button"; //Unknown command
 		}

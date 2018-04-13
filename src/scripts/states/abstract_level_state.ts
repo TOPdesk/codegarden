@@ -3,7 +3,7 @@
 namespace States {
 	const CAMERA_OFFSET_X = -3 * WorldConstants.BLOCK_WIDTH;
 	const CAMERA_OFFSET_Y = -50;
-	
+
 	export class AbstractLevelState extends Phaser.State {
 		create() {
 			this.handleSizeChange();
