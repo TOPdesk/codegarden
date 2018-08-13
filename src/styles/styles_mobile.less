@@ -9,16 +9,44 @@
 @buttonLightGreen: #99ff99;
 
 
-@media only screen and (max-device-width: 768px) {
+@media only screen and (max-device-width: 500px) {
 
     @font-face {
     font-family: 'MessageFont';
     src: url('../assets/font/Kingthings Petrock.ttf');
     }
 
-    #canvasContainer{
-        width:360px;
-        height:720px;
+    #gnomeCodeButtons {
+        height: 400px;
     }
 
+    .commandButton {
+        height: 150px;
+        width: 150px; 
+    }
+
+    .commandMoveForward {
+        background: url("../assets/images/control_walk.png"), @buttonYellow;
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .commandTurnLeft {
+        background: url("../assets/images/control_turn_left.png"), @buttonYellow;
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .commandTurnRight {
+        background: url("../assets/images/control_turn_right.png"), @buttonYellow;
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .commandPerformAction {
+        background: url("../assets/images/control_interact.png"), @buttonYellow;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
 }

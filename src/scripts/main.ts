@@ -2,10 +2,12 @@
 /// <reference path="states/boot.ts"/>
 
 class Game extends Phaser.Game {
+	MOBILE;
 
 	constructor() {
 		//noinspection TypeScriptValidateTypes
 		super("100%", "100%", Phaser.AUTO, "canvasContainer");
+		this.MOBILE= window.screen.availWidth < 500;
 	}
 
 	start() {
@@ -13,4 +15,4 @@ class Game extends Phaser.Game {
 	}
 }
 
-(window as any).codeGarden = new Game();
+window["codeGarden"] = new Game();

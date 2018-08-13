@@ -1,4 +1,7 @@
+/// <reference path="main.ts" />
+
 const TIME_X_BUTTON_OFFSET = 90;
+const TIME_X_BUTTON_OFFSET_MOBILE = 180;
 const TIME_Y_BUTTON_OFFSET = 10;
 const TIME_X_BUTTON_DISTANCE = 72;
 
@@ -10,7 +13,7 @@ enum TimerState {
  * Allows the player to control the flow of time in the world by clicking buttons.
  */
 class TimeControls {
-	private xButtonOffset = TIME_X_BUTTON_OFFSET;
+	private xButtonOffset;
 	private timerState = TimerState.PAUSED;
 
 	private timer: Phaser.Timer;
@@ -19,16 +22,16 @@ class TimeControls {
 	private playFastButton: Phaser.Sprite;
 
 	constructor (private game: Phaser.Game, private world: GameWorld, private victoryCallback) {
+		this.xButtonOffset = window["codeGarden"].MOBILE ? TIME_X_BUTTON_OFFSET_MOBILE : TIME_X_BUTTON_OFFSET;
 		this.drawButton("stop-button", () => this.reset());
 		this.drawButton("1-step-button", () => this.takeSingleStep());
 		this.playSlowButton = this.drawButton("play-button", () => this.playSlowOrPause());
 		this.playFastButton = this.drawButton("play-fast-button", () => this.playFastOrPause());
 	}
 
-	private drawButton(pictureKey, trigger: Function): Phaser.Sprite {
+	private drawButton(pictureKey, trigger: Function): Phaser.Sprite {		
 		let button = this.game.add.sprite(this.xButtonOffset, TIME_Y_BUTTON_OFFSET, WorldConstants.SPRITE_SHEET, pictureKey);
 		this.xButtonOffset += TIME_X_BUTTON_DISTANCE;
-
 		button.inputEnabled = true;
 		button.fixedToCamera = true;
 		button.events.onInputDown.add(trigger, this);
